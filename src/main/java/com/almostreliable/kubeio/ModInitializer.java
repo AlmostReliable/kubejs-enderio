@@ -1,6 +1,6 @@
 package com.almostreliable.kubeio;
 
-import com.almostreliable.kubeio.core.KubeJSEnderioIntegration;
+import com.almostreliable.kubeio.core.EIOIntegration;
 import com.almostreliable.kubeio.util.SmeltingFilterSynchronizer;
 import com.enderio.api.integration.IntegrationManager;
 import com.mojang.logging.LogUtils;
@@ -21,7 +21,7 @@ public final class ModInitializer {
     public ModInitializer() {
         LOGGER.info("Loading EnderIO integration for KubeJS");
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ModInitializer::onRegistration);
-        IntegrationManager.addIntegration(new KubeJSEnderioIntegration());
+        IntegrationManager.addIntegration(new EIOIntegration());
     }
 
     public static ResourceLocation getRl(String path) {
