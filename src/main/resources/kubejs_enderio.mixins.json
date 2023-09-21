@@ -6,7 +6,6 @@
   "mixins": [
     "accessor.IngredientAccessor",
     "accessor.TagValueAccessor",
-    "filter.AlloySmelterBlockEntityMixin",
     "filter.RecipesEventJSMixin"
   ],
   "client": [],
