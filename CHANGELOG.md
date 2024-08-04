@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
-## Unreleased
+## [0.5.0] - 2024-08-04
 
 ### Changed
 - updated to new EnderIO version
@@ -68,6 +68,7 @@ Initial 1.20.1 release!
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
 <!-- Versions -->
+[0.5.0]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.20.1-forge-0.5.0
 [0.4.1]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.20.1-forge-0.4.1-beta
 [0.4.0]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.20.1-forge-0.4.0-beta
 [0.3.1]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.20.1-forge-0.3.1-beta
