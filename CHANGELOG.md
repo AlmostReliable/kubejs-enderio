@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
+## Unreleased
+
+### Changed
+- updated to new EnderIO version
+  - new minimum version is 6.1.7-beta
+
 ## [0.4.1] - 2023-11-16
 
 ### Fixed

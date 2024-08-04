@@ -1,14 +1,12 @@
 package com.almostreliable.kubeio.enderio.conduit;
 
-import com.enderio.api.conduit.IConduitMenuData;
-import com.enderio.api.conduit.IConduitType;
+import com.enderio.api.conduit.ConduitMenuData;
+import com.enderio.api.conduit.ConduitType;
 import com.enderio.api.conduit.TieredConduit;
-import com.enderio.api.conduit.ticker.IConduitTicker;
+import com.enderio.api.conduit.ticker.ConduitTicker;
 import com.enderio.api.misc.RedstoneControl;
-import com.enderio.api.misc.Vector2i;
-import com.enderio.conduits.common.init.EnderConduitTypes;
-import com.enderio.conduits.common.types.EnergyConduitType;
-import com.enderio.conduits.common.types.EnergyExtendedData;
+import com.enderio.conduits.common.conduit.type.energy.EnergyConduitData;
+import com.enderio.conduits.common.conduit.type.energy.EnergyConduitType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -18,33 +16,41 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class CustomEnergyConduitType extends TieredConduit<EnergyExtendedData> {
+public class CustomEnergyConduitType extends TieredConduit<EnergyConduitData> {
 
-    @SuppressWarnings("AssignmentToSuperclassField")
-    public CustomEnergyConduitType(ResourceLocation texture, int transferRate) {
+    private static final ConduitMenuData MENU_DATA = new ConduitMenuData.Simple(
+        false,
+        false,
+        false,
+        false,
+        false,
+        true
+    );
+
+    private final CustomEnergyConduitTicker ticker;
+
+    public CustomEnergyConduitType(ResourceLocation tierName, int transferRate) {
         super(
-            texture,
             new ResourceLocation("forge:energy"),
-            transferRate,
-            EnderConduitTypes.ICON_TEXTURE,
-            new Vector2i(0, 24)
+            tierName,
+            transferRate
         );
-        this.clientConduitData = new CustomEnergyClientData(texture);
+        this.ticker = new CustomEnergyConduitTicker(transferRate);
     }
 
     @Override
-    public IConduitTicker getTicker() {
-        return new CustomEnergyConduitTicker(getTier());
+    public ConduitTicker<EnergyConduitData> getTicker() {
+        return ticker;
     }
 
     @Override
-    public IConduitMenuData getMenuData() {
-        return IConduitMenuData.ENERGY;
+    public ConduitMenuData getMenuData() {
+        return MENU_DATA;
     }
 
     @Override
-    public EnergyExtendedData createExtendedConduitData(Level level, BlockPos pos) {
-        return new EnergyExtendedData();
+    public EnergyConduitData createConduitData(Level level, BlockPos pos) {
+        return new EnergyConduitData();
     }
 
     @Override
@@ -62,13 +68,13 @@ public class CustomEnergyConduitType extends TieredConduit<EnergyExtendedData> {
     }
 
     @Override
-    public boolean canBeReplacedBy(IConduitType<?> other) {
+    public boolean canBeReplacedBy(ConduitType<?> other) {
         // allow replacing with simple energy conduit as it's infinite
         return other instanceof EnergyConduitType || super.canBeReplacedBy(other);
     }
 
     @Override
-    public boolean canBeInSameBlock(IConduitType<?> other) {
+    public boolean canBeInSameBlock(ConduitType<?> other) {
         // don't allow simple energy conduit to be in the same block as custom energy conduits
         return !(other instanceof EnergyConduitType) && super.canBeInSameBlock(other);
     }
