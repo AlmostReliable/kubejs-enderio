@@ -29,7 +29,7 @@ For an in-depth explanation of the functionality and code examples, check out th
 This project is All Rights Reserved.
 
 <!-- Badges -->
-[workflow_status_badge]: https://img.shields.io/github/actions/workflow/status/AlmostReliable/kubejs-enderio/build.yml?branch=1.20.1-forge&style=for-the-badge
+[workflow_status_badge]: https://img.shields.io/github/actions/workflow/status/AlmostReliable/kubejs-enderio/build.yml?branch=1.20.1&style=for-the-badge
 [workflow_status_link]: https://github.com/AlmostReliable/kubejs-enderio/actions
 [license_badge]: https://img.shields.io/badge/License-ARR-ffa200?style=for-the-badge
 [version_badge]: https://img.shields.io/badge/dynamic/json?color=0078FF&label=release&style=for-the-badge&query=name&url=https://api.razonyang.com/v1/github/tag/AlmostReliable/kubejs-enderio%3Fprefix=v1.20.1-
