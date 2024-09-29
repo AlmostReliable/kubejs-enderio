@@ -82,7 +82,6 @@ dependencies {
     localRuntime("dev.gigaherz.graph:GraphLib3:3.0.4")
 
     // JEI
-    modCompileOnly("mezz.jei:jei-$minecraftVersion-common-api:$jeiVersion") { isTransitive = false }
     modLocalRuntime("mezz.jei:jei-$minecraftVersion-forge:$jeiVersion") { isTransitive = false }
 }
 

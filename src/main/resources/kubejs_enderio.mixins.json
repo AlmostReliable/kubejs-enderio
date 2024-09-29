@@ -6,8 +6,7 @@
   "mixins": [
     "EnergyConduitTickerMixin",
     "accessor.IngredientAccessor",
-    "accessor.TagValueAccessor",
-    "filter.RecipesEventJSMixin"
+    "accessor.TagValueAccessor"
   ],
   "client": [],
   "injectors": {

@@ -2,7 +2,6 @@ package com.almostreliable.kubeio.kube;
 
 import com.almostreliable.kubeio.enderio.conduit.CustomConduitEntry;
 import com.almostreliable.kubeio.kube.event.ConduitRegistryEvent;
-import com.almostreliable.kubeio.kube.recipe.RecipesBinding;
 import com.almostreliable.kubeio.kube.schema.*;
 import com.enderio.EnderIO;
 import com.enderio.base.common.init.EIORecipes;
@@ -40,7 +39,6 @@ public class KubePlugin extends KubeJSPlugin {
         if (event.getType().isServer()) {
             event.add("MobCategory", MobCategory.class);
             event.add("EnderIOBonusType", SagMillingRecipe.BonusType.class);
-            event.add("EnderIORecipes", RecipesBinding.class);
         }
     }
 
