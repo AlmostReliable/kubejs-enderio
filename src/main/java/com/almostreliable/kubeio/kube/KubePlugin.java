@@ -3,11 +3,13 @@ package com.almostreliable.kubeio.kube;
 import com.almostreliable.kubeio.enderio.CustomConduitEntry;
 import com.almostreliable.kubeio.kube.event.ConduitRegistryEvent;
 import com.almostreliable.kubeio.kube.schema.*;
+import com.almostreliable.kubeio.mixin.AlloySmeltingRecipeAccessor;
 import com.enderio.EnderIO;
 import com.enderio.base.common.init.EIORecipes;
 import com.enderio.core.common.recipes.CountedIngredient;
 import com.enderio.core.common.recipes.RecipeTypeSerializerPair;
 import com.enderio.machines.common.init.MachineRecipes;
+import com.enderio.machines.common.recipe.AlloySmeltingRecipe;
 import com.enderio.machines.common.recipe.SagMillingRecipe;
 import com.google.gson.JsonObject;
 import dev.latvian.mods.kubejs.KubeJSPlugin;
@@ -16,6 +18,7 @@ import dev.latvian.mods.kubejs.event.EventGroup;
 import dev.latvian.mods.kubejs.event.EventHandler;
 import dev.latvian.mods.kubejs.generator.AssetJsonGenerator;
 import dev.latvian.mods.kubejs.item.InputItem;
+import dev.latvian.mods.kubejs.recipe.RecipesEventJS;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeNamespace;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
 import dev.latvian.mods.kubejs.recipe.schema.RegisterRecipeSchemasEvent;
@@ -23,11 +26,18 @@ import dev.latvian.mods.kubejs.script.BindingsEvent;
 import dev.latvian.mods.kubejs.script.ScriptType;
 import dev.latvian.mods.kubejs.util.MapJS;
 import dev.latvian.mods.rhino.util.wrap.TypeWrappers;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.*;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class KubePlugin extends KubeJSPlugin {
+
+    public static final Set<ResourceLocation> SMELTING_RECIPES = new HashSet<>();
 
     @Override
     public void registerEvents() {
@@ -62,6 +72,31 @@ public class KubePlugin extends KubeJSPlugin {
         for (CustomConduitEntry conduit : ConduitRegistryEvent.CONDUITS) {
             event.add("item." + EnderIO.MODID + "." + conduit.id(), conduit.name());
         }
+    }
+
+    @Override
+    public void injectRuntimeRecipes(
+        RecipesEventJS event, RecipeManager manager, Map<ResourceLocation, Recipe<?>> recipesByName
+    ) {
+        for (ResourceLocation recipeId : SMELTING_RECIPES) {
+            var recipe = recipesByName.get(recipeId);
+            if (!(recipe instanceof AlloySmeltingRecipe r)) {
+                continue;
+            }
+
+            var smeltingRecipe = (AlloySmeltingRecipeAccessor) r;
+            var inputs = smeltingRecipe.getInputs();
+            if (inputs.size() != 1 || inputs.get(0).count() != 1) continue;
+
+            Ingredient input = inputs.get(0).ingredient();
+            ItemStack output = smeltingRecipe.getOutput();
+            float experience = smeltingRecipe.getExperience();
+            ResourceLocation id = new ResourceLocation(recipeId.toString() + "_inherited");
+
+            recipesByName.put(id, new SmeltingRecipe(id, "", CookingBookCategory.MISC, input, output, experience, 200));
+        }
+
+        SMELTING_RECIPES.clear();
     }
 
     @Override

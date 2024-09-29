@@ -1,5 +1,6 @@
 package com.almostreliable.kubeio.kube.schema;
 
+import com.almostreliable.kubeio.kube.KubePlugin;
 import com.almostreliable.kubeio.kube.recipe.CommonRecipeKeys;
 import com.almostreliable.kubeio.kube.recipe.RecipeComponents;
 import com.enderio.core.common.recipes.CountedIngredient;
@@ -35,6 +36,7 @@ public interface AlloySmelterRecipeSchema extends CommonRecipeKeys {
 
         public AlloySmelterRecipeJS smelting() {
             setValue(IS_SMELTING, true);
+            KubePlugin.SMELTING_RECIPES.add(getOrCreateId());
             return this;
         }
     }
