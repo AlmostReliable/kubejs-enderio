@@ -5,6 +5,7 @@ import com.almostreliable.kubeio.mixin.accessor.IngredientAccessor;
 import com.almostreliable.kubeio.mixin.accessor.TagValueAccessor;
 import com.enderio.core.common.recipes.CountedIngredient;
 import com.enderio.machines.common.recipe.SagMillingRecipe;
+import com.google.common.base.Preconditions;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -29,8 +30,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.Objects;
-
+@SuppressWarnings("StaticMethodOnlyUsedInOneClass")
 public interface RecipeComponents {
 
     RecipeComponent<CountedIngredient> COUNTED_INGREDIENT = new RecipeComponent<>() {
@@ -77,22 +77,7 @@ public interface RecipeComponents {
 
         @Override
         public JsonElement write(RecipeJS recipe, SagMillingRecipe.OutputItem value) {
-            JsonObject jsonObject = new JsonObject();
-
-            if (value.isTag()) {
-                jsonObject.addProperty("tag", Objects.requireNonNull(value.getTag()).location().toString());
-            } else {
-                jsonObject.addProperty(
-                    "item",
-                    Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(value.getItem())).toString()
-                );
-            }
-
-            if (value.getCount() != 1) jsonObject.addProperty("count", value.getCount());
-            if (value.getChance() < 1.0f) jsonObject.addProperty("chance", value.getChance());
-            if (value.isOptional()) jsonObject.addProperty("optional", value.isOptional());
-
-            return jsonObject;
+            return value.toJson();
         }
 
         @SuppressWarnings("CastToIncompatibleInterface")
@@ -146,7 +131,6 @@ public interface RecipeComponents {
                         throw new IllegalArgumentException("Recipe is missing a required output item");
                     }
 
-                    // noinspection DataFlowIssue
                     return SagMillingRecipe.OutputItem.of(item, count, chance, optional);
                 }
 
@@ -182,7 +166,7 @@ public interface RecipeComponents {
 
         @Override
         public JsonElement write(RecipeJS recipe, Item value) {
-            return new JsonPrimitive(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(value)).toString());
+            return new JsonPrimitive(Preconditions.checkNotNull(ForgeRegistries.ITEMS.getKey(value)).toString());
         }
 
         @Override
@@ -215,7 +199,7 @@ public interface RecipeComponents {
 
             value.left().ifPresent(block -> {
                 ResourceLocation blockId = ForgeRegistries.BLOCKS.getKey(block);
-                jsonObject.addProperty("block", Objects.requireNonNull(blockId).toString());
+                jsonObject.addProperty("block", Preconditions.checkNotNull(blockId).toString());
             });
             value.right().ifPresent(tag -> jsonObject.addProperty("tag", tag.location().toString()));
 
@@ -289,7 +273,7 @@ public interface RecipeComponents {
         @Override
         public JsonElement write(RecipeJS recipe, Enchantment value) {
             ResourceLocation enchantmentId = ForgeRegistries.ENCHANTMENTS.getKey(value);
-            return new JsonPrimitive(Objects.requireNonNull(enchantmentId).toString());
+            return new JsonPrimitive(Preconditions.checkNotNull(enchantmentId).toString());
         }
 
         @Override
