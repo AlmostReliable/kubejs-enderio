@@ -61,6 +61,11 @@ public class CustomEnergyConduitType extends TieredConduit<EnergyConduitData> {
         LazyOptional<IEnergyStorage> cap = blockEntity.getCapability(ForgeCapabilities.ENERGY, direction.getOpposite());
         if (cap.isPresent()) {
             IEnergyStorage storage = cap.orElseThrow(() -> new RuntimeException("present capability was not found"));
+
+            if (!storage.canReceive() && !storage.canExtract()) {
+                return new ConduitConnectionData(false, true, RedstoneControl.ALWAYS_ACTIVE);
+            }
+
             return new ConduitConnectionData(storage.canReceive(), storage.canExtract(), RedstoneControl.ALWAYS_ACTIVE);
         }
 
