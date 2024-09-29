@@ -5,8 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "EnergyConduitTickerMixin",
-    "accessor.IngredientAccessor",
-    "accessor.TagValueAccessor"
+    "IngredientAccessor",
+    "TagValueAccessor"
   ],
   "client": [],
   "injectors": {

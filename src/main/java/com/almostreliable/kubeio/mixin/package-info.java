@@ -1,5 +1,5 @@
 @ParametersAreNonnullByDefault @MethodsReturnNonnullByDefault
-package com.almostreliable.kubeio.mixin.accessor;
+package com.almostreliable.kubeio.mixin;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

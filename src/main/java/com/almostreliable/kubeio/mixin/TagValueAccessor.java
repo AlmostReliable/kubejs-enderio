@@ -1,4 +1,4 @@
-package com.almostreliable.kubeio.mixin.accessor;
+package com.almostreliable.kubeio.mixin;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
