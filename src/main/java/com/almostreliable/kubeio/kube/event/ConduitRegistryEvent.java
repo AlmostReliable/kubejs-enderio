@@ -1,7 +1,7 @@
 package com.almostreliable.kubeio.kube.event;
 
-import com.almostreliable.kubeio.enderio.conduit.CustomConduitEntry;
-import com.almostreliable.kubeio.enderio.conduit.CustomEnergyConduitType;
+import com.almostreliable.kubeio.enderio.CustomConduitEntry;
+import com.almostreliable.kubeio.enderio.CustomEnergyConduitType;
 import com.enderio.EnderIO;
 import com.enderio.api.conduit.ConduitItemFactory;
 import com.enderio.conduits.common.init.EIOConduitTypes;
@@ -19,6 +19,7 @@ public class ConduitRegistryEvent extends EventJS {
     @HideFromJS
     public static final Set<CustomConduitEntry> CONDUITS = new HashSet<>();
 
+    @SuppressWarnings("unused")
     public void registerEnergyConduit(String id, String name, int transferRate) {
         Preconditions.checkArgument(!id.contains(":"), "id must not contain a colon (:)");
         Preconditions.checkArgument(!id.contains(" "), "id must not contain a space");

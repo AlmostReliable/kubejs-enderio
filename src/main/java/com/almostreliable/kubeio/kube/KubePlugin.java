@@ -1,6 +1,6 @@
 package com.almostreliable.kubeio.kube;
 
-import com.almostreliable.kubeio.enderio.conduit.CustomConduitEntry;
+import com.almostreliable.kubeio.enderio.CustomConduitEntry;
 import com.almostreliable.kubeio.kube.event.ConduitRegistryEvent;
 import com.almostreliable.kubeio.kube.schema.*;
 import com.enderio.EnderIO;

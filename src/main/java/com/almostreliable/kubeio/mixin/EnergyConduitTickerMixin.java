@@ -1,6 +1,6 @@
 package com.almostreliable.kubeio.mixin;
 
-import com.almostreliable.kubeio.enderio.conduit.CustomEnergyConduitTicker;
+import com.almostreliable.kubeio.enderio.CustomEnergyConduitTicker;
 import com.enderio.conduits.common.conduit.type.energy.EnergyConduitTicker;
 import net.minecraftforge.energy.IEnergyStorage;
 import org.spongepowered.asm.mixin.Mixin;

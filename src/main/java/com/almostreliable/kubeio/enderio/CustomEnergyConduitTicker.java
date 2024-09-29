@@ -1,4 +1,4 @@
-package com.almostreliable.kubeio.enderio.conduit;
+package com.almostreliable.kubeio.enderio;
 
 import com.enderio.conduits.common.conduit.type.energy.EnergyConduitTicker;
 
