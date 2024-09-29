@@ -30,7 +30,7 @@ public interface SoulBinderRecipeSchema extends CommonRecipeKeys {
         .defaultOptional();
 
     RecipeSchema SCHEMA = new RecipeSchema(
-        ITEM_OUTPUT,
+        OUTPUT_STACK,
         SINGLE_INPUT,
         ENERGY,
         EXP,

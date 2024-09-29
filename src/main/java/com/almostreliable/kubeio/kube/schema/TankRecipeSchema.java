@@ -24,7 +24,7 @@ public interface TankRecipeSchema extends CommonRecipeKeys {
     RecipeSchema SCHEMA = new RecipeSchema(
         TankRecipeJS.class,
         TankRecipeJS::new,
-        ITEM_OUTPUT,
+        OUTPUT_STACK,
         SINGLE_INPUT,
         FLUID,
         IS_EMPTYING

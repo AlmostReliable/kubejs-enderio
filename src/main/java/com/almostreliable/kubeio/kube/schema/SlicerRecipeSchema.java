@@ -15,7 +15,7 @@ public interface SlicerRecipeSchema extends CommonRecipeKeys {
     RecipeSchema SCHEMA = new RecipeSchema(
         SlicerRecipeJS.class,
         SlicerRecipeJS::new,
-        ITEM_OUTPUT,
+        OUTPUT_STACK,
         MULTI_INPUT,
         ENERGY
     );

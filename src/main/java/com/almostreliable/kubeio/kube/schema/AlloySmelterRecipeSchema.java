@@ -5,9 +5,9 @@ import com.almostreliable.kubeio.kube.recipe.RecipeComponents;
 import com.enderio.core.common.recipes.CountedIngredient;
 import com.enderio.machines.common.recipe.AlloySmeltingRecipe;
 import com.enderio.machines.data.recipes.AlloyRecipeProvider;
-import dev.latvian.mods.kubejs.item.OutputItem;
+import dev.latvian.mods.kubejs.recipe.RecipeJS;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
-import dev.latvian.mods.kubejs.recipe.component.ItemComponents;
+import dev.latvian.mods.kubejs.recipe.component.BooleanComponent;
 import dev.latvian.mods.kubejs.recipe.component.NumberComponent;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
 
@@ -16,15 +16,26 @@ import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
  */
 public interface AlloySmelterRecipeSchema extends CommonRecipeKeys {
 
-    RecipeKey<OutputItem> RESULT = ItemComponents.OUTPUT.key("result").noBuilders();
     RecipeKey<CountedIngredient[]> MULTI_COUNTED_INPUT = RecipeComponents.COUNTED_INGREDIENT_ARRAY.key("inputs")
         .noBuilders();
     RecipeKey<Float> EXPERIENCE = NumberComponent.FLOAT.key("experience").optional(0f).alwaysWrite();
+    RecipeKey<Boolean> IS_SMELTING = BooleanComponent.BOOLEAN.key("is_smelting").optional(false).noBuilders();
 
     RecipeSchema SCHEMA = new RecipeSchema(
-        RESULT,
+        AlloySmelterRecipeJS.class,
+        AlloySmelterRecipeJS::new,
+        RESULT_STACK,
         MULTI_COUNTED_INPUT,
         ENERGY,
-        EXPERIENCE
+        EXPERIENCE,
+        IS_SMELTING
     );
+
+    class AlloySmelterRecipeJS extends RecipeJS {
+
+        public AlloySmelterRecipeJS smelting() {
+            setValue(IS_SMELTING, true);
+            return this;
+        }
+    }
 }

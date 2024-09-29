@@ -11,7 +11,7 @@ import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
 public interface PaintingRecipeSchema extends CommonRecipeKeys {
 
     RecipeSchema SCHEMA = new RecipeSchema(
-        ITEM_OUTPUT,
+        OUTPUT_STACK,
         SINGLE_INPUT
     );
 }
