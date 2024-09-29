@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
+## Unreleased
+
+This update adjusts recipe schemas and introduces changes to the Alloy Smelter filtering.
+Please read the [wiki](https://github.com/AlmostReliable/kubejs-enderio/wiki) for more information.
+
+### Added
+- added automatic smelting recipe inheritance
+
+### Changed
+- updated to new EnderIO version
+  - new minimum version is 6.2.0-beta
+
+### Fixed
+- fixed custom energy conduits not connecting to some modded blocks ([#6](https://github.com/AlmostReliable/kubejs-enderio/issues/6))
+
+### Removed
+- removed manual synchronization of filtered smelting recipes
+- removed KubeJS binding for utility methods
+
 ## [0.5.0] - 2024-08-04
 
 ### Changed
