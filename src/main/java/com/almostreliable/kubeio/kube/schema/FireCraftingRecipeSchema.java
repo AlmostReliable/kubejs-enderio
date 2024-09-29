@@ -24,7 +24,7 @@ public interface FireCraftingRecipeSchema {
     RecipeKey<String> LOOT_TABLE = StringComponent.ID.key("loot_table").noBuilders();
     RecipeKey<Integer> MAX_ITEM_DROPS = NumberComponent.INT.key("max_item_drops")
         .preferred("maxItemDrops")
-        .optional(1)
+        .optional(1_000)
         .alwaysWrite();
     RecipeKey<String[]> DIMENSIONS = StringComponent.ID.asArray().key("dimensions")
         .optional(ArrayUtils.toArray("minecraft:overworld"))
