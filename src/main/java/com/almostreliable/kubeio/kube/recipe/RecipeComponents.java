@@ -19,9 +19,7 @@ import dev.latvian.mods.kubejs.recipe.component.RecipeComponent;
 import dev.latvian.mods.kubejs.util.UtilsJS;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -112,29 +110,7 @@ public interface RecipeComponents {
             }
 
             if (from instanceof JsonObject jsonObject) {
-                int count = GsonHelper.getAsInt(jsonObject, "count", 1);
-                float chance = GsonHelper.getAsFloat(jsonObject, "chance", 1.0f);
-                boolean optional = GsonHelper.getAsBoolean(jsonObject, "optional", false);
-
-                if (jsonObject.has("tag")) {
-                    ResourceLocation id = new ResourceLocation(jsonObject.get("tag").getAsString());
-                    TagKey<Item> tag = ItemTags.create(id);
-
-                    return SagMillingRecipe.OutputItem.of(tag, count, chance, optional);
-                }
-
-                if (jsonObject.has("item")) {
-                    ResourceLocation id = new ResourceLocation(jsonObject.get("item").getAsString());
-                    Item item = ForgeRegistries.ITEMS.getValue(id);
-
-                    if (!optional && item == null) {
-                        throw new IllegalArgumentException("Recipe is missing a required output item");
-                    }
-
-                    return SagMillingRecipe.OutputItem.of(item, count, chance, optional);
-                }
-
-                throw new IllegalArgumentException("Invalid output item: " + jsonObject);
+                return SagMillingRecipe.OutputItem.fromJson(jsonObject, recipe.id);
             }
 
             OutputItem outputItem = OutputItem.of(from);
