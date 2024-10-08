@@ -43,7 +43,7 @@ public abstract class EnergyConduitTickerMixin<TData extends ConduitData<TData>,
             IEnergyStorage capability = be.getCapability(ForgeCapabilities.ENERGY, insert.dir().getOpposite())
                 .resolve()
                 .orElse(null);
-            if (capability == null || !capability.canReceive()) continue;
+            if (capability == null) continue;
             Tuple<CapabilityConnections, CapabilityConnections> capabilityTuple = capabilitiesByBlock.computeIfAbsent(
                 be,
                 k -> new Tuple<>(new CapabilityConnections(capability), null)
@@ -58,7 +58,7 @@ public abstract class EnergyConduitTickerMixin<TData extends ConduitData<TData>,
                 IEnergyStorage capability = be.getCapability(ForgeCapabilities.ENERGY, extract.dir().getOpposite())
                     .resolve()
                     .orElse(null);
-                if (capability == null || !capability.canExtract()) continue;
+                if (capability == null) continue;
                 Tuple<CapabilityConnections, CapabilityConnections> capabilityTuple = capabilitiesByBlock.computeIfAbsent(
                     be,
                     k -> new Tuple<>(null, new CapabilityConnections(capability))
