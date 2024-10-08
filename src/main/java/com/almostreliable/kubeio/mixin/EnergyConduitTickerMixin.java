@@ -103,6 +103,7 @@ public abstract class EnergyConduitTickerMixin<TData extends ConduitData<TData>,
                     transferRate * capabilityConnections.getCount(),
                     true
                 );
+                if (insertAmount == 0) return Stream.empty();
                 maxInsertAmount.updateAndGet(v -> v + insertAmount);
                 return split(capabilityConnections.capability, capabilityConnections.getCount(), insertAmount).stream();
             })
@@ -118,6 +119,7 @@ public abstract class EnergyConduitTickerMixin<TData extends ConduitData<TData>,
                     transferRate * capabilityConnections.getCount(),
                     true
                 );
+                if (extractAmount == 0) return Stream.empty();
                 maxExtractAmount.updateAndGet(v -> v + extractAmount);
                 return split(
                     capabilityConnections.capability,
