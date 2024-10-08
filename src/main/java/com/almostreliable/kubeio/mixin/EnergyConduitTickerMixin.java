@@ -1,6 +1,7 @@
 package com.almostreliable.kubeio.mixin;
 
 import com.almostreliable.kubeio.enderio.CustomEnergyConduitTicker;
+import com.almostreliable.kubeio.util.CapabilityConnections;
 import com.enderio.api.conduit.ColoredRedstoneProvider;
 import com.enderio.api.conduit.ConduitData;
 import com.enderio.api.conduit.ConduitGraph;
@@ -20,100 +21,138 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Stream;
 
 @Mixin(CapabilityAwareConduitTicker.class)
 public abstract class EnergyConduitTickerMixin<TData extends ConduitData<TData>, TCap> {
 
     @SuppressWarnings({"InstanceofThis", "ConstantValue"})
     @Inject(method = "tickColoredGraph", at = @At(value = "HEAD", remap = false), cancellable = true, remap = false)
-    private void kubeio$tickColoredGraph(ServerLevel level, ConduitType<TData> type, List<IOAwareConduitTicker.Connection<TData>> inserts, List<IOAwareConduitTicker.Connection<TData>> extracts, ColorControl color, ConduitGraph<TData> graph, ColoredRedstoneProvider coloredRedstoneProvider, CallbackInfo ci) {
+    private void kubeio$tickColoredGraph(
+        ServerLevel level, ConduitType<TData> type, List<IOAwareConduitTicker.Connection<TData>> inserts,
+        List<IOAwareConduitTicker.Connection<TData>> extracts, ColorControl color, ConduitGraph<TData> graph,
+        ColoredRedstoneProvider coloredRedstoneProvider, CallbackInfo ci
+    ) {
         if (!((Object) this instanceof CustomEnergyConduitTicker ticker)) return;
-        Map<BlockEntity, Tuple<List<IEnergyStorage>, List<IEnergyStorage>>> capabilitiesByBlock = new IdentityHashMap<>(inserts.size() + extracts.size());
+        Map<BlockEntity, Tuple<CapabilityConnections, CapabilityConnections>> capabilitiesByBlock = new IdentityHashMap<>(
+            inserts.size() + extracts.size());
 
         for (IOAwareConduitTicker.Connection<TData> insert : inserts) {
             BlockEntity be = level.getBlockEntity(insert.move());
             if (be == null) continue;
-            IEnergyStorage capability = be.getCapability(ForgeCapabilities.ENERGY, insert.dir().getOpposite()).resolve().orElse(null);
-            if (capability == null || !capability.canReceive() || capability.receiveEnergy(1, true) < 1) continue;
-            Tuple<List<IEnergyStorage>, List<IEnergyStorage>> capabilityTuple = capabilitiesByBlock.computeIfAbsent(be, k -> new Tuple<>(new ArrayList<>(), new ArrayList<>()));
-            capabilityTuple.getA().add(capability);
+            IEnergyStorage capability = be.getCapability(ForgeCapabilities.ENERGY, insert.dir().getOpposite())
+                .resolve()
+                .orElse(null);
+            if (capability == null || !capability.canReceive()) continue;
+            Tuple<CapabilityConnections, CapabilityConnections> capabilityTuple = capabilitiesByBlock.computeIfAbsent(
+                be,
+                k -> new Tuple<>(new CapabilityConnections(capability), null)
+            );
+            capabilityTuple.getA().increment();
         }
 
         if (!capabilitiesByBlock.isEmpty()) {
             for (IOAwareConduitTicker.Connection<TData> extract : extracts) {
                 BlockEntity be = level.getBlockEntity(extract.move());
                 if (be == null) continue;
-                IEnergyStorage capability = be.getCapability(ForgeCapabilities.ENERGY, extract.dir().getOpposite()).resolve().orElse(null);
-                if (capability == null || !capability.canExtract() || capability.extractEnergy(1, true) < 1) continue;
-                Tuple<List<IEnergyStorage>, List<IEnergyStorage>> capabilityTuple = capabilitiesByBlock.computeIfAbsent(be, k -> new Tuple<>(new ArrayList<>(), new ArrayList<>()));
-                capabilityTuple.getB().add(capability);
+                IEnergyStorage capability = be.getCapability(ForgeCapabilities.ENERGY, extract.dir().getOpposite())
+                    .resolve()
+                    .orElse(null);
+                if (capability == null || !capability.canExtract()) continue;
+                Tuple<CapabilityConnections, CapabilityConnections> capabilityTuple = capabilitiesByBlock.computeIfAbsent(
+                    be,
+                    k -> new Tuple<>(null, new CapabilityConnections(capability))
+                );
+                if (capabilityTuple.getB() == null) capabilityTuple.setB(new CapabilityConnections(capability));
+                capabilityTuple.getB().increment();
             }
         }
 
-        List<Tuple<IEnergyStorage, Integer>> energyInserts = new ArrayList<>();
-        List<Tuple<IEnergyStorage, Integer>> energyExtracts = new ArrayList<>();
-        List<Tuple<Tuple<IEnergyStorage, Integer>, Tuple<IEnergyStorage, Integer>>> energyInsertAndExtracts = new ArrayList<>();
+        List<CapabilityConnections> energyInserts = new ArrayList<>();
+        List<CapabilityConnections> energyExtracts = new ArrayList<>();
+        List<Tuple<CapabilityConnections, CapabilityConnections>> energyInsertAndExtracts = new ArrayList<>();
 
         // I only use one capability for all energy transfer as I need to check if all the energy fits in the machine from all connected sides
         for (var tuple : capabilitiesByBlock.values()) {
-            if (tuple.getA().isEmpty()) {
-                energyExtracts.add(new Tuple<>(tuple.getB().get(0), tuple.getB().size()));
-            } else if (tuple.getB().isEmpty()) {
-                energyInserts.add(new Tuple<>(tuple.getA().get(0), tuple.getA().size()));
+            if (tuple.getA() == null) {
+                energyExtracts.add(tuple.getB());
+            } else if (tuple.getB() == null) {
+                energyInserts.add(tuple.getA());
             } else {
-                energyInsertAndExtracts.add(new Tuple<>(new Tuple<>(tuple.getA().get(0), tuple.getA().size()), new Tuple<>(tuple.getB().get(0), tuple.getB().size())));
+                energyInsertAndExtracts.add(tuple);
             }
         }
 
-        if ((!energyInserts.isEmpty() && !energyExtracts.isEmpty()) || (!energyInserts.isEmpty() && !energyInsertAndExtracts.isEmpty()) || (!energyExtracts.isEmpty() && !energyInsertAndExtracts.isEmpty()))
+        if ((!energyInserts.isEmpty() && !energyExtracts.isEmpty()) || (!energyInserts.isEmpty() && !energyInsertAndExtracts.isEmpty()) || (!energyExtracts.isEmpty() && !energyInsertAndExtracts.isEmpty())) {
             tickEnergyGraph(ticker, energyInserts, energyExtracts, energyInsertAndExtracts);
+        }
 
         ci.cancel();
     }
 
-    private void tickEnergyGraph(CustomEnergyConduitTicker ticker, List<Tuple<IEnergyStorage, Integer>> inserts, List<Tuple<IEnergyStorage, Integer>> extracts,
-                                 List<Tuple<Tuple<IEnergyStorage, Integer>, Tuple<IEnergyStorage, Integer>>> insertAndExtracts) {
+    private void tickEnergyGraph(
+        CustomEnergyConduitTicker ticker, List<CapabilityConnections> inserts, List<CapabilityConnections> extracts,
+        List<Tuple<CapabilityConnections, CapabilityConnections>> insertAndExtracts
+    ) {
         int transferRate = ticker.getTransferRate();
 
         AtomicReference<Integer> maxInsertAmount = new AtomicReference<>(0);
         List<IEnergyStorage> sortedInserts = inserts.stream()
-                .flatMap(tuple -> {
-                    int insertAmount = tuple.getA().receiveEnergy(transferRate * tuple.getB(), true);
-                    maxInsertAmount.updateAndGet(v -> v + insertAmount);
-                    return split(tuple.getA(), tuple.getB(), insertAmount).stream();
-                })
-                .filter(t -> t.getB() > 0)
-                .sorted(Comparator.comparingInt(Tuple::getB))
-                .map(Tuple::getA)
-                .toList();
+            .flatMap(capabilityConnections -> {
+                int insertAmount = capabilityConnections.capability.receiveEnergy(
+                    transferRate * capabilityConnections.getCount(),
+                    true
+                );
+                maxInsertAmount.updateAndGet(v -> v + insertAmount);
+                return split(capabilityConnections.capability, capabilityConnections.getCount(), insertAmount).stream();
+            })
+            .filter(t -> t.getB() > 0)
+            .sorted(Comparator.comparingInt(Tuple::getB))
+            .map(Tuple::getA)
+            .toList();
 
         AtomicReference<Integer> maxExtractAmount = new AtomicReference<>(0);
         List<IEnergyStorage> sortedExtracts = extracts.stream()
-                .flatMap(tuple -> {
-                    int extractAmount = tuple.getA().extractEnergy(transferRate * tuple.getB(), true);
-                    maxExtractAmount.updateAndGet(v -> v + extractAmount);
-                    return split(tuple.getA(), tuple.getB(), extractAmount).stream();
-                })
-                .filter(t -> t.getB() > 0)
-                .sorted(Comparator.comparingInt(Tuple::getB))
-                .map(Tuple::getA)
-                .toList();
+            .flatMap(capabilityConnections -> {
+                int extractAmount = capabilityConnections.capability.extractEnergy(
+                    transferRate * capabilityConnections.getCount(),
+                    true
+                );
+                maxExtractAmount.updateAndGet(v -> v + extractAmount);
+                return split(
+                    capabilityConnections.capability,
+                    capabilityConnections.getCount(),
+                    extractAmount
+                ).stream();
+            })
+            .filter(t -> t.getB() > 0)
+            .sorted(Comparator.comparingInt(Tuple::getB))
+            .map(Tuple::getA)
+            .toList();
 
         if (maxInsertAmount.get() < maxExtractAmount.get()) {
             int excessPower = maxExtractAmount.get() - maxInsertAmount.get();
 
             AtomicReference<Integer> maxExtraInsertAmount = new AtomicReference<>(0);
             List<IEnergyStorage> extraSortedInserts = insertAndExtracts.stream()
-                    .map(Tuple::getA)
-                    .flatMap(tuple -> {
-                        int insertAmount = tuple.getA().receiveEnergy(transferRate * tuple.getB(), true);
-                        maxExtraInsertAmount.updateAndGet(v -> v + insertAmount);
-                        return split(tuple.getA(), tuple.getB(), insertAmount).stream();
-                    })
-                    .filter(t -> t.getB() > 0)
-                    .sorted(Comparator.comparingInt(Tuple::getB))
-                    .map(Tuple::getA)
-                    .toList();
+                .map(Tuple::getA)
+                .flatMap(capabilityConnections -> {
+                    int insertAmount = capabilityConnections.capability.receiveEnergy(
+                        transferRate * capabilityConnections.getCount(),
+                        true
+                    );
+                    if (insertAmount == 0) return Stream.empty();
+                    maxExtraInsertAmount.updateAndGet(v -> v + insertAmount);
+                    return split(
+                        capabilityConnections.capability,
+                        capabilityConnections.getCount(),
+                        insertAmount
+                    ).stream();
+                })
+                .filter(t -> t.getB() > 0)
+                .sorted(Comparator.comparingInt(Tuple::getB))
+                .map(Tuple::getA)
+                .toList();
 
             sortedInserts.forEach(cap -> cap.receiveEnergy(transferRate, false));
 
@@ -141,16 +180,24 @@ public abstract class EnergyConduitTickerMixin<TData extends ConduitData<TData>,
 
             AtomicReference<Integer> maxExtraExtractAmount = new AtomicReference<>(0);
             List<IEnergyStorage> extraSortedExtracts = insertAndExtracts.stream()
-                    .map(Tuple::getB)
-                    .flatMap(tuple -> {
-                        int extractAmount = tuple.getA().extractEnergy(transferRate * tuple.getB(), true);
-                        maxExtraExtractAmount.updateAndGet(v -> v + extractAmount);
-                        return split(tuple.getA(), tuple.getB(), extractAmount).stream();
-                    })
-                    .filter(t -> t.getB() > 0)
-                    .sorted(Comparator.comparingInt(Tuple::getB))
-                    .map(Tuple::getA)
-                    .toList();
+                .map(Tuple::getB)
+                .flatMap(capabilityConnections -> {
+                    int extractAmount = capabilityConnections.capability.extractEnergy(
+                        transferRate * capabilityConnections.getCount(),
+                        true
+                    );
+                    if (extractAmount == 0) return Stream.empty();
+                    maxExtraExtractAmount.updateAndGet(v -> v + extractAmount);
+                    return split(
+                        capabilityConnections.capability,
+                        capabilityConnections.getCount(),
+                        extractAmount
+                    ).stream();
+                })
+                .filter(t -> t.getB() > 0)
+                .sorted(Comparator.comparingInt(Tuple::getB))
+                .map(Tuple::getA)
+                .toList();
 
             sortedExtracts.forEach(cap -> cap.extractEnergy(transferRate, false));
 
