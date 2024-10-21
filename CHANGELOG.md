@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 ## Unreleased
+- /
+
+## [0.7.0] - 2024-10-21
 
 Initial 1.21.1 release!
 
@@ -69,6 +72,7 @@ Initial 1.20.1 release!
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
 <!-- Versions -->
+[0.7.0]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.21.1-neoforge-0.7.0
 [0.6.0]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.20.1-forge-0.6.0
 [0.5.0]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.20.1-forge-0.5.0
 [0.4.1]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.20.1-forge-0.4.1-beta
