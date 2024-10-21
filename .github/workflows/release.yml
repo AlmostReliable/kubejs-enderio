@@ -34,9 +34,11 @@ on:
 
 jobs:
   redirect:
-    uses: AlmostReliable/.github/.github/workflows/release-java17-ff.yml@main
+    uses: AlmostReliable/.github/.github/workflows/release-nf.yml@main
     secrets: inherit
     with:
+      java-distribution: "microsoft"
+      java-version: "21"
       mod_name: "KubeJS-EnderIO"
       curseforge_id: "910379"
       modrinth_id: "BotkzaBk"
@@ -47,5 +49,5 @@ jobs:
       target_version: ${{ github.event.inputs.target_version }}
       update_type: ${{ github.event.inputs.update_type }}
       release_type: ${{ github.event.inputs.release_type }}
-      loaders: "forge"
+      loaders: "neoforge"
       debug: ${{ github.event.inputs.debug }}
