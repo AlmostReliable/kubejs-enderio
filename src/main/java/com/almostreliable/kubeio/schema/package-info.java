@@ -1,4 +1,4 @@
 @NonnullDefault
-package com.almostreliable.kubeio.mixin;
+package com.almostreliable.kubeio.schema;
 
 import org.lwjgl.system.NonnullDefault;

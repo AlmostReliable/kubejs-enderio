@@ -1,1 +1,1 @@
-com.almostreliable.kubeio.kube.KubePlugin
+com.almostreliable.kubeio.KubePlugin
