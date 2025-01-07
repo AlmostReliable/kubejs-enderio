@@ -22,14 +22,14 @@ public interface EnchanterRecipeSchema {
     RecipeKey<Holder<Enchantment>> ENCHANTMENT = EnchantmentComponent.ENCHANTMENT
         .key("enchantment", ComponentRole.OTHER)
         .noFunctions();
+    RecipeKey<SizedIngredient> INPUT = SizedIngredientComponent.FLAT
+        .key("input", ComponentRole.INPUT)
+        .noFunctions();
     RecipeKey<Integer> COST_MULTIPLIER = NumberComponent.INT
         .key("cost_multiplier", ComponentRole.OTHER)
         .functionNames(List.of("costMultiplier"))
         .optional(1)
         .alwaysWrite();
-    RecipeKey<SizedIngredient> INPUT = SizedIngredientComponent.FLAT
-        .key("input", ComponentRole.INPUT)
-        .noFunctions();
 
     RecipeSchema SCHEMA = new RecipeSchema(ENCHANTMENT, INPUT, COST_MULTIPLIER);
 }
