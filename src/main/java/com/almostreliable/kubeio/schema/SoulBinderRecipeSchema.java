@@ -1,6 +1,6 @@
 package com.almostreliable.kubeio.schema;
 
-import com.enderio.machines.common.recipe.SoulBindingRecipe;
+import com.enderio.machines.common.blocks.soul_binder.SoulBindingRecipe;
 import com.enderio.machines.data.recipes.SoulBindingRecipeProvider;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.*;

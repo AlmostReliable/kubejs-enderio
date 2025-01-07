@@ -1,6 +1,6 @@
 package com.almostreliable.kubeio.schema;
 
-import com.enderio.machines.common.recipe.PaintingRecipe;
+import com.enderio.machines.common.blocks.painting.PaintingRecipe;
 import com.enderio.machines.data.recipes.PaintingRecipeProvider;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.ComponentRole;

@@ -6,7 +6,9 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 ## Unreleased
-- /
+
+- fixed crash with new EnderIO alpha version ([#11](https://github.com/AlmostReliable/kubejs-enderio/issues/11))
+- changed minimum EnderIO version to 7.1.0-alpha
 
 ## [0.7.0] - 2024-10-21
 

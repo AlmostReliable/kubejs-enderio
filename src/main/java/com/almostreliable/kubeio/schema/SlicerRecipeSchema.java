@@ -1,7 +1,7 @@
 package com.almostreliable.kubeio.schema;
 
 import com.almostreliable.kubeio.recipe.SlicerKubeRecipe;
-import com.enderio.machines.common.recipe.SlicingRecipe;
+import com.enderio.machines.common.blocks.slicer.SlicingRecipe;
 import com.enderio.machines.data.recipes.SlicingRecipeProvider;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.ComponentRole;

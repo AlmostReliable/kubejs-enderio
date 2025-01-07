@@ -1,7 +1,7 @@
 package com.almostreliable.kubeio.schema;
 
 import com.almostreliable.kubeio.recipe.AlloySmelterKubeRecipe;
-import com.enderio.machines.common.recipe.AlloySmeltingRecipe;
+import com.enderio.machines.common.blocks.alloy.AlloySmeltingRecipe;
 import com.enderio.machines.data.recipes.AlloyRecipeProvider;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.*;

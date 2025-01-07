@@ -1,7 +1,7 @@
 package com.almostreliable.kubeio.schema;
 
 import com.almostreliable.kubeio.component.SagMillOutputItemComponent;
-import com.enderio.machines.common.recipe.SagMillingRecipe;
+import com.enderio.machines.common.blocks.sag_mill.SagMillingRecipe;
 import com.enderio.machines.data.recipes.SagMillRecipeProvider;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.ComponentRole;

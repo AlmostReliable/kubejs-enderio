@@ -1,6 +1,6 @@
 package com.almostreliable.kubeio.mixin;
 
-import com.enderio.machines.common.recipe.SagMillingRecipe;
+import com.enderio.machines.common.blocks.sag_mill.SagMillingRecipe;
 import com.mojang.serialization.Codec;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;

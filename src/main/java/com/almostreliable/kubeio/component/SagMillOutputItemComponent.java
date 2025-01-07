@@ -4,7 +4,7 @@ import com.almostreliable.kubeio.binding.SagMillOutputItem;
 import com.almostreliable.kubeio.mixin.IngredientAccessor;
 import com.almostreliable.kubeio.mixin.SagMillOutputItemAccessor;
 import com.almostreliable.kubeio.mixin.TagValueAccessor;
-import com.enderio.machines.common.recipe.SagMillingRecipe;
+import com.enderio.machines.common.blocks.sag_mill.SagMillingRecipe;
 import com.mojang.serialization.Codec;
 import dev.latvian.mods.kubejs.bindings.SizedIngredientWrapper;
 import dev.latvian.mods.kubejs.item.ItemStackJS;

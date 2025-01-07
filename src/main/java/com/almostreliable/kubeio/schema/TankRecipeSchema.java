@@ -1,7 +1,7 @@
 package com.almostreliable.kubeio.schema;
 
 import com.almostreliable.kubeio.recipe.TankKubeRecipe;
-import com.enderio.machines.common.recipe.TankRecipe;
+import com.enderio.machines.common.blocks.fluid_tank.TankRecipe;
 import com.enderio.machines.data.recipes.TankRecipeProvider;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.*;

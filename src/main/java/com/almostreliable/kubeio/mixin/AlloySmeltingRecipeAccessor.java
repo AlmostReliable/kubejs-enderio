@@ -1,6 +1,6 @@
 package com.almostreliable.kubeio.mixin;
 
-import com.enderio.machines.common.recipe.AlloySmeltingRecipe;
+import com.enderio.machines.common.blocks.alloy.AlloySmeltingRecipe;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import org.spongepowered.asm.mixin.Mixin;

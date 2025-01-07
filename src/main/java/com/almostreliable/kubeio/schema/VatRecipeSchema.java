@@ -1,6 +1,6 @@
 package com.almostreliable.kubeio.schema;
 
-import com.enderio.machines.common.recipe.FermentingRecipe;
+import com.enderio.machines.common.blocks.vat.FermentingRecipe;
 import com.enderio.machines.data.recipes.FermentingRecipeProvider;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.*;
