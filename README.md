@@ -7,13 +7,14 @@
 
 A [Minecraft] mod to add [KubeJS] integration to [EnderIO].
 
+![License][license_badge]
+[![Workflow Status][workflow_status_badge]][workflow_status_link]
 [![Version][version_badge]][version_link]
+
+[![Wiki][wiki_badge]][wiki]
 [![Total Downloads CF][total_downloads_cf_badge]][curseforge]
 [![Total Downloads MR][total_downloads_mr_badge]][modrinth]
-
-![License][license_badge]
 [![Discord][discord_badge]][discord]
-[![Wiki][wiki_badge]][wiki]
 
 </div>
 
@@ -39,7 +40,7 @@ Redistribution of builds or rehosting is strictly prohibited.
 [workflow_status_badge]: https://img.shields.io/github/actions/workflow/status/AlmostReliable/kubejs-enderio/build.yml?branch=1.21.1&style=for-the-badge
 [workflow_status_link]: https://github.com/AlmostReliable/kubejs-enderio/actions
 [license_badge]: https://img.shields.io/badge/License-ARR-ffa200?style=for-the-badge
-[version_badge]: https://img.shields.io/badge/dynamic/json?color=0078FF&label=release&style=for-the-badge&query=name&url=https://api.razonyang.com/v1/github/tag/AlmostReliable/kubejs-enderio%3Fprefix=v1.21.1-
+[version_badge]: https://img.shields.io/github/v/release/AlmostReliable/kubejs-enderio?include_prereleases&style=for-the-badge
 [version_link]: https://github.com/AlmostReliable/kubejs-enderio/releases/latest
 [total_downloads_cf_badge]: https://img.shields.io/badge/dynamic/json?color=e04e14&label=CurseForge&style=for-the-badge&query=downloads.total&url=https%3A%2F%2Fapi.cfwidget.com%2F910379&logo=curseforge
 [total_downloads_mr_badge]: https://img.shields.io/modrinth/dt/BotkzaBk?color=5da545&label=Modrinth&style=for-the-badge&logo=modrinth
