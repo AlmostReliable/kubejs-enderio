@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 ## Unreleased
+- /
+
+## [0.7.2] - 2025-03-26
 
 - fixed not being able to register new conduits with new EnderIO alpha version ([#13](https://github.com/AlmostReliable/kubejs-enderio/issues/13))
 - changed minimum EnderIO version to 7.1.7-alpha
@@ -79,6 +82,7 @@ Initial 1.20.1 release!
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
 <!-- Versions -->
+[0.7.2]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.21.1-neoforge-0.7.2
 [0.7.1]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.21.1-neoforge-0.7.1
 [0.7.0]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.21.1-neoforge-0.7.0
 [0.6.0]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.20.1-forge-0.6.0
