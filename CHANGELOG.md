@@ -6,7 +6,9 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 ## Unreleased
-- /
+
+- fixed not being able to register new conduits with new EnderIO alpha version ([#13](https://github.com/AlmostReliable/kubejs-enderio/issues/13))
+- changed minimum EnderIO version to 7.1.7-alpha
 
 ## [0.7.1] - 2025-01-07
 

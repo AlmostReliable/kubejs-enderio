@@ -1,6 +1,6 @@
 package com.almostreliable.kubeio.event;
 
-import com.enderio.EnderIOBase;
+import com.enderio.base.api.EnderIO;
 import com.enderio.conduits.api.Conduit;
 import com.enderio.conduits.common.conduit.type.energy.EnergyConduit;
 import com.enderio.conduits.common.conduit.type.fluid.FluidConduit;
@@ -71,12 +71,12 @@ public class ConduitRegistryEvent implements KubeEvent {
         private void bindInstance(BiFunction<Component, ResourceLocation, Conduit<?>> factory) {
             var conduit = factory.apply(name, getTexturePath());
             JsonElement conduitJson = Conduit.DIRECT_CODEC.encodeStart(JsonOps.INSTANCE, conduit).getOrThrow();
-            CUSTOM_CONDUITS.put(EnderIOBase.loc("enderio/conduit/" + id), conduitJson);
+            CUSTOM_CONDUITS.put(EnderIO.loc("enderio/conduit/" + id), conduitJson);
             CONDUIT_IDS.add(id);
         }
 
         private ResourceLocation getTexturePath() {
-            return EnderIOBase.loc("block/conduit/" + id);
+            return EnderIO.loc("block/conduit/" + id);
         }
     }
 }

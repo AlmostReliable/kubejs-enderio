@@ -11,7 +11,7 @@ import com.almostreliable.kubeio.recipe.FireCraftingKubeRecipe;
 import com.almostreliable.kubeio.recipe.SlicerKubeRecipe;
 import com.almostreliable.kubeio.recipe.TankKubeRecipe;
 import com.almostreliable.kubeio.schema.*;
-import com.enderio.EnderIOBase;
+import com.enderio.base.api.EnderIO;
 import com.enderio.base.common.init.EIORecipes;
 import com.enderio.core.common.recipes.RecipeTypeSerializerPair;
 import com.enderio.machines.common.blocks.alloy.AlloySmeltingRecipe;
@@ -95,7 +95,7 @@ public class KubePlugin implements KubeJSPlugin {
             MachineRecipes.VAT_FERMENTING, VatRecipeSchema.SCHEMA
         );
 
-        RecipeNamespace namespace = registry.namespace(EnderIOBase.REGISTRY_NAMESPACE);
+        RecipeNamespace namespace = registry.namespace(EnderIO.NAMESPACE);
 
         for (var schemaEntry : basicRecipeSchemas.entrySet()) {
             registerRecipeSchema(namespace, schemaEntry);
