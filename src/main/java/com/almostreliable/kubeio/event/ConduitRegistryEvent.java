@@ -30,8 +30,11 @@ public class ConduitRegistryEvent implements KubeEvent {
         CustomConduit.of(id, name).bindInstance((n, tex) -> new EnergyConduit(tex, n, transferRate));
     }
 
-    public void registerFluidConduit(String id, Component name, int transferRate, boolean multiFluid) {
-        CustomConduit.of(id, name).bindInstance((n, tex) -> new FluidConduit(tex, n, transferRate, multiFluid));
+    public void registerFluidConduit(
+        String id, Component name, int transferRate, boolean multiFluid, boolean supportPriority
+    ) {
+        CustomConduit.of(id, name)
+            .bindInstance((n, tex) -> new FluidConduit(tex, n, transferRate, multiFluid, supportPriority));
     }
 
     public void registerChemicalConduit(String id, Component name, int transferRate, boolean multiChemical) {
@@ -57,6 +60,7 @@ public class ConduitRegistryEvent implements KubeEvent {
         CustomConduit.CONDUIT_IDS.clear();
     }
 
+    @SuppressWarnings("UnstableApiUsage")
     private record CustomConduit(String id, Component name) {
 
         private static final Set<String> CONDUIT_IDS = new HashSet<>();
@@ -68,7 +72,7 @@ public class ConduitRegistryEvent implements KubeEvent {
             return new CustomConduit(id, name);
         }
 
-        private void bindInstance(BiFunction<Component, ResourceLocation, Conduit<?>> factory) {
+        private void bindInstance(BiFunction<Component, ResourceLocation, Conduit<?, ?>> factory) {
             var conduit = factory.apply(name, getTexturePath());
             JsonElement conduitJson = Conduit.DIRECT_CODEC.encodeStart(JsonOps.INSTANCE, conduit).getOrThrow();
             CUSTOM_CONDUITS.put(EnderIO.loc("enderio/conduit/" + id), conduitJson);
