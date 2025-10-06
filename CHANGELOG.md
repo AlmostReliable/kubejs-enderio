@@ -6,7 +6,11 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 ## Unreleased
-- /
+
+- updated to new major EnderIO version
+- changed minimum EnderIO version to 8.0.4-alpha
+- fixed conduit registration not working
+- reworked fire crafting schema and bindings
 
 ## [0.7.2] - 2025-03-26
 
