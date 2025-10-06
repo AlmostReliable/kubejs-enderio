@@ -2,6 +2,7 @@ package com.almostreliable.kubeio;
 
 import com.almostreliable.kubeio.binding.DataComponents;
 import com.almostreliable.kubeio.component.EnchantmentComponent;
+import com.almostreliable.kubeio.component.FireCraftingResultComponent;
 import com.almostreliable.kubeio.component.ResourceKeyComponent;
 import com.almostreliable.kubeio.component.SagMillOutputItemComponent;
 import com.almostreliable.kubeio.event.ConduitRegistryEvent;
@@ -12,6 +13,7 @@ import com.almostreliable.kubeio.recipe.TankKubeRecipe;
 import com.almostreliable.kubeio.schema.*;
 import com.enderio.base.api.EnderIO;
 import com.enderio.base.common.init.EIORecipes;
+import com.enderio.base.common.recipe.FireCraftingRecipe;
 import com.enderio.core.common.recipes.RecipeTypeSerializerPair;
 import com.enderio.machines.common.blocks.alloy.AlloySmeltingRecipe;
 import com.enderio.machines.common.blocks.fluid_tank.TankRecipe;
@@ -50,6 +52,7 @@ public class KubePlugin implements KubeJSPlugin {
     @Override
     public void registerBindings(BindingRegistry registry) {
         if (registry.type().isServer()) {
+            registry.add("FireCraftingResult", FireCraftingRecipe.Result.class);
             registry.add("MobCategory", MobCategory.class);
             registry.add("SagMillBonus", SagMillingRecipe.BonusType.class);
             registry.add("SagMillOutput", SagMillingRecipe.OutputItem.class);
@@ -62,10 +65,11 @@ public class KubePlugin implements KubeJSPlugin {
 
     @Override
     public void registerRecipeComponents(RecipeComponentFactoryRegistry registry) {
-        registry.register(EnchantmentComponent.ENCHANTMENT);
+        registry.register(EnchantmentComponent.INSTANCE);
+        registry.register(FireCraftingResultComponent.INSTANCE);
         registry.register(ResourceKeyComponent.DIMENSION);
         registry.register(ResourceKeyComponent.LOOT_TABLE);
-        registry.register(SagMillOutputItemComponent.OUTPUT_ITEM);
+        registry.register(SagMillOutputItemComponent.INSTANCE);
     }
 
     @Override

@@ -10,7 +10,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 
 public record EnchantmentComponent() implements RecipeComponent<Holder<Enchantment>> {
 
-    public static final RecipeComponent<Holder<Enchantment>> ENCHANTMENT = new EnchantmentComponent();
+    public static final RecipeComponent<Holder<Enchantment>> INSTANCE = new EnchantmentComponent();
 
     @Override
     public Codec<Holder<Enchantment>> codec() {

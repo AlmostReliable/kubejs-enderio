@@ -20,7 +20,7 @@ import net.neoforged.neoforge.common.crafting.SizedIngredient;
 
 public record SagMillOutputItemComponent() implements RecipeComponent<SagMillingRecipe.OutputItem> {
 
-    public static final RecipeComponent<SagMillingRecipe.OutputItem> OUTPUT_ITEM = new SagMillOutputItemComponent();
+    public static final RecipeComponent<SagMillingRecipe.OutputItem> INSTANCE = new SagMillOutputItemComponent();
 
     @Override
     public Codec<SagMillingRecipe.OutputItem> codec() {
