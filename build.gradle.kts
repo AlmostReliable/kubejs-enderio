@@ -32,4 +32,7 @@ dependencies {
     implementation("com.enderio:enderio-conduits-modded:${almostgradle.getProperty("eioVersion")}") {
         isTransitive = false
     }
+
+    // Applied Energistics 2
+    localImplementation("org.appliedenergistics:appliedenergistics2:${almostgradle.getProperty("aeVersion")}")
 }

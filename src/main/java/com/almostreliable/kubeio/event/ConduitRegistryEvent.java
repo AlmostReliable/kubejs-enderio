@@ -1,11 +1,12 @@
 package com.almostreliable.kubeio.event;
 
+import appeng.api.util.AEColor;
 import com.enderio.base.api.EnderIO;
 import com.enderio.conduits.api.Conduit;
 import com.enderio.conduits.common.conduit.type.energy.EnergyConduit;
 import com.enderio.conduits.common.conduit.type.fluid.FluidConduit;
-import com.enderio.modconduits.mods.appeng.MEConduit;
-import com.enderio.modconduits.mods.mekanism.ChemicalConduit;
+import com.enderio.modconduits.common.modules.appeng.MEConduit;
+import com.enderio.modconduits.common.modules.mekanism.chemical.ChemicalConduit;
 import com.google.common.base.Preconditions;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
@@ -15,10 +16,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.fml.ModList;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiFunction;
 
 public class ConduitRegistryEvent implements KubeEvent {
@@ -45,12 +43,14 @@ public class ConduitRegistryEvent implements KubeEvent {
         CustomConduit.of(id, name).bindInstance((n, tex) -> new ChemicalConduit(tex, n, transferRate, multiChemical));
     }
 
-    public void registerMeConduit(String id, Component name, boolean dense) {
+    public void registerMeConduit(String id, Component name, String color, boolean dense) {
         Preconditions.checkArgument(
-            ModList.get().isLoaded("ae2"),
+            Ae2Integration.isLoaded(),
             "applied energistics 2 must be loaded to use me conduits"
         );
-        CustomConduit.of(id, name).bindInstance((n, tex) -> new MEConduit(tex, n, dense));
+
+        var conduitFactory = Ae2Integration.createFactory(color, dense);
+        CustomConduit.of(id, name).bindInstance(conduitFactory);
     }
 
     @SuppressWarnings("StaticMethodOnlyUsedInOneClass")
@@ -81,6 +81,21 @@ public class ConduitRegistryEvent implements KubeEvent {
 
         private ResourceLocation getTexturePath() {
             return EnderIO.loc("block/conduit/" + id);
+        }
+    }
+
+    @SuppressWarnings("UnstableApiUsage")
+    private static final class Ae2Integration {
+
+        private static BiFunction<Component, ResourceLocation, Conduit<?, ?>> createFactory(
+            String color, boolean dense
+        ) {
+            AEColor aeColor = AEColor.valueOf(color.toUpperCase(Locale.ROOT));
+            return (n, t) -> new MEConduit(t, n, aeColor, dense);
+        }
+
+        private static boolean isLoaded() {
+            return ModList.get().isLoaded("ae2");
         }
     }
 }
