@@ -4,7 +4,6 @@
   "package": "com.almostreliable.kubeio.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "AlloySmeltingRecipeAccessor",
     "IngredientAccessor",
     "SagMillOutputItemAccessor",
     "SagMillOutputItemMixin",

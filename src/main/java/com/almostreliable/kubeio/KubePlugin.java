@@ -5,7 +5,6 @@ import com.almostreliable.kubeio.component.EnchantmentComponent;
 import com.almostreliable.kubeio.component.ResourceKeyComponent;
 import com.almostreliable.kubeio.component.SagMillOutputItemComponent;
 import com.almostreliable.kubeio.event.ConduitRegistryEvent;
-import com.almostreliable.kubeio.mixin.AlloySmeltingRecipeAccessor;
 import com.almostreliable.kubeio.recipe.AlloySmelterKubeRecipe;
 import com.almostreliable.kubeio.recipe.FireCraftingKubeRecipe;
 import com.almostreliable.kubeio.recipe.SlicerKubeRecipe;
@@ -119,17 +118,16 @@ public class KubePlugin implements KubeJSPlugin {
     ) {
         for (ResourceLocation recipeId : SMELTING_RECIPES) {
             var recipe = recipesByName.get(recipeId).value();
-            if (!(recipe instanceof AlloySmeltingRecipe r)) {
+            if (!(recipe instanceof AlloySmeltingRecipe alloyRecipe)) {
                 continue;
             }
 
-            var smeltingRecipe = (AlloySmeltingRecipeAccessor) r;
-            var inputs = smeltingRecipe.getInputs();
+            var inputs = alloyRecipe.inputs();
             if (inputs.size() != 1 || inputs.getFirst().count() != 1) continue;
 
             Ingredient input = inputs.getFirst().ingredient();
-            ItemStack output = smeltingRecipe.getOutput();
-            float experience = smeltingRecipe.getExperience();
+            ItemStack output = alloyRecipe.output();
+            float experience = alloyRecipe.experience();
             ResourceLocation id = ResourceLocation.tryParse(recipeId.toString() + "_inherited");
             if (id == null) continue;
 
