@@ -6,7 +6,8 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 ## Unreleased
-- /
+
+- added ingredient type info to Sag Mill output component
 
 ## [0.8.0] - 2025-10-06
 

@@ -8,6 +8,7 @@ import com.enderio.machines.common.blocks.sag_mill.SagMillingRecipe;
 import com.mojang.serialization.Codec;
 import dev.latvian.mods.kubejs.bindings.SizedIngredientWrapper;
 import dev.latvian.mods.kubejs.item.ItemStackJS;
+import dev.latvian.mods.kubejs.item.ingredient.IngredientJS;
 import dev.latvian.mods.kubejs.recipe.KubeRecipe;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponent;
 import dev.latvian.mods.kubejs.script.KubeJSContext;
@@ -29,7 +30,10 @@ public record SagMillOutputItemComponent() implements RecipeComponent<SagMilling
 
     @Override
     public TypeInfo typeInfo() {
-        return TypeInfo.of(SagMillingRecipe.OutputItem.class).or(ItemStackJS.TYPE_INFO);
+        return TypeInfo.of(SagMillingRecipe.OutputItem.class)
+            .or(SizedIngredientWrapper.TYPE_INFO)
+            .or(IngredientJS.TYPE_INFO)
+            .or(ItemStackJS.TYPE_INFO);
     }
 
     @Override
