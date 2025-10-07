@@ -15,6 +15,9 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
  */
 public interface VatRecipeSchema {
 
+    RecipeKey<FluidStack> OUTPUT = FluidStackComponent.FLUID_STACK
+        .key("output", ComponentRole.OUTPUT)
+        .noFunctions();
     RecipeKey<SizedFluidIngredient> INPUT = SizedFluidIngredientComponent.FLAT
         .key("input", ComponentRole.INPUT)
         .noFunctions();
@@ -23,9 +26,6 @@ public interface VatRecipeSchema {
         .noFunctions();
     RecipeKey<TagKey<Item>> RIGHT_REAGENT = TagKeyComponent.ITEM
         .key("right_reagent", ComponentRole.INPUT)
-        .noFunctions();
-    RecipeKey<FluidStack> OUTPUT = FluidStackComponent.FLUID_STACK
-        .key("output", ComponentRole.OUTPUT)
         .noFunctions();
     RecipeKey<Integer> TICKS = NumberComponent.INT
         .key("ticks", ComponentRole.OTHER)

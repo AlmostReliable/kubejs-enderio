@@ -15,11 +15,11 @@ import net.neoforged.neoforge.fluids.FluidStack;
  */
 public interface TankRecipeSchema {
 
-    RecipeKey<Ingredient> INPUT = IngredientComponent.NON_EMPTY_INGREDIENT
-        .key("input", ComponentRole.INPUT)
-        .noFunctions();
     RecipeKey<ItemStack> OUTPUT = ItemStackComponent.STRICT_ITEM_STACK
         .key("output", ComponentRole.OUTPUT)
+        .noFunctions();
+    RecipeKey<Ingredient> INPUT = IngredientComponent.NON_EMPTY_INGREDIENT
+        .key("input", ComponentRole.INPUT)
         .noFunctions();
     RecipeKey<FluidStack> FLUID = FluidStackComponent.FLUID_STACK
         .key("fluid", ComponentRole.OTHER)
