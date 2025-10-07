@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning].
 ## Unreleased
 
 - added ingredient type info to Sag Mill output component
+- changed fire crafting result to use stack count if no count is specified
 - finished [new wiki](http://docs.almostreliable.com/kubejs-enderio)
 
 ## [0.8.0] - 2025-10-06

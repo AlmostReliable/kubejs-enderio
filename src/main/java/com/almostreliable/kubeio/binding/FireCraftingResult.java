@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 public interface FireCraftingResult {
 
     static FireCraftingRecipe.Result kubeio$of(ItemStack item) {
-        return kubeio$of(item, 1);
+        return kubeio$of(item, item.getCount());
     }
 
     static FireCraftingRecipe.Result kubeio$of(ItemStack item, int count) {
