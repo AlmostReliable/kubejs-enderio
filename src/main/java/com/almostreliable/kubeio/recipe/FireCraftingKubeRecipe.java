@@ -40,8 +40,6 @@ public class FireCraftingKubeRecipe extends KubeRecipe {
 
     @Override
     public void serialize() {
-        // TODO: find a better approach to validate the recipe, exception is only printed to latest.log
-
         var baseBlocks = getValue(FireCraftingRecipeSchema.BASE_BLOCKS);
         var baseTags = getValue(FireCraftingRecipeSchema.BASE_TAGS);
 
