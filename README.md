@@ -51,7 +51,7 @@ Redistribution of builds or rehosting is strictly prohibited.
 [modrinth]: https://modrinth.com/mod/kubejs-enderio
 [workflow_status_link]: https://github.com/AlmostReliable/kubejs-enderio/actions
 [discord]: https://discord.com/invite/ThFnwZCyYY
-[wiki]: https://github.com/AlmostReliable/kubejs-enderio/wiki
+[wiki]: http://docs.almostreliable.com/kubejs-enderio
 
 <!-- Links -->
 [minecraft]: https://www.minecraft.net/
