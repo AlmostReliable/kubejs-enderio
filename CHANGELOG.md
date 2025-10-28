@@ -6,7 +6,8 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 ## Unreleased
-- /
+
+- updated to KubeJS 7.2 ([#19](https://github.com/AlmostReliable/kubejs-enderio/pull/19))
 
 ## [0.8.1] - 2025-10-07
 
