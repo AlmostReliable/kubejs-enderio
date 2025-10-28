@@ -2,7 +2,6 @@ package com.almostreliable.kubeio;
 
 import com.almostreliable.kubeio.binding.DataComponents;
 import com.almostreliable.kubeio.component.FireCraftingResultComponent;
-import com.almostreliable.kubeio.component.ResourceKeyComponent;
 import com.almostreliable.kubeio.component.SagMillOutputItemComponent;
 import com.almostreliable.kubeio.event.ConduitRegistryEvent;
 import com.almostreliable.kubeio.recipe.AlloySmelterKubeRecipe;
@@ -64,8 +63,6 @@ public class KubePlugin implements KubeJSPlugin {
     @Override
     public void registerRecipeComponents(RecipeComponentFactoryRegistry registry) {
         registry.register(FireCraftingResultComponent.INSTANCE);
-        registry.register(ResourceKeyComponent.DIMENSION);
-        registry.register(ResourceKeyComponent.LOOT_TABLE);
         registry.register(SagMillOutputItemComponent.INSTANCE);
     }
 

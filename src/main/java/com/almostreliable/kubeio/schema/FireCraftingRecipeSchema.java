@@ -1,13 +1,13 @@
 package com.almostreliable.kubeio.schema;
 
 import com.almostreliable.kubeio.component.FireCraftingResultComponent;
-import com.almostreliable.kubeio.component.ResourceKeyComponent;
 import com.almostreliable.kubeio.recipe.FireCraftingKubeRecipe;
 import com.enderio.base.common.recipe.FireCraftingRecipe;
 import com.enderio.base.data.recipe.FireCraftingRecipeProvider;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.BlockComponent;
 import dev.latvian.mods.kubejs.recipe.component.ComponentRole;
+import dev.latvian.mods.kubejs.recipe.component.ResourceKeyComponent;
 import dev.latvian.mods.kubejs.recipe.component.TagKeyComponent;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
 import dev.latvian.mods.kubejs.util.IntBounds;
@@ -49,6 +49,7 @@ public interface FireCraftingRecipeSchema {
         .noFunctions()
         .exclude();
     RecipeKey<List<ResourceKey<Level>>> DIMENSIONS = ResourceKeyComponent.DIMENSION
+        .instance()
         .asList()
         .key("dimensions", ComponentRole.OTHER)
         .optional(List.of(Level.OVERWORLD))
