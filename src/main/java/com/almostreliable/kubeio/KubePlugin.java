@@ -1,6 +1,7 @@
 package com.almostreliable.kubeio;
 
 import com.almostreliable.kubeio.binding.DataComponents;
+import com.almostreliable.kubeio.component.EnchantmentComponent;
 import com.almostreliable.kubeio.component.FireCraftingResultComponent;
 import com.almostreliable.kubeio.component.SagMillOutputItemComponent;
 import com.almostreliable.kubeio.event.ConduitRegistryEvent;
@@ -58,6 +59,7 @@ public class KubePlugin implements KubeJSPlugin {
 
     @Override
     public void registerRecipeComponents(RecipeComponentTypeRegistry registry) {
+        registry.register(EnchantmentComponent.TYPE);
         registry.register(FireCraftingResultComponent.TYPE);
         registry.register(SagMillOutputItemComponent.TYPE);
     }
