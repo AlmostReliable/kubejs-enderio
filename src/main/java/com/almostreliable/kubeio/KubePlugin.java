@@ -8,7 +8,6 @@ import com.almostreliable.kubeio.component.SagMillOutputItemComponent;
 import com.almostreliable.kubeio.event.ConduitRegistryEvent;
 import com.almostreliable.kubeio.recipe.AlloySmelterKubeRecipe;
 import com.almostreliable.kubeio.recipe.FireCraftingKubeRecipe;
-import com.almostreliable.kubeio.recipe.SlicerKubeRecipe;
 import com.almostreliable.kubeio.recipe.TankKubeRecipe;
 import com.almostreliable.kubeio.schema.*;
 import com.enderio.base.api.EnderIO;
@@ -76,7 +75,6 @@ public class KubePlugin implements KubeJSPlugin {
     public void registerRecipeFactories(RecipeFactoryRegistry registry) {
         registry.register(AlloySmelterKubeRecipe.FACTORY);
         registry.register(FireCraftingKubeRecipe.FACTORY);
-        registry.register(SlicerKubeRecipe.FACTORY);
         registry.register(TankKubeRecipe.FACTORY);
     }
 
