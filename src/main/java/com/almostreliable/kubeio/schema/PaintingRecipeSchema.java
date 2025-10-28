@@ -15,7 +15,7 @@ import net.minecraft.world.item.crafting.Ingredient;
  */
 public interface PaintingRecipeSchema {
 
-    RecipeKey<ItemStack> OUTPUT = ItemStackComponent.STRICT_ITEM_STACK
+    RecipeKey<ItemStack> OUTPUT = ItemStackComponent.ITEM_STACK
         .key("output", ComponentRole.OUTPUT)
         .noFunctions();
     RecipeKey<Ingredient> INPUT = IngredientComponent.INGREDIENT

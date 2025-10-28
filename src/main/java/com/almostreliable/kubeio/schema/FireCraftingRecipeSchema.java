@@ -1,15 +1,16 @@
 package com.almostreliable.kubeio.schema;
 
 import com.almostreliable.kubeio.component.FireCraftingResultComponent;
-import com.almostreliable.kubeio.component.ResourceKeyComponent;
 import com.almostreliable.kubeio.recipe.FireCraftingKubeRecipe;
 import com.enderio.base.common.recipe.FireCraftingRecipe;
 import com.enderio.base.data.recipe.FireCraftingRecipeProvider;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.BlockComponent;
 import dev.latvian.mods.kubejs.recipe.component.ComponentRole;
+import dev.latvian.mods.kubejs.recipe.component.ResourceKeyComponent;
 import dev.latvian.mods.kubejs.recipe.component.TagKeyComponent;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
+import dev.latvian.mods.kubejs.util.IntBounds;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.Level;
@@ -23,31 +24,33 @@ import java.util.List;
  */
 public interface FireCraftingRecipeSchema {
 
-    RecipeKey<List<FireCraftingRecipe.Result>> RESULTS = FireCraftingResultComponent.INSTANCE
+    RecipeKey<List<FireCraftingRecipe.Result>> RESULTS = FireCraftingResultComponent.TYPE
+        .instance()
         .asList()
         .key("results", ComponentRole.OUTPUT)
         .noFunctions();
-    RecipeKey<Block> BLOCK_AFTER_BURNING = BlockComponent.BLOCK
+    RecipeKey<Block> BLOCK_AFTER_BURNING = BlockComponent.OPTIONAL_BLOCK
         .key("block_after_burning", ComponentRole.OUTPUT)
         .functionNames(List.of("blockAfterBurning"))
         .optional(Blocks.AIR)
-        .allowEmpty()
         .exclude();
-    RecipeKey<List<Block>> BASE_BLOCKS = BlockComponent.BLOCK
+    RecipeKey<List<Block>> BASE_BLOCKS = BlockComponent.OPTIONAL_BLOCK
+        .instance()
         .asList()
         .key("base_blocks", ComponentRole.INPUT)
         .defaultOptional()
-        .allowEmpty()
         .noFunctions()
         .exclude();
     RecipeKey<List<TagKey<Block>>> BASE_TAGS = TagKeyComponent.BLOCK
+        .instance()
         .asList()
+        .withBounds(IntBounds.OPTIONAL)
         .key("base_tags", ComponentRole.INPUT)
         .defaultOptional()
-        .allowEmpty()
         .noFunctions()
         .exclude();
     RecipeKey<List<ResourceKey<Level>>> DIMENSIONS = ResourceKeyComponent.DIMENSION
+        .instance()
         .asList()
         .key("dimensions", ComponentRole.OTHER)
         .optional(List.of(Level.OVERWORLD))

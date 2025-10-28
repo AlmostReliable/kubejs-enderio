@@ -1,6 +1,5 @@
 package com.almostreliable.kubeio.schema;
 
-import com.almostreliable.kubeio.recipe.SlicerKubeRecipe;
 import com.enderio.machines.common.blocks.slicer.SlicingRecipe;
 import com.enderio.machines.data.recipes.SlicingRecipeProvider;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
@@ -9,6 +8,7 @@ import dev.latvian.mods.kubejs.recipe.component.IngredientComponent;
 import dev.latvian.mods.kubejs.recipe.component.ItemStackComponent;
 import dev.latvian.mods.kubejs.recipe.component.NumberComponent;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
+import dev.latvian.mods.kubejs.util.IntBounds;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
@@ -19,11 +19,13 @@ import java.util.List;
  */
 public interface SlicerRecipeSchema {
 
-    RecipeKey<ItemStack> OUTPUT = ItemStackComponent.STRICT_ITEM_STACK
+    RecipeKey<ItemStack> OUTPUT = ItemStackComponent.ITEM_STACK
         .key("output", ComponentRole.OUTPUT)
         .noFunctions();
     RecipeKey<List<Ingredient>> INPUTS = IngredientComponent.INGREDIENT
+        .instance()
         .asList()
+        .withBounds(IntBounds.of(6, 6))
         .key("inputs", ComponentRole.INPUT)
         .noFunctions();
     RecipeKey<Integer> ENERGY = NumberComponent.INT
@@ -31,6 +33,5 @@ public interface SlicerRecipeSchema {
         .optional(2_000)
         .alwaysWrite();
 
-    RecipeSchema SCHEMA = new RecipeSchema(OUTPUT, INPUTS, ENERGY)
-        .factory(SlicerKubeRecipe.FACTORY);
+    RecipeSchema SCHEMA = new RecipeSchema(OUTPUT, INPUTS, ENERGY);
 }

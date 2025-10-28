@@ -3,38 +3,33 @@ package com.almostreliable.kubeio;
 import com.almostreliable.kubeio.binding.DataComponents;
 import com.almostreliable.kubeio.component.EnchantmentComponent;
 import com.almostreliable.kubeio.component.FireCraftingResultComponent;
-import com.almostreliable.kubeio.component.ResourceKeyComponent;
 import com.almostreliable.kubeio.component.SagMillOutputItemComponent;
+import com.almostreliable.kubeio.component.SimpleComponents;
 import com.almostreliable.kubeio.event.ConduitRegistryEvent;
 import com.almostreliable.kubeio.recipe.AlloySmelterKubeRecipe;
 import com.almostreliable.kubeio.recipe.FireCraftingKubeRecipe;
-import com.almostreliable.kubeio.recipe.SlicerKubeRecipe;
 import com.almostreliable.kubeio.recipe.TankKubeRecipe;
 import com.almostreliable.kubeio.schema.*;
 import com.enderio.base.api.EnderIO;
 import com.enderio.base.common.init.EIORecipes;
 import com.enderio.base.common.recipe.FireCraftingRecipe;
 import com.enderio.core.common.recipes.RecipeTypeSerializerPair;
-import com.enderio.machines.common.blocks.alloy.AlloySmeltingRecipe;
 import com.enderio.machines.common.blocks.fluid_tank.TankRecipe;
 import com.enderio.machines.common.blocks.sag_mill.SagMillingRecipe;
 import com.enderio.machines.common.init.MachineRecipes;
-import dev.latvian.mods.kubejs.core.RecipeManagerKJS;
 import dev.latvian.mods.kubejs.event.EventGroup;
 import dev.latvian.mods.kubejs.event.EventGroupRegistry;
 import dev.latvian.mods.kubejs.event.EventHandler;
 import dev.latvian.mods.kubejs.generator.KubeDataGenerator;
 import dev.latvian.mods.kubejs.plugin.KubeJSPlugin;
-import dev.latvian.mods.kubejs.recipe.RecipesKubeEvent;
-import dev.latvian.mods.kubejs.recipe.schema.*;
+import dev.latvian.mods.kubejs.recipe.component.RecipeComponentTypeRegistry;
+import dev.latvian.mods.kubejs.recipe.schema.RecipeFactoryRegistry;
+import dev.latvian.mods.kubejs.recipe.schema.RecipeNamespace;
+import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
+import dev.latvian.mods.kubejs.recipe.schema.RecipeSchemaRegistry;
 import dev.latvian.mods.kubejs.script.BindingRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CookingBookCategory;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.SmeltingRecipe;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -64,19 +59,19 @@ public class KubePlugin implements KubeJSPlugin {
     }
 
     @Override
-    public void registerRecipeComponents(RecipeComponentFactoryRegistry registry) {
-        registry.register(EnchantmentComponent.INSTANCE);
-        registry.register(FireCraftingResultComponent.INSTANCE);
-        registry.register(ResourceKeyComponent.DIMENSION);
-        registry.register(ResourceKeyComponent.LOOT_TABLE);
-        registry.register(SagMillOutputItemComponent.INSTANCE);
+    public void registerRecipeComponents(RecipeComponentTypeRegistry registry) {
+        registry.register(SimpleComponents.BOUS_TYPE);
+        registry.register(SimpleComponents.MOB_CATEGORY);
+        registry.register(SimpleComponents.TANK_MODE);
+        registry.register(EnchantmentComponent.TYPE);
+        registry.register(FireCraftingResultComponent.TYPE);
+        registry.register(SagMillOutputItemComponent.TYPE);
     }
 
     @Override
     public void registerRecipeFactories(RecipeFactoryRegistry registry) {
         registry.register(AlloySmelterKubeRecipe.FACTORY);
         registry.register(FireCraftingKubeRecipe.FACTORY);
-        registry.register(SlicerKubeRecipe.FACTORY);
         registry.register(TankKubeRecipe.FACTORY);
     }
 
@@ -115,35 +110,35 @@ public class KubePlugin implements KubeJSPlugin {
         ConduitRegistryEvent.clear();
     }
 
-    @SuppressWarnings("removal") // TODO: use dynamic recipes
-    @Override
-    public void injectRuntimeRecipes(
-        RecipesKubeEvent event, RecipeManagerKJS manager, Map<ResourceLocation, RecipeHolder<?>> recipesByName
-    ) {
-        for (ResourceLocation recipeId : SMELTING_RECIPES) {
-            var recipe = recipesByName.get(recipeId).value();
-            if (!(recipe instanceof AlloySmeltingRecipe alloyRecipe)) {
-                continue;
-            }
-
-            var inputs = alloyRecipe.inputs();
-            if (inputs.size() != 1 || inputs.getFirst().count() != 1) continue;
-
-            Ingredient input = inputs.getFirst().ingredient();
-            ItemStack output = alloyRecipe.output();
-            float experience = alloyRecipe.experience();
-            ResourceLocation id = ResourceLocation.tryParse(recipeId.toString() + "_inherited");
-            if (id == null) continue;
-
-            var holder = new RecipeHolder<>(
-                id,
-                new SmeltingRecipe("", CookingBookCategory.MISC, input, output, experience, 200)
-            );
-            recipesByName.put(id, holder);
-        }
-
-        SMELTING_RECIPES.clear();
-    }
+    // @SuppressWarnings("removal") // TODO: use dynamic recipes
+    // @Override
+    // public void injectRuntimeRecipes(
+    //     RecipesKubeEvent event, RecipeManagerKJS manager, Map<ResourceLocation, RecipeHolder<?>> recipesByName
+    // ) {
+    //     for (ResourceLocation recipeId : SMELTING_RECIPES) {
+    //         var recipe = recipesByName.get(recipeId).value();
+    //         if (!(recipe instanceof AlloySmeltingRecipe alloyRecipe)) {
+    //             continue;
+    //         }
+    //
+    //         var inputs = alloyRecipe.inputs();
+    //         if (inputs.size() != 1 || inputs.getFirst().count() != 1) continue;
+    //
+    //         Ingredient input = inputs.getFirst().ingredient();
+    //         ItemStack output = alloyRecipe.output();
+    //         float experience = alloyRecipe.experience();
+    //         ResourceLocation id = ResourceLocation.tryParse(recipeId.toString() + "_inherited");
+    //         if (id == null) continue;
+    //
+    //         var holder = new RecipeHolder<>(
+    //             id,
+    //             new SmeltingRecipe("", CookingBookCategory.MISC, input, output, experience, 200)
+    //         );
+    //         recipesByName.put(id, holder);
+    //     }
+    //
+    //     SMELTING_RECIPES.clear();
+    // }
 
     private void registerRecipeSchema(
         RecipeNamespace namespace, Map.Entry<RecipeTypeSerializerPair<?, ?>, RecipeSchema> schemaEntry

@@ -1,16 +1,20 @@
 package com.almostreliable.kubeio.component;
 
+import com.enderio.base.api.EnderIO;
 import com.mojang.serialization.Codec;
-import dev.latvian.mods.kubejs.recipe.KubeRecipe;
+import dev.latvian.mods.kubejs.recipe.RecipeScriptContext;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponent;
-import dev.latvian.mods.rhino.Context;
+import dev.latvian.mods.kubejs.recipe.component.RecipeComponentType;
 import dev.latvian.mods.rhino.type.TypeInfo;
 import net.minecraft.core.Holder;
 import net.minecraft.world.item.enchantment.Enchantment;
 
-public record EnchantmentComponent() implements RecipeComponent<Holder<Enchantment>> {
+public record EnchantmentComponent(RecipeComponentType<?> type) implements RecipeComponent<Holder<Enchantment>> {
 
-    public static final RecipeComponent<Holder<Enchantment>> INSTANCE = new EnchantmentComponent();
+    public static final RecipeComponentType<Holder<Enchantment>> TYPE = RecipeComponentType.unit(
+        EnderIO.loc("enchantment"),
+        EnchantmentComponent::new
+    );
 
     @Override
     public Codec<Holder<Enchantment>> codec() {
@@ -24,12 +28,8 @@ public record EnchantmentComponent() implements RecipeComponent<Holder<Enchantme
 
     @SuppressWarnings("unchecked")
     @Override
-    public Holder<Enchantment> wrap(Context cx, KubeRecipe recipe, Object from) {
-        return (Holder<Enchantment>) cx.jsToJava(from, typeInfo());
-    }
-
-    @Override
-    public String toString() {
-        return "enderio:enchantment";
+    public Holder<Enchantment> wrap(RecipeScriptContext cx, Object from) {
+        return (Holder<Enchantment>) cx.cx().jsToJava(from, typeInfo());
     }
 }
+

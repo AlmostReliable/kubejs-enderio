@@ -19,7 +19,7 @@ import java.util.List;
  */
 public interface EnchanterRecipeSchema {
 
-    RecipeKey<Holder<Enchantment>> ENCHANTMENT = EnchantmentComponent.INSTANCE
+    RecipeKey<Holder<Enchantment>> ENCHANTMENT = EnchantmentComponent.TYPE
         .key("enchantment", ComponentRole.OTHER)
         .noFunctions();
     RecipeKey<SizedIngredient> INPUT = SizedIngredientComponent.FLAT
