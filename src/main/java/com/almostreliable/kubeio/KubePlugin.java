@@ -110,35 +110,35 @@ public class KubePlugin implements KubeJSPlugin {
         ConduitRegistryEvent.clear();
     }
 
-    @SuppressWarnings("removal") // TODO: use dynamic recipes
-    @Override
-    public void injectRuntimeRecipes(
-        RecipesKubeEvent event, RecipeManagerKJS manager, Map<ResourceLocation, RecipeHolder<?>> recipesByName
-    ) {
-        for (ResourceLocation recipeId : SMELTING_RECIPES) {
-            var recipe = recipesByName.get(recipeId).value();
-            if (!(recipe instanceof AlloySmeltingRecipe alloyRecipe)) {
-                continue;
-            }
-
-            var inputs = alloyRecipe.inputs();
-            if (inputs.size() != 1 || inputs.getFirst().count() != 1) continue;
-
-            Ingredient input = inputs.getFirst().ingredient();
-            ItemStack output = alloyRecipe.output();
-            float experience = alloyRecipe.experience();
-            ResourceLocation id = ResourceLocation.tryParse(recipeId.toString() + "_inherited");
-            if (id == null) continue;
-
-            var holder = new RecipeHolder<>(
-                id,
-                new SmeltingRecipe("", CookingBookCategory.MISC, input, output, experience, 200)
-            );
-            recipesByName.put(id, holder);
-        }
-
-        SMELTING_RECIPES.clear();
-    }
+    // @SuppressWarnings("removal") // TODO: use dynamic recipes
+    // @Override
+    // public void injectRuntimeRecipes(
+    //     RecipesKubeEvent event, RecipeManagerKJS manager, Map<ResourceLocation, RecipeHolder<?>> recipesByName
+    // ) {
+    //     for (ResourceLocation recipeId : SMELTING_RECIPES) {
+    //         var recipe = recipesByName.get(recipeId).value();
+    //         if (!(recipe instanceof AlloySmeltingRecipe alloyRecipe)) {
+    //             continue;
+    //         }
+    //
+    //         var inputs = alloyRecipe.inputs();
+    //         if (inputs.size() != 1 || inputs.getFirst().count() != 1) continue;
+    //
+    //         Ingredient input = inputs.getFirst().ingredient();
+    //         ItemStack output = alloyRecipe.output();
+    //         float experience = alloyRecipe.experience();
+    //         ResourceLocation id = ResourceLocation.tryParse(recipeId.toString() + "_inherited");
+    //         if (id == null) continue;
+    //
+    //         var holder = new RecipeHolder<>(
+    //             id,
+    //             new SmeltingRecipe("", CookingBookCategory.MISC, input, output, experience, 200)
+    //         );
+    //         recipesByName.put(id, holder);
+    //     }
+    //
+    //     SMELTING_RECIPES.clear();
+    // }
 
     private void registerRecipeSchema(
         RecipeNamespace namespace, Map.Entry<RecipeTypeSerializerPair<?, ?>, RecipeSchema> schemaEntry
