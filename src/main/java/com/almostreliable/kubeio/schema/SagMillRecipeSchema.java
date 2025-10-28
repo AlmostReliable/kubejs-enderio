@@ -1,7 +1,7 @@
 package com.almostreliable.kubeio.schema;
 
 import com.almostreliable.kubeio.component.SagMillOutputItemComponent;
-import net.minecraft.world.item.crafting.Ingredient;
+import com.enderio.base.api.EnderIO;
 import com.enderio.machines.common.blocks.sag_mill.SagMillingRecipe;
 import com.enderio.machines.data.recipes.SagMillRecipeProvider;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
@@ -10,6 +10,7 @@ import dev.latvian.mods.kubejs.recipe.component.EnumComponent;
 import dev.latvian.mods.kubejs.recipe.component.IngredientComponent;
 import dev.latvian.mods.kubejs.recipe.component.NumberComponent;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public interface SagMillRecipeSchema {
         .asList()
         .key("outputs", ComponentRole.OUTPUT)
         .noFunctions();
-    RecipeKey<Ingredient> INPUT = IngredientComponent.NON_EMPTY_INGREDIENT
+    RecipeKey<Ingredient> INPUT = IngredientComponent.INGREDIENT
         .key("input", ComponentRole.INPUT)
         .noFunctions();
     RecipeKey<Integer> ENERGY = NumberComponent.INT
@@ -30,7 +31,7 @@ public interface SagMillRecipeSchema {
         .optional(2_000)
         .alwaysWrite();
     RecipeKey<SagMillingRecipe.BonusType> BONUS = EnumComponent.of(
-            "enderio:bonus_type",
+            EnderIO.loc("bonus_type"),
             SagMillingRecipe.BonusType.class,
             SagMillingRecipe.BonusType.CODEC
         )

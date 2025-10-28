@@ -16,10 +16,11 @@ import java.util.List;
  */
 public interface AlloySmelterRecipeSchema {
 
-    RecipeKey<ItemStack> OUTPUT = ItemStackComponent.STRICT_ITEM_STACK
+    RecipeKey<ItemStack> OUTPUT = ItemStackComponent.ITEM_STACK
         .key("output", ComponentRole.OUTPUT)
         .noFunctions();
     RecipeKey<List<SizedIngredient>> INPUTS = SizedIngredientComponent.FLAT
+        .instance()
         .asList()
         .key("inputs", ComponentRole.INPUT)
         .noFunctions();

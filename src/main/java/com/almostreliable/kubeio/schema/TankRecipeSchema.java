@@ -1,6 +1,7 @@
 package com.almostreliable.kubeio.schema;
 
 import com.almostreliable.kubeio.recipe.TankKubeRecipe;
+import com.enderio.base.api.EnderIO;
 import com.enderio.machines.common.blocks.fluid_tank.TankRecipe;
 import com.enderio.machines.data.recipes.TankRecipeProvider;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
@@ -15,17 +16,17 @@ import net.neoforged.neoforge.fluids.FluidStack;
  */
 public interface TankRecipeSchema {
 
-    RecipeKey<ItemStack> OUTPUT = ItemStackComponent.STRICT_ITEM_STACK
+    RecipeKey<ItemStack> OUTPUT = ItemStackComponent.ITEM_STACK
         .key("output", ComponentRole.OUTPUT)
         .noFunctions();
-    RecipeKey<Ingredient> INPUT = IngredientComponent.NON_EMPTY_INGREDIENT
+    RecipeKey<Ingredient> INPUT = IngredientComponent.INGREDIENT
         .key("input", ComponentRole.INPUT)
         .noFunctions();
     RecipeKey<FluidStack> FLUID = FluidStackComponent.FLUID_STACK
         .key("fluid", ComponentRole.OTHER)
         .noFunctions();
     RecipeKey<TankRecipe.Mode> MODE = EnumComponent.of(
-            "enderio:tank_mode",
+            EnderIO.loc("tank_mode"),
             TankRecipe.Mode.class,
             TankRecipe.Mode.CODEC
         )

@@ -10,6 +10,7 @@ import dev.latvian.mods.kubejs.recipe.component.BlockComponent;
 import dev.latvian.mods.kubejs.recipe.component.ComponentRole;
 import dev.latvian.mods.kubejs.recipe.component.TagKeyComponent;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
+import dev.latvian.mods.kubejs.util.IntBounds;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.Level;
@@ -27,24 +28,24 @@ public interface FireCraftingRecipeSchema {
         .asList()
         .key("results", ComponentRole.OUTPUT)
         .noFunctions();
-    RecipeKey<Block> BLOCK_AFTER_BURNING = BlockComponent.BLOCK
+    RecipeKey<Block> BLOCK_AFTER_BURNING = BlockComponent.OPTIONAL_BLOCK
         .key("block_after_burning", ComponentRole.OUTPUT)
         .functionNames(List.of("blockAfterBurning"))
         .optional(Blocks.AIR)
-        .allowEmpty()
         .exclude();
-    RecipeKey<List<Block>> BASE_BLOCKS = BlockComponent.BLOCK
+    RecipeKey<List<Block>> BASE_BLOCKS = BlockComponent.OPTIONAL_BLOCK
+        .instance()
         .asList()
         .key("base_blocks", ComponentRole.INPUT)
         .defaultOptional()
-        .allowEmpty()
         .noFunctions()
         .exclude();
     RecipeKey<List<TagKey<Block>>> BASE_TAGS = TagKeyComponent.BLOCK
+        .instance()
         .asList()
+        .withBounds(IntBounds.OPTIONAL)
         .key("base_tags", ComponentRole.INPUT)
         .defaultOptional()
-        .allowEmpty()
         .noFunctions()
         .exclude();
     RecipeKey<List<ResourceKey<Level>>> DIMENSIONS = ResourceKeyComponent.DIMENSION

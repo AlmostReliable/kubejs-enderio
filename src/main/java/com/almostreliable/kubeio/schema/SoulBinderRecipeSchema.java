@@ -1,5 +1,6 @@
 package com.almostreliable.kubeio.schema;
 
+import com.enderio.base.api.EnderIO;
 import com.enderio.machines.common.blocks.soul_binder.SoulBindingRecipe;
 import com.enderio.machines.data.recipes.SoulBindingRecipeProvider;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
@@ -18,10 +19,10 @@ import java.util.List;
  */
 public interface SoulBinderRecipeSchema {
 
-    RecipeKey<ItemStack> OUTPUT = ItemStackComponent.STRICT_ITEM_STACK
+    RecipeKey<ItemStack> OUTPUT = ItemStackComponent.ITEM_STACK
         .key("output", ComponentRole.OUTPUT)
         .noFunctions();
-    RecipeKey<Ingredient> INPUT = IngredientComponent.NON_EMPTY_INGREDIENT
+    RecipeKey<Ingredient> INPUT = IngredientComponent.INGREDIENT
         .key("input", ComponentRole.INPUT)
         .noFunctions();
     RecipeKey<Integer> ENERGY = NumberComponent.INT
@@ -37,12 +38,16 @@ public interface SoulBinderRecipeSchema {
         .functionNames(List.of("entityType"))
         .defaultOptional()
         .exclude();
-    RecipeKey<MobCategory> MOB_CATEGORY = EnumComponent.of("mob_category", MobCategory.class, MobCategory.CODEC)
+    RecipeKey<MobCategory> MOB_CATEGORY = EnumComponent.of(
+            EnderIO.loc("mob_category"),
+            MobCategory.class,
+            MobCategory.CODEC
+        )
         .key("mob_category", ComponentRole.OTHER)
         .functionNames(List.of("mobCategory"))
         .defaultOptional()
         .exclude();
-    RecipeKey<String> SOUL_DATA = StringComponent.NON_BLANK
+    RecipeKey<String> SOUL_DATA = StringComponent.STRING
         .key("soul_data", ComponentRole.OTHER)
         .functionNames(List.of("soulData"))
         .defaultOptional()

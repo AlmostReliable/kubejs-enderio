@@ -19,10 +19,11 @@ import java.util.List;
  */
 public interface SlicerRecipeSchema {
 
-    RecipeKey<ItemStack> OUTPUT = ItemStackComponent.STRICT_ITEM_STACK
+    RecipeKey<ItemStack> OUTPUT = ItemStackComponent.ITEM_STACK
         .key("output", ComponentRole.OUTPUT)
         .noFunctions();
     RecipeKey<List<Ingredient>> INPUTS = IngredientComponent.INGREDIENT
+        .instance()
         .asList()
         .key("inputs", ComponentRole.INPUT)
         .noFunctions();
