@@ -1,12 +1,11 @@
 package com.almostreliable.kubeio.schema;
 
 import com.almostreliable.kubeio.component.SagMillOutputItemComponent;
-import com.enderio.base.api.EnderIO;
+import com.almostreliable.kubeio.component.SimpleComponents;
 import com.enderio.machines.common.blocks.sag_mill.SagMillingRecipe;
 import com.enderio.machines.data.recipes.SagMillRecipeProvider;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.ComponentRole;
-import dev.latvian.mods.kubejs.recipe.component.EnumComponent;
 import dev.latvian.mods.kubejs.recipe.component.IngredientComponent;
 import dev.latvian.mods.kubejs.recipe.component.NumberComponent;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
@@ -31,11 +30,7 @@ public interface SagMillRecipeSchema {
         .key("energy", ComponentRole.INPUT)
         .optional(2_000)
         .alwaysWrite();
-    RecipeKey<SagMillingRecipe.BonusType> BONUS = EnumComponent.of(
-            EnderIO.loc("bonus_type"),
-            SagMillingRecipe.BonusType.class,
-            SagMillingRecipe.BonusType.CODEC
-        )
+    RecipeKey<SagMillingRecipe.BonusType> BONUS = SimpleComponents.BOUS_TYPE
         .key("bonus", ComponentRole.OTHER)
         .optional(SagMillingRecipe.BonusType.MULTIPLY_OUTPUT);
 

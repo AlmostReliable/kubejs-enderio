@@ -1,6 +1,6 @@
 package com.almostreliable.kubeio.schema;
 
-import com.enderio.base.api.EnderIO;
+import com.almostreliable.kubeio.component.SimpleComponents;
 import com.enderio.machines.common.blocks.soul_binder.SoulBindingRecipe;
 import com.enderio.machines.data.recipes.SoulBindingRecipeProvider;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
@@ -38,11 +38,7 @@ public interface SoulBinderRecipeSchema {
         .functionNames(List.of("entityType"))
         .defaultOptional()
         .exclude();
-    RecipeKey<MobCategory> MOB_CATEGORY = EnumComponent.of(
-            EnderIO.loc("mob_category"),
-            MobCategory.class,
-            MobCategory.CODEC
-        )
+    RecipeKey<MobCategory> MOB_CATEGORY = SimpleComponents.MOB_CATEGORY
         .key("mob_category", ComponentRole.OTHER)
         .functionNames(List.of("mobCategory"))
         .defaultOptional()
