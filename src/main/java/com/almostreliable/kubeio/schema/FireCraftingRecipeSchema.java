@@ -24,7 +24,8 @@ import java.util.List;
  */
 public interface FireCraftingRecipeSchema {
 
-    RecipeKey<List<FireCraftingRecipe.Result>> RESULTS = FireCraftingResultComponent.INSTANCE
+    RecipeKey<List<FireCraftingRecipe.Result>> RESULTS = FireCraftingResultComponent.TYPE
+        .instance()
         .asList()
         .key("results", ComponentRole.OUTPUT)
         .noFunctions();

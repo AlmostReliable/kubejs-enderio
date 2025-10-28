@@ -12,26 +12,22 @@ import com.enderio.base.api.EnderIO;
 import com.enderio.base.common.init.EIORecipes;
 import com.enderio.base.common.recipe.FireCraftingRecipe;
 import com.enderio.core.common.recipes.RecipeTypeSerializerPair;
-import com.enderio.machines.common.blocks.alloy.AlloySmeltingRecipe;
 import com.enderio.machines.common.blocks.fluid_tank.TankRecipe;
 import com.enderio.machines.common.blocks.sag_mill.SagMillingRecipe;
 import com.enderio.machines.common.init.MachineRecipes;
-import dev.latvian.mods.kubejs.core.RecipeManagerKJS;
 import dev.latvian.mods.kubejs.event.EventGroup;
 import dev.latvian.mods.kubejs.event.EventGroupRegistry;
 import dev.latvian.mods.kubejs.event.EventHandler;
 import dev.latvian.mods.kubejs.generator.KubeDataGenerator;
 import dev.latvian.mods.kubejs.plugin.KubeJSPlugin;
-import dev.latvian.mods.kubejs.recipe.RecipesKubeEvent;
-import dev.latvian.mods.kubejs.recipe.schema.*;
+import dev.latvian.mods.kubejs.recipe.component.RecipeComponentTypeRegistry;
+import dev.latvian.mods.kubejs.recipe.schema.RecipeFactoryRegistry;
+import dev.latvian.mods.kubejs.recipe.schema.RecipeNamespace;
+import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
+import dev.latvian.mods.kubejs.recipe.schema.RecipeSchemaRegistry;
 import dev.latvian.mods.kubejs.script.BindingRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CookingBookCategory;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.SmeltingRecipe;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -61,9 +57,9 @@ public class KubePlugin implements KubeJSPlugin {
     }
 
     @Override
-    public void registerRecipeComponents(RecipeComponentFactoryRegistry registry) {
-        registry.register(FireCraftingResultComponent.INSTANCE);
-        registry.register(SagMillOutputItemComponent.INSTANCE);
+    public void registerRecipeComponents(RecipeComponentTypeRegistry registry) {
+        registry.register(FireCraftingResultComponent.TYPE);
+        registry.register(SagMillOutputItemComponent.TYPE);
     }
 
     @Override

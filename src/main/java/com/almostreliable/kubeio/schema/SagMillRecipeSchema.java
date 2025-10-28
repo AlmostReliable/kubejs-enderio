@@ -19,7 +19,8 @@ import java.util.List;
  */
 public interface SagMillRecipeSchema {
 
-    RecipeKey<List<SagMillingRecipe.OutputItem>> OUTPUTS = SagMillOutputItemComponent.INSTANCE
+    RecipeKey<List<SagMillingRecipe.OutputItem>> OUTPUTS = SagMillOutputItemComponent.TYPE
+        .instance()
         .asList()
         .key("outputs", ComponentRole.OUTPUT)
         .noFunctions();

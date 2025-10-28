@@ -4,50 +4,59 @@ import com.almostreliable.kubeio.binding.SagMillOutputItem;
 import com.almostreliable.kubeio.mixin.IngredientAccessor;
 import com.almostreliable.kubeio.mixin.SagMillOutputItemAccessor;
 import com.almostreliable.kubeio.mixin.TagValueAccessor;
-import com.enderio.machines.common.blocks.sag_mill.SagMillingRecipe;
+import com.enderio.base.api.EnderIO;
+import com.enderio.machines.common.blocks.sag_mill.SagMillingRecipe.OutputItem;
 import com.mojang.serialization.Codec;
-import dev.latvian.mods.kubejs.bindings.SizedIngredientWrapper;
-import dev.latvian.mods.kubejs.item.ItemStackJS;
-import dev.latvian.mods.kubejs.item.ingredient.IngredientJS;
-import dev.latvian.mods.kubejs.recipe.KubeRecipe;
+import dev.latvian.mods.kubejs.error.InvalidRecipeComponentValueException;
+import dev.latvian.mods.kubejs.plugin.builtin.wrapper.IngredientWrapper;
+import dev.latvian.mods.kubejs.plugin.builtin.wrapper.ItemWrapper;
+import dev.latvian.mods.kubejs.plugin.builtin.wrapper.SizedIngredientWrapper;
+import dev.latvian.mods.kubejs.recipe.RecipeScriptContext;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponent;
-import dev.latvian.mods.kubejs.script.KubeJSContext;
-import dev.latvian.mods.kubejs.util.RegistryAccessContainer;
-import dev.latvian.mods.rhino.Context;
+import dev.latvian.mods.kubejs.recipe.component.RecipeComponentType;
 import dev.latvian.mods.rhino.type.TypeInfo;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 
-public record SagMillOutputItemComponent() implements RecipeComponent<SagMillingRecipe.OutputItem> {
+public record SagMillOutputItemComponent(RecipeComponentType<?> type) implements RecipeComponent<OutputItem> {
 
-    public static final RecipeComponent<SagMillingRecipe.OutputItem> INSTANCE = new SagMillOutputItemComponent();
+    public static final RecipeComponentType<OutputItem> TYPE = RecipeComponentType.unit(
+        EnderIO.loc("sag_mill_output"),
+        SagMillOutputItemComponent::new
+    );
+    private static final OutputItem EMPTY = SagMillOutputItem.kubeio$of(ItemStack.EMPTY);
 
     @Override
-    public Codec<SagMillingRecipe.OutputItem> codec() {
+    public Codec<OutputItem> codec() {
         return SagMillOutputItemAccessor.getCodec();
     }
 
     @Override
     public TypeInfo typeInfo() {
-        return TypeInfo.of(SagMillingRecipe.OutputItem.class)
+        return TypeInfo.of(OutputItem.class)
             .or(SizedIngredientWrapper.TYPE_INFO)
-            .or(IngredientJS.TYPE_INFO)
-            .or(ItemStackJS.TYPE_INFO);
+            .or(IngredientWrapper.TYPE_INFO)
+            .or(ItemWrapper.TYPE_INFO);
     }
 
     @Override
-    public SagMillingRecipe.OutputItem wrap(Context cx, KubeRecipe recipe, Object from) {
-        if (from instanceof SagMillingRecipe.OutputItem o) {
+    public OutputItem wrap(RecipeScriptContext cx, Object from) {
+        if (from instanceof OutputItem o) {
             return o;
         }
 
-        RegistryAccessContainer registryAccess = ((KubeJSContext) cx).getRegistries();
-
-        SizedIngredient sizedIngredient = SizedIngredientWrapper.wrap(registryAccess, from);
+        SizedIngredient sizedIngredient = SizedIngredientWrapper.wrap(cx.cx(), from);
         var ingredientValues = ((IngredientAccessor) (Object) sizedIngredient.ingredient()).kubeio$getValues();
+        if (ingredientValues.length == 0) {
+            return EMPTY;
+        }
         if (ingredientValues.length > 1) {
-            throw new IllegalArgumentException("compound ingredients not supported in sag mill output: " + from);
+            throw new InvalidRecipeComponentValueException(
+                "compound ingredients not supported in sag mill output",
+                this,
+                from
+            ).source(cx.recipe().sourceLine);
         }
 
         var ingredientValue = ingredientValues[0];
@@ -58,24 +67,27 @@ public record SagMillOutputItemComponent() implements RecipeComponent<SagMilling
 
         if (ingredientValue instanceof Ingredient.ItemValue itemValue) {
             var items = itemValue.getItems();
+            if (items.isEmpty()) {
+                return EMPTY;
+            }
             if (items.size() > 1) {
-                throw new IllegalArgumentException("compound ingredients not supported in sag mill output: " + from);
+                throw new InvalidRecipeComponentValueException(
+                    "compound ingredients not supported in sag mill output",
+                    this,
+                    from
+                ).source(cx.recipe().sourceLine);
             }
 
             ItemStack itemStack = new ItemStack(items.iterator().next().getItem(), sizedIngredient.count());
             return SagMillOutputItem.kubeio$of(itemStack);
         }
 
-        ItemStack itemStack = ItemStackJS.wrap(registryAccess, from);
-        if (itemStack.isEmpty()) {
-            throw new IllegalArgumentException("empty sag mill output: " + from);
-        }
-
-        return SagMillOutputItem.kubeio$of(itemStack);
+        ItemStack itemStack = ItemWrapper.wrap(cx.cx(), from);
+        return itemStack.isEmpty() ? EMPTY : SagMillOutputItem.kubeio$of(itemStack);
     }
 
     @Override
-    public String toString() {
-        return "enderio:sag_mill_output";
+    public boolean isEmpty(OutputItem value) {
+        return value == EMPTY || !value.isPresent();
     }
 }
