@@ -1,7 +1,6 @@
 package com.almostreliable.kubeio;
 
 import com.almostreliable.kubeio.binding.DataComponents;
-import com.almostreliable.kubeio.component.EnchantmentComponent;
 import com.almostreliable.kubeio.component.FireCraftingResultComponent;
 import com.almostreliable.kubeio.component.ResourceKeyComponent;
 import com.almostreliable.kubeio.component.SagMillOutputItemComponent;
@@ -64,7 +63,6 @@ public class KubePlugin implements KubeJSPlugin {
 
     @Override
     public void registerRecipeComponents(RecipeComponentFactoryRegistry registry) {
-        registry.register(EnchantmentComponent.INSTANCE);
         registry.register(FireCraftingResultComponent.INSTANCE);
         registry.register(ResourceKeyComponent.DIMENSION);
         registry.register(ResourceKeyComponent.LOOT_TABLE);
