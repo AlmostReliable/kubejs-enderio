@@ -2,7 +2,6 @@ package com.almostreliable.kubeio.component;
 
 import com.enderio.enderio.EnderIO;
 import com.mojang.serialization.Codec;
-import dev.latvian.mods.kubejs.recipe.RecipeScriptContext;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponent;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponentType;
 import dev.latvian.mods.rhino.type.TypeInfo;
@@ -24,12 +23,6 @@ public record EnchantmentComponent(RecipeComponentType<?> type) implements Recip
     @Override
     public TypeInfo typeInfo() {
         return TypeInfo.of(Holder.class).withParams(TypeInfo.of(Enchantment.class));
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public Holder<Enchantment> wrap(RecipeScriptContext cx, Object from) {
-        return (Holder<Enchantment>) cx.cx().jsToJava(from, typeInfo());
     }
 }
 
