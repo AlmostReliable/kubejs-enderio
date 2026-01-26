@@ -2,9 +2,9 @@ package com.almostreliable.kubeio.component;
 
 import com.almostreliable.kubeio.binding.SagMillOutputItem;
 import com.almostreliable.kubeio.mixin.IngredientAccessor;
-import com.almostreliable.kubeio.mixin.SagMillOutputItemAccessor;
 import com.almostreliable.kubeio.mixin.TagValueAccessor;
 import com.enderio.enderio.EnderIO;
+import com.enderio.enderio.content.machines.sag_mill.SagMillingRecipe;
 import com.enderio.enderio.content.machines.sag_mill.SagMillingRecipe.OutputItem;
 import com.mojang.serialization.Codec;
 import dev.latvian.mods.kubejs.error.InvalidRecipeComponentValueException;
@@ -29,7 +29,7 @@ public record SagMillOutputItemComponent(RecipeComponentType<?> type) implements
 
     @Override
     public Codec<OutputItem> codec() {
-        return SagMillOutputItemAccessor.getCodec();
+        return SagMillingRecipe.OutputItem.CODEC;
     }
 
     @Override

@@ -7,7 +7,6 @@
     "FireCraftingResultMixin",
     "IngredientAccessor",
     "RecipeManagerMixin",
-    "SagMillOutputItemAccessor",
     "SagMillOutputItemMixin",
     "TagValueAccessor"
   ],
