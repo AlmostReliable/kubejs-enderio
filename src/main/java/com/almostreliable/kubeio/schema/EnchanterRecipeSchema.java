@@ -1,8 +1,7 @@
 package com.almostreliable.kubeio.schema;
 
 import com.almostreliable.kubeio.component.EnchantmentComponent;
-import com.enderio.machines.common.blocks.enchanter.EnchanterRecipe;
-import com.enderio.machines.data.recipes.EnchanterRecipeProvider;
+import com.enderio.enderio.content.enchanter.EnchanterRecipe;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.ComponentRole;
 import dev.latvian.mods.kubejs.recipe.component.NumberComponent;
@@ -15,7 +14,7 @@ import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import java.util.List;
 
 /**
- * See {@link EnchanterRecipe.Serializer} and {@link EnchanterRecipeProvider}.
+ * See {@link EnchanterRecipe.Serializer}.
  */
 public interface EnchanterRecipeSchema {
 

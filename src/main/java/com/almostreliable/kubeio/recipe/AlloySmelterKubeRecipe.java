@@ -2,7 +2,7 @@ package com.almostreliable.kubeio.recipe;
 
 import com.almostreliable.kubeio.KubePlugin;
 import com.almostreliable.kubeio.schema.AlloySmelterRecipeSchema;
-import com.enderio.machines.common.init.MachineRecipes;
+import com.enderio.enderio.init.EIORecipes;
 import dev.latvian.mods.kubejs.recipe.KubeRecipe;
 import dev.latvian.mods.kubejs.recipe.schema.KubeRecipeFactory;
 
@@ -12,7 +12,7 @@ import dev.latvian.mods.kubejs.recipe.schema.KubeRecipeFactory;
 public class AlloySmelterKubeRecipe extends KubeRecipe {
 
     public static final KubeRecipeFactory FACTORY = new KubeRecipeFactory(
-        MachineRecipes.ALLOY_SMELTING.type().getId(),
+        EIORecipes.ALLOY_SMELTING.type().getId(),
         AlloySmelterKubeRecipe.class,
         AlloySmelterKubeRecipe::new
     );

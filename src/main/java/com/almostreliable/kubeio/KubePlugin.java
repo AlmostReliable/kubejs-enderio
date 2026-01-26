@@ -10,13 +10,12 @@ import com.almostreliable.kubeio.recipe.AlloySmelterKubeRecipe;
 import com.almostreliable.kubeio.recipe.FireCraftingKubeRecipe;
 import com.almostreliable.kubeio.recipe.TankKubeRecipe;
 import com.almostreliable.kubeio.schema.*;
-import com.enderio.base.api.EnderIO;
-import com.enderio.base.common.init.EIORecipes;
-import com.enderio.base.common.recipe.FireCraftingRecipe;
 import com.enderio.core.common.recipes.RecipeTypeSerializerPair;
-import com.enderio.machines.common.blocks.fluid_tank.TankRecipe;
-import com.enderio.machines.common.blocks.sag_mill.SagMillingRecipe;
-import com.enderio.machines.common.init.MachineRecipes;
+import com.enderio.enderio.EnderIO;
+import com.enderio.enderio.content.fire_crafting.FireCraftingRecipe;
+import com.enderio.enderio.content.machines.sag_mill.SagMillingRecipe;
+import com.enderio.enderio.content.storage.fluid_tank.TankRecipe;
+import com.enderio.enderio.init.EIORecipes;
 import dev.latvian.mods.kubejs.event.EventGroup;
 import dev.latvian.mods.kubejs.event.EventGroupRegistry;
 import dev.latvian.mods.kubejs.event.EventHandler;
@@ -83,17 +82,17 @@ public class KubePlugin implements KubeJSPlugin {
         );
 
         Map<RecipeTypeSerializerPair<?, ?>, RecipeSchema> machineRecipeSchemas = Map.of(
-            MachineRecipes.ALLOY_SMELTING, AlloySmelterRecipeSchema.SCHEMA,
-            MachineRecipes.ENCHANTING, EnchanterRecipeSchema.SCHEMA,
-            MachineRecipes.PAINTING, PaintingRecipeSchema.SCHEMA,
-            MachineRecipes.SAG_MILLING, SagMillRecipeSchema.SCHEMA,
-            MachineRecipes.SLICING, SlicerRecipeSchema.SCHEMA,
-            MachineRecipes.SOUL_BINDING, SoulBinderRecipeSchema.SCHEMA,
-            MachineRecipes.TANK, TankRecipeSchema.SCHEMA,
-            MachineRecipes.VAT_FERMENTING, VatRecipeSchema.SCHEMA
+            EIORecipes.ALLOY_SMELTING, AlloySmelterRecipeSchema.SCHEMA,
+            EIORecipes.ENCHANTING, EnchanterRecipeSchema.SCHEMA,
+            EIORecipes.PAINTING, PaintingRecipeSchema.SCHEMA,
+            EIORecipes.SAG_MILLING, SagMillRecipeSchema.SCHEMA,
+            EIORecipes.SLICING, SlicerRecipeSchema.SCHEMA,
+            EIORecipes.SOUL_BINDING, SoulBinderRecipeSchema.SCHEMA,
+            EIORecipes.TANK, TankRecipeSchema.SCHEMA,
+            EIORecipes.VAT_FERMENTING, VatRecipeSchema.SCHEMA
         );
 
-        RecipeNamespace namespace = registry.namespace(EnderIO.NAMESPACE);
+        RecipeNamespace namespace = registry.namespace(EnderIO.MOD_ID);
 
         for (var schemaEntry : basicRecipeSchemas.entrySet()) {
             registerRecipeSchema(namespace, schemaEntry);

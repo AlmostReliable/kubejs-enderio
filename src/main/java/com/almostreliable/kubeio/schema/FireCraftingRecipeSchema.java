@@ -2,8 +2,7 @@ package com.almostreliable.kubeio.schema;
 
 import com.almostreliable.kubeio.component.FireCraftingResultComponent;
 import com.almostreliable.kubeio.recipe.FireCraftingKubeRecipe;
-import com.enderio.base.common.recipe.FireCraftingRecipe;
-import com.enderio.base.data.recipe.FireCraftingRecipeProvider;
+import com.enderio.enderio.content.fire_crafting.FireCraftingRecipe;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.BlockComponent;
 import dev.latvian.mods.kubejs.recipe.component.ComponentRole;
@@ -20,7 +19,7 @@ import net.minecraft.world.level.block.Blocks;
 import java.util.List;
 
 /**
- * See {@link FireCraftingRecipe.Serializer} and {@link FireCraftingRecipeProvider}.
+ * See {@link FireCraftingRecipe.Serializer}.
  */
 public interface FireCraftingRecipeSchema {
 

@@ -1,7 +1,6 @@
 package com.almostreliable.kubeio.schema;
 
-import com.enderio.machines.common.blocks.painting.PaintingRecipe;
-import com.enderio.machines.data.recipes.PaintingRecipeProvider;
+import com.enderio.enderio.content.machines.painting.PaintingRecipe;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.ComponentRole;
 import dev.latvian.mods.kubejs.recipe.component.IngredientComponent;
@@ -11,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
 /**
- * See {@link PaintingRecipe.Serializer} and {@link PaintingRecipeProvider}.
+ * See {@link PaintingRecipe.Serializer}.
  */
 public interface PaintingRecipeSchema {
 

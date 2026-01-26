@@ -1,7 +1,7 @@
 package com.almostreliable.kubeio.binding;
 
 import com.almostreliable.kubeio.mixin.FireCraftingResultMixin;
-import com.enderio.base.common.recipe.FireCraftingRecipe;
+import com.enderio.enderio.content.fire_crafting.FireCraftingRecipe;
 import dev.latvian.mods.rhino.util.RemapPrefixForJS;
 import net.minecraft.world.item.ItemStack;
 

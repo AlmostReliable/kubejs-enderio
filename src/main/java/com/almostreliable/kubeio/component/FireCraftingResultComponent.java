@@ -1,8 +1,8 @@
 package com.almostreliable.kubeio.component;
 
 import com.almostreliable.kubeio.binding.FireCraftingResult;
-import com.enderio.base.api.EnderIO;
-import com.enderio.base.common.recipe.FireCraftingRecipe.Result;
+import com.enderio.enderio.EnderIO;
+import com.enderio.enderio.content.fire_crafting.FireCraftingRecipe.Result;
 import com.mojang.serialization.Codec;
 import dev.latvian.mods.kubejs.plugin.builtin.wrapper.ItemWrapper;
 import dev.latvian.mods.kubejs.recipe.RecipeScriptContext;
@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 public record FireCraftingResultComponent(RecipeComponentType<?> type) implements RecipeComponent<Result> {
 
     public static final RecipeComponentType<Result> TYPE = RecipeComponentType.unit(
-        EnderIO.loc("fire_crafting_result"),
+        EnderIO.rl("fire_crafting_result"),
         FireCraftingResultComponent::new
     );
     private static final Result EMPTY = FireCraftingResult.kubeio$of(ItemStack.EMPTY);

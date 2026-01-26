@@ -1,7 +1,7 @@
 package com.almostreliable.kubeio.mixin;
 
 import com.almostreliable.kubeio.binding.SagMillOutputItem;
-import com.enderio.machines.common.blocks.sag_mill.SagMillingRecipe;
+import com.enderio.enderio.content.machines.sag_mill.SagMillingRecipe;
 import dev.latvian.mods.rhino.util.HideFromJS;
 import dev.latvian.mods.rhino.util.RemapForJS;
 import net.minecraft.tags.TagKey;

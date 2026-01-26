@@ -1,7 +1,6 @@
 package com.almostreliable.kubeio.schema;
 
-import com.enderio.machines.common.blocks.slicer.SlicingRecipe;
-import com.enderio.machines.data.recipes.SlicingRecipeProvider;
+import com.enderio.enderio.content.machines.slicer.SlicingRecipe;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.ComponentRole;
 import dev.latvian.mods.kubejs.recipe.component.IngredientComponent;
@@ -15,7 +14,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.List;
 
 /**
- * See {@link SlicingRecipe.Serializer} and {@link SlicingRecipeProvider}.
+ * See {@link SlicingRecipe.Serializer}.
  */
 public interface SlicerRecipeSchema {
 

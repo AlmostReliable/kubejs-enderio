@@ -1,12 +1,12 @@
 package com.almostreliable.kubeio.event;
 
 import appeng.api.util.AEColor;
-import com.enderio.base.api.EnderIO;
-import com.enderio.conduits.api.Conduit;
-import com.enderio.conduits.common.conduit.type.energy.EnergyConduit;
-import com.enderio.conduits.common.conduit.type.fluid.FluidConduit;
-import com.enderio.modconduits.common.modules.appeng.MEConduit;
-import com.enderio.modconduits.common.modules.mekanism.chemical.ChemicalConduit;
+import com.enderio.enderio.EnderIO;
+import com.enderio.enderio.api.conduits.Conduit;
+import com.enderio.enderio.content.conduits.type.energy.EnergyConduit;
+import com.enderio.enderio.content.conduits.type.fluid.FluidConduit;
+import com.enderio.modded_conduits.common.modules.appeng.MEConduit;
+import com.enderio.modded_conduits.common.modules.mekanism.chemical.ChemicalConduit;
 import com.google.common.base.Preconditions;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
@@ -75,12 +75,12 @@ public class ConduitRegistryEvent implements KubeEvent {
         private void bindInstance(BiFunction<Component, ResourceLocation, Conduit<?, ?>> factory) {
             var conduit = factory.apply(name, getTexturePath());
             JsonElement conduitJson = Conduit.DIRECT_CODEC.encodeStart(JsonOps.INSTANCE, conduit).getOrThrow();
-            CUSTOM_CONDUITS.put(EnderIO.loc("enderio/conduit/" + id), conduitJson);
+            CUSTOM_CONDUITS.put(EnderIO.rl("enderio/conduit/" + id), conduitJson);
             CONDUIT_IDS.add(id);
         }
 
         private ResourceLocation getTexturePath() {
-            return EnderIO.loc("block/conduit/" + id);
+            return EnderIO.rl("block/conduit/" + id);
         }
     }
 

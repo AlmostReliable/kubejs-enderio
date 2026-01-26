@@ -1,7 +1,7 @@
 package com.almostreliable.kubeio.recipe;
 
 import com.almostreliable.kubeio.schema.FireCraftingRecipeSchema;
-import com.enderio.base.common.init.EIORecipes;
+import com.enderio.enderio.init.EIORecipes;
 import dev.latvian.mods.kubejs.recipe.KubeRecipe;
 import dev.latvian.mods.kubejs.recipe.schema.KubeRecipeFactory;
 import net.minecraft.tags.TagKey;

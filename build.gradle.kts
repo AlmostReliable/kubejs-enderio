@@ -27,9 +27,8 @@ dependencies {
     implementation("dev.latvian.mods:kubejs-neoforge:${almostgradle.getProperty("kjsVersion")}")
 
     // EnderIO
-    implementation("com.enderio:enderio-machines:${almostgradle.getProperty("eioVersion")}")
-    implementation("com.enderio:enderio-conduits:${almostgradle.getProperty("eioVersion")}")
-    implementation("com.enderio:enderio-conduits-modded:${almostgradle.getProperty("eioVersion")}") {
+    implementation("com.enderio:enderio:${almostgradle.getProperty("eioVersion")}")
+    implementation("com.enderio:enderio-modded-conduits:${almostgradle.getProperty("eioVersion")}") {
         isTransitive = false
     }
 
