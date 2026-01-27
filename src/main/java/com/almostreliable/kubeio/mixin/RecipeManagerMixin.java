@@ -1,7 +1,7 @@
 package com.almostreliable.kubeio.mixin;
 
 import com.almostreliable.kubeio.KubePlugin;
-import com.enderio.machines.common.blocks.alloy.AlloySmeltingRecipe;
+import com.enderio.enderio.content.machines.alloy.AlloySmeltingRecipe;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import net.minecraft.resources.ResourceLocation;

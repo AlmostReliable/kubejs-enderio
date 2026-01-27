@@ -1,6 +1,6 @@
 package com.almostreliable.kubeio.component;
 
-import com.enderio.base.api.EnderIO;
+import com.enderio.enderio.EnderIO;
 import com.mojang.serialization.Codec;
 import dev.latvian.mods.kubejs.recipe.RecipeScriptContext;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponent;
@@ -12,7 +12,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 public record EnchantmentComponent(RecipeComponentType<?> type) implements RecipeComponent<Holder<Enchantment>> {
 
     public static final RecipeComponentType<Holder<Enchantment>> TYPE = RecipeComponentType.unit(
-        EnderIO.loc("enchantment"),
+        EnderIO.rl("enchantment"),
         EnchantmentComponent::new
     );
 

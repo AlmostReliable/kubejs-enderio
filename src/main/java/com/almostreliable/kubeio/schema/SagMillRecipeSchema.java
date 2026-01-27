@@ -2,8 +2,7 @@ package com.almostreliable.kubeio.schema;
 
 import com.almostreliable.kubeio.component.SagMillOutputItemComponent;
 import com.almostreliable.kubeio.component.SimpleComponents;
-import com.enderio.machines.common.blocks.sag_mill.SagMillingRecipe;
-import com.enderio.machines.data.recipes.SagMillRecipeProvider;
+import com.enderio.enderio.content.machines.sag_mill.SagMillingRecipe;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.ComponentRole;
 import dev.latvian.mods.kubejs.recipe.component.IngredientComponent;
@@ -14,7 +13,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.List;
 
 /**
- * See {@link SagMillingRecipe.Serializer} and {@link SagMillRecipeProvider}.
+ * See {@link SagMillingRecipe.Serializer}.
  */
 public interface SagMillRecipeSchema {
 

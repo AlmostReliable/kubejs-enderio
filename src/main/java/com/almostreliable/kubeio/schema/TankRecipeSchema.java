@@ -2,20 +2,21 @@ package com.almostreliable.kubeio.schema;
 
 import com.almostreliable.kubeio.component.SimpleComponents;
 import com.almostreliable.kubeio.recipe.TankKubeRecipe;
-import com.enderio.machines.common.blocks.fluid_tank.TankRecipe;
-import com.enderio.machines.data.recipes.TankRecipeProvider;
-import dev.latvian.mods.kubejs.recipe.RecipeKey;
-import dev.latvian.mods.kubejs.recipe.component.ComponentRole;
-import dev.latvian.mods.kubejs.recipe.component.FluidStackComponent;
-import dev.latvian.mods.kubejs.recipe.component.IngredientComponent;
-import dev.latvian.mods.kubejs.recipe.component.ItemStackComponent;
-import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
+
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
+
+import com.enderio.enderio.content.storage.fluid_tank.TankRecipe;
+import dev.latvian.mods.kubejs.recipe.RecipeKey;
+import dev.latvian.mods.kubejs.recipe.component.ComponentRole;
+import dev.latvian.mods.kubejs.recipe.component.IngredientComponent;
+import dev.latvian.mods.kubejs.recipe.component.ItemStackComponent;
+import dev.latvian.mods.kubejs.recipe.component.SizedFluidIngredientComponent;
+import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
 
 /**
- * See {@link TankRecipe.Serializer} and {@link TankRecipeProvider}.
+ * See {@link TankRecipe.Serializer}.
  */
 public interface TankRecipeSchema {
 
@@ -25,7 +26,7 @@ public interface TankRecipeSchema {
     RecipeKey<Ingredient> INPUT = IngredientComponent.INGREDIENT
         .key("input", ComponentRole.INPUT)
         .noFunctions();
-    RecipeKey<FluidStack> FLUID = FluidStackComponent.FLUID_STACK
+    RecipeKey<SizedFluidIngredient> FLUID = SizedFluidIngredientComponent.FLAT
         .key("fluid", ComponentRole.OTHER)
         .noFunctions();
     RecipeKey<TankRecipe.Mode> MODE = SimpleComponents.TANK_MODE

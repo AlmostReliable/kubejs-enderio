@@ -1,8 +1,7 @@
 package com.almostreliable.kubeio.schema;
 
 import com.almostreliable.kubeio.recipe.AlloySmelterKubeRecipe;
-import com.enderio.machines.common.blocks.alloy.AlloySmeltingRecipe;
-import com.enderio.machines.data.recipes.AlloyRecipeProvider;
+import com.enderio.enderio.content.machines.alloy.AlloySmeltingRecipe;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.*;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
@@ -12,7 +11,7 @@ import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import java.util.List;
 
 /**
- * See {@link AlloySmeltingRecipe.Serializer} and {@link AlloyRecipeProvider}.
+ * See {@link AlloySmeltingRecipe.Serializer}.
  */
 public interface AlloySmelterRecipeSchema {
 

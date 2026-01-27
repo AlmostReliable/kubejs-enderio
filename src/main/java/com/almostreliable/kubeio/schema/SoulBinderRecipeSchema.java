@@ -1,8 +1,7 @@
 package com.almostreliable.kubeio.schema;
 
 import com.almostreliable.kubeio.component.SimpleComponents;
-import com.enderio.machines.common.blocks.soul_binder.SoulBindingRecipe;
-import com.enderio.machines.data.recipes.SoulBindingRecipeProvider;
+import com.enderio.enderio.content.machines.soul_binder.SoulBindingRecipe;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.*;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
@@ -15,7 +14,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.List;
 
 /**
- * See {@link SoulBindingRecipe.Serializer} and {@link SoulBindingRecipeProvider}.
+ * See {@link SoulBindingRecipe.Serializer}.
  */
 public interface SoulBinderRecipeSchema {
 

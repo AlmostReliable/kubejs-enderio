@@ -2,10 +2,10 @@ package com.almostreliable.kubeio.component;
 
 import com.almostreliable.kubeio.binding.SagMillOutputItem;
 import com.almostreliable.kubeio.mixin.IngredientAccessor;
-import com.almostreliable.kubeio.mixin.SagMillOutputItemAccessor;
 import com.almostreliable.kubeio.mixin.TagValueAccessor;
-import com.enderio.base.api.EnderIO;
-import com.enderio.machines.common.blocks.sag_mill.SagMillingRecipe.OutputItem;
+import com.enderio.enderio.EnderIO;
+import com.enderio.enderio.content.machines.sag_mill.SagMillingRecipe;
+import com.enderio.enderio.content.machines.sag_mill.SagMillingRecipe.OutputItem;
 import com.mojang.serialization.Codec;
 import dev.latvian.mods.kubejs.error.InvalidRecipeComponentValueException;
 import dev.latvian.mods.kubejs.plugin.builtin.wrapper.IngredientWrapper;
@@ -22,14 +22,14 @@ import net.neoforged.neoforge.common.crafting.SizedIngredient;
 public record SagMillOutputItemComponent(RecipeComponentType<?> type) implements RecipeComponent<OutputItem> {
 
     public static final RecipeComponentType<OutputItem> TYPE = RecipeComponentType.unit(
-        EnderIO.loc("sag_mill_output"),
+        EnderIO.rl("sag_mill_output"),
         SagMillOutputItemComponent::new
     );
     private static final OutputItem EMPTY = SagMillOutputItem.kubeio$of(ItemStack.EMPTY);
 
     @Override
     public Codec<OutputItem> codec() {
-        return SagMillOutputItemAccessor.getCodec();
+        return SagMillingRecipe.OutputItem.CODEC;
     }
 
     @Override

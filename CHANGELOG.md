@@ -6,7 +6,9 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 ## Unreleased
-- /
+
+- added support for fluid ingredients in Tank recipes
+- updated to EnderIO 8.1.0 ([#21](https://github.com/AlmostReliable/kubejs-enderio/pull/21))
 
 ## [0.9.0] - 2025-10-28
 

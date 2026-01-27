@@ -35,14 +35,7 @@ ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies."${modId}"]]
-modId = "enderio_machines"
-type = "REQUIRED"
-versionRange = "[${eioVersion},)"
-ordering = "AFTER"
-side = "BOTH"
-
-[[dependencies."${modId}"]]
-modId = "enderio_conduits"
+modId = "enderio"
 type = "REQUIRED"
 versionRange = "[${eioVersion},)"
 ordering = "AFTER"
