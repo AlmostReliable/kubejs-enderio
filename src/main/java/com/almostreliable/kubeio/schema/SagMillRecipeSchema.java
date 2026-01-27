@@ -13,7 +13,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.List;
 
 /**
- * See {@link SagMillingRecipe.Serializer}
+ * See {@link SagMillingRecipe.Serializer}.
  */
 public interface SagMillRecipeSchema {
 
