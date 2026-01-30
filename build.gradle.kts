@@ -24,7 +24,9 @@ repositories {
 
 dependencies {
     // KubeJS
-    implementation("dev.latvian.mods:kubejs-neoforge:${almostgradle.getProperty("kjsVersion")}")
+    implementation("dev.latvian.mods:kubejs-neoforge:${almostgradle.getProperty("kjsVersion")}")?.let {
+        interfaceInjectionData(it)
+    }
 
     // EnderIO
     implementation("com.enderio:enderio:${almostgradle.getProperty("eioVersion")}")
