@@ -6,15 +6,29 @@ import com.almostreliable.kubeio.component.FireCraftingResultComponent;
 import com.almostreliable.kubeio.component.SagMillOutputItemComponent;
 import com.almostreliable.kubeio.component.SimpleComponents;
 import com.almostreliable.kubeio.event.ConduitRegistryEvent;
+import com.almostreliable.kubeio.event.VatReagentModificationEvent;
 import com.almostreliable.kubeio.recipe.AlloySmelterKubeRecipe;
 import com.almostreliable.kubeio.recipe.FireCraftingKubeRecipe;
 import com.almostreliable.kubeio.recipe.TankKubeRecipe;
-import com.almostreliable.kubeio.schema.*;
+import com.almostreliable.kubeio.schema.AlloySmelterRecipeSchema;
+import com.almostreliable.kubeio.schema.EnchanterRecipeSchema;
+import com.almostreliable.kubeio.schema.FireCraftingRecipeSchema;
+import com.almostreliable.kubeio.schema.PaintingRecipeSchema;
+import com.almostreliable.kubeio.schema.SagMillRecipeSchema;
+import com.almostreliable.kubeio.schema.SlicerRecipeSchema;
+import com.almostreliable.kubeio.schema.SoulBinderRecipeSchema;
+import com.almostreliable.kubeio.schema.TankRecipeSchema;
+import com.almostreliable.kubeio.schema.VatRecipeSchema;
+
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.MobCategory;
+
 import com.enderio.core.common.recipes.RecipeTypeSerializerPair;
 import com.enderio.enderio.EnderIO;
 import com.enderio.enderio.content.fire_crafting.FireCraftingRecipe;
 import com.enderio.enderio.content.machines.sag_mill.SagMillingRecipe;
 import com.enderio.enderio.content.storage.fluid_tank.TankRecipe;
+import com.enderio.enderio.foundation.datamap.VatReagent;
 import com.enderio.enderio.init.EIORecipes;
 import dev.latvian.mods.kubejs.event.EventGroup;
 import dev.latvian.mods.kubejs.event.EventGroupRegistry;
@@ -27,8 +41,7 @@ import dev.latvian.mods.kubejs.recipe.schema.RecipeNamespace;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchemaRegistry;
 import dev.latvian.mods.kubejs.script.BindingRegistry;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.MobCategory;
+import dev.latvian.mods.kubejs.script.ScriptType;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -104,40 +117,19 @@ public class KubePlugin implements KubeJSPlugin {
 
     @Override
     public void generateData(KubeDataGenerator generator) {
-        Events.CONDUIT_REGISTRY.post(new ConduitRegistryEvent());
-        ConduitRegistryEvent.CUSTOM_CONDUITS.forEach(generator::json);
-        ConduitRegistryEvent.clear();
-    }
+        if (Events.CONDUIT_REGISTRY.hasListeners()) {
+            Events.CONDUIT_REGISTRY.post(ScriptType.SERVER, new ConduitRegistryEvent());
+            ConduitRegistryEvent.CUSTOM_CONDUITS.forEach(generator::json);
+            ConduitRegistryEvent.clear();
+        }
 
-    // @SuppressWarnings("removal") // TODO: use dynamic recipes
-    // @Override
-    // public void injectRuntimeRecipes(
-    //     RecipesKubeEvent event, RecipeManagerKJS manager, Map<ResourceLocation, RecipeHolder<?>> recipesByName
-    // ) {
-    //     for (ResourceLocation recipeId : SMELTING_RECIPES) {
-    //         var recipe = recipesByName.get(recipeId).value();
-    //         if (!(recipe instanceof AlloySmeltingRecipe alloyRecipe)) {
-    //             continue;
-    //         }
-    //
-    //         var inputs = alloyRecipe.inputs();
-    //         if (inputs.size() != 1 || inputs.getFirst().count() != 1) continue;
-    //
-    //         Ingredient input = inputs.getFirst().ingredient();
-    //         ItemStack output = alloyRecipe.output();
-    //         float experience = alloyRecipe.experience();
-    //         ResourceLocation id = ResourceLocation.tryParse(recipeId.toString() + "_inherited");
-    //         if (id == null) continue;
-    //
-    //         var holder = new RecipeHolder<>(
-    //             id,
-    //             new SmeltingRecipe("", CookingBookCategory.MISC, input, output, experience, 200)
-    //         );
-    //         recipesByName.put(id, holder);
-    //     }
-    //
-    //     SMELTING_RECIPES.clear();
-    // }
+        if (Events.VAT_REAGENTS.hasListeners()) {
+            generator.dataMap(
+                VatReagent.DATA_MAP,
+                map -> Events.VAT_REAGENTS.post(ScriptType.SERVER, new VatReagentModificationEvent(map))
+            );
+        }
+    }
 
     private void registerRecipeSchema(
         RecipeNamespace namespace, Map.Entry<RecipeTypeSerializerPair<?, ?>, RecipeSchema> schemaEntry
@@ -147,7 +139,9 @@ public class KubePlugin implements KubeJSPlugin {
     }
 
     public interface Events {
+
         EventGroup GROUP = EventGroup.of("EnderIOEvents");
         EventHandler CONDUIT_REGISTRY = GROUP.server("conduits", () -> ConduitRegistryEvent.class);
+        EventHandler VAT_REAGENTS = GROUP.server("vatReagents", () -> VatReagentModificationEvent.class);
     }
 }
