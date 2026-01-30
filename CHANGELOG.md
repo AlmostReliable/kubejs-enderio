@@ -6,7 +6,9 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 ## Unreleased
-- /
+
+- added support for adding, modifying, and removing Vat Reagents via a custom event
+- added support for adding Sag Mill Grinding Balls
 
 ## [0.10.0] - 2026-01-27
 
