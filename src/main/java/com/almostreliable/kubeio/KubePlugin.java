@@ -6,7 +6,7 @@ import com.almostreliable.kubeio.component.FireCraftingResultComponent;
 import com.almostreliable.kubeio.component.SagMillOutputItemComponent;
 import com.almostreliable.kubeio.component.SimpleComponents;
 import com.almostreliable.kubeio.event.ConduitRegistryEvent;
-import com.almostreliable.kubeio.event.GrindingBallEvent;
+import com.almostreliable.kubeio.event.GrindingBallModificationEvent;
 import com.almostreliable.kubeio.event.VatReagentModificationEvent;
 import com.almostreliable.kubeio.recipe.AlloySmelterKubeRecipe;
 import com.almostreliable.kubeio.recipe.FireCraftingKubeRecipe;
@@ -129,7 +129,7 @@ public class KubePlugin implements KubeJSPlugin {
 
         if (Events.GRINDING_BALLS.hasListeners()) {
             JsonArray array = new JsonArray();
-            for (var item : GrindingBallEvent.GRINDING_BALLS.keySet()) {
+            for (var item : GrindingBallModificationEvent.GRINDING_BALLS.keySet()) {
                 ResourceLocation itemId = item.kjs$getIdLocation();
                 array.add(itemId.toString());
             }
@@ -138,7 +138,7 @@ public class KubePlugin implements KubeJSPlugin {
 
             ResourceLocation grindingBallTag = EIOTags.Items.GRINDING_BALLS.location();
             generator.json(EnderIO.rl("tags/item/" + grindingBallTag.getPath()), json);
-            GrindingBallEvent.clear();
+            GrindingBallModificationEvent.clear();
         }
 
         if (Events.VAT_REAGENTS.hasListeners()) {
@@ -161,7 +161,7 @@ public class KubePlugin implements KubeJSPlugin {
         EventGroup GROUP = EventGroup.of("EnderIOEvents");
 
         // startup
-        EventHandler GRINDING_BALLS = GROUP.startup("grindingBalls", () -> GrindingBallEvent.class);
+        EventHandler GRINDING_BALLS = GROUP.startup("grindingBalls", () -> GrindingBallModificationEvent.class);
 
         // server
         EventHandler CONDUIT_REGISTRY = GROUP.server("conduits", () -> ConduitRegistryEvent.class);

@@ -1,6 +1,6 @@
 package com.almostreliable.kubeio;
 
-import com.almostreliable.kubeio.event.GrindingBallEvent;
+import com.almostreliable.kubeio.event.GrindingBallModificationEvent;
 import com.almostreliable.kubejs_enderio.ModConstants;
 
 import net.neoforged.bus.api.IEventBus;
@@ -24,8 +24,8 @@ public final class ModInitializer {
 
     private static void onModifyComponents(ModifyDefaultComponentsEvent event) {
         if (KubePlugin.Events.GRINDING_BALLS.hasListeners()) {
-            KubePlugin.Events.GRINDING_BALLS.post(ScriptType.STARTUP, new GrindingBallEvent());
-            for (var grindingBallData : GrindingBallEvent.GRINDING_BALLS.entrySet()) {
+            KubePlugin.Events.GRINDING_BALLS.post(ScriptType.STARTUP, new GrindingBallModificationEvent());
+            for (var grindingBallData : GrindingBallModificationEvent.GRINDING_BALLS.entrySet()) {
                 var item = grindingBallData.getKey();
                 var data = grindingBallData.getValue();
                 event.modify(

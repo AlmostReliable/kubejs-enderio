@@ -9,7 +9,7 @@ import dev.latvian.mods.rhino.util.HideFromJS;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GrindingBallEvent implements KubeEvent {
+public class GrindingBallModificationEvent implements KubeEvent {
 
     @HideFromJS
     public static final Map<Item, GrindingBallData> GRINDING_BALLS = new HashMap<>();
