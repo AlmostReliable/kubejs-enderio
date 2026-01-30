@@ -6,6 +6,7 @@ import com.almostreliable.kubeio.component.FireCraftingResultComponent;
 import com.almostreliable.kubeio.component.SagMillOutputItemComponent;
 import com.almostreliable.kubeio.component.SimpleComponents;
 import com.almostreliable.kubeio.event.ConduitRegistryEvent;
+import com.almostreliable.kubeio.event.GrindingBallEvent;
 import com.almostreliable.kubeio.event.VatReagentModificationEvent;
 import com.almostreliable.kubeio.recipe.AlloySmelterKubeRecipe;
 import com.almostreliable.kubeio.recipe.FireCraftingKubeRecipe;
@@ -29,7 +30,10 @@ import com.enderio.enderio.content.fire_crafting.FireCraftingRecipe;
 import com.enderio.enderio.content.machines.sag_mill.SagMillingRecipe;
 import com.enderio.enderio.content.storage.fluid_tank.TankRecipe;
 import com.enderio.enderio.foundation.datamap.VatReagent;
+import com.enderio.enderio.foundation.tag.EIOTags;
 import com.enderio.enderio.init.EIORecipes;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import dev.latvian.mods.kubejs.event.EventGroup;
 import dev.latvian.mods.kubejs.event.EventGroupRegistry;
 import dev.latvian.mods.kubejs.event.EventHandler;
@@ -123,6 +127,20 @@ public class KubePlugin implements KubeJSPlugin {
             ConduitRegistryEvent.clear();
         }
 
+        if (Events.GRINDING_BALLS.hasListeners()) {
+            JsonArray array = new JsonArray();
+            for (var item : GrindingBallEvent.GRINDING_BALLS.keySet()) {
+                ResourceLocation itemId = item.kjs$getIdLocation();
+                array.add(itemId.toString());
+            }
+            JsonObject json = new JsonObject();
+            json.add("values", array);
+
+            ResourceLocation grindingBallTag = EIOTags.Items.GRINDING_BALLS.location();
+            generator.json(EnderIO.rl("tags/item/" + grindingBallTag.getPath()), json);
+            GrindingBallEvent.clear();
+        }
+
         if (Events.VAT_REAGENTS.hasListeners()) {
             generator.dataMap(
                 VatReagent.DATA_MAP,
@@ -141,6 +159,11 @@ public class KubePlugin implements KubeJSPlugin {
     public interface Events {
 
         EventGroup GROUP = EventGroup.of("EnderIOEvents");
+
+        // startup
+        EventHandler GRINDING_BALLS = GROUP.startup("grindingBalls", () -> GrindingBallEvent.class);
+
+        // server
         EventHandler CONDUIT_REGISTRY = GROUP.server("conduits", () -> ConduitRegistryEvent.class);
         EventHandler VAT_REAGENTS = GROUP.server("vatReagents", () -> VatReagentModificationEvent.class);
     }
