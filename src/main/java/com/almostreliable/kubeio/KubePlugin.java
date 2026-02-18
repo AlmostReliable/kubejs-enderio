@@ -1,6 +1,5 @@
 package com.almostreliable.kubeio;
 
-import com.almostreliable.kubeio.binding.DataComponents;
 import com.almostreliable.kubeio.component.EnchantmentComponent;
 import com.almostreliable.kubeio.component.FireCraftingResultComponent;
 import com.almostreliable.kubeio.component.SagMillOutputItemComponent;
@@ -41,7 +40,6 @@ import dev.latvian.mods.kubejs.generator.KubeDataGenerator;
 import dev.latvian.mods.kubejs.plugin.KubeJSPlugin;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponentTypeRegistry;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeFactoryRegistry;
-import dev.latvian.mods.kubejs.recipe.schema.RecipeNamespace;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchemaRegistry;
 import dev.latvian.mods.kubejs.script.BindingRegistry;
@@ -69,9 +67,6 @@ public class KubePlugin implements KubeJSPlugin {
             registry.add("SagMillOutput", SagMillingRecipe.OutputItem.class);
             registry.add("TankMode", TankRecipe.Mode.class);
         }
-        if (registry.type().isStartup()) {
-            registry.add("EnderIOComponents", DataComponents.class);
-        }
     }
 
     @Override
@@ -93,14 +88,10 @@ public class KubePlugin implements KubeJSPlugin {
 
     @Override
     public void registerRecipeSchemas(RecipeSchemaRegistry registry) {
-        Map<RecipeTypeSerializerPair<?, ?>, RecipeSchema> basicRecipeSchemas = Map.of(
-            EIORecipes.FIRE_CRAFTING, FireCraftingRecipeSchema.SCHEMA
-            // EIORecipes.GRINDING_BALL, GrindingBallRecipeSchema.SCHEMA TODO: migrate to data component system
-        );
-
-        Map<RecipeTypeSerializerPair<?, ?>, RecipeSchema> machineRecipeSchemas = Map.of(
+        Map<RecipeTypeSerializerPair<?, ?>, RecipeSchema> recipeSchemas = Map.of(
             EIORecipes.ALLOY_SMELTING, AlloySmelterRecipeSchema.SCHEMA,
             EIORecipes.ENCHANTING, EnchanterRecipeSchema.SCHEMA,
+            EIORecipes.FIRE_CRAFTING, FireCraftingRecipeSchema.SCHEMA,
             EIORecipes.PAINTING, PaintingRecipeSchema.SCHEMA,
             EIORecipes.SAG_MILLING, SagMillRecipeSchema.SCHEMA,
             EIORecipes.SLICING, SlicerRecipeSchema.SCHEMA,
@@ -109,13 +100,11 @@ public class KubePlugin implements KubeJSPlugin {
             EIORecipes.VAT_FERMENTING, VatRecipeSchema.SCHEMA
         );
 
-        RecipeNamespace namespace = registry.namespace(EnderIO.MOD_ID);
-
-        for (var schemaEntry : basicRecipeSchemas.entrySet()) {
-            registerRecipeSchema(namespace, schemaEntry);
-        }
-        for (var schemaEntry : machineRecipeSchemas.entrySet()) {
-            registerRecipeSchema(namespace, schemaEntry);
+        for (var entry : recipeSchemas.entrySet()) {
+            var recipeType = entry.getKey();
+            var schema = entry.getValue();
+            var id = recipeType.type().getId();
+            registry.register(id, schema);
         }
     }
 
@@ -147,13 +136,6 @@ public class KubePlugin implements KubeJSPlugin {
                 map -> Events.VAT_REAGENTS.post(ScriptType.SERVER, new VatReagentModificationEvent(map))
             );
         }
-    }
-
-    private void registerRecipeSchema(
-        RecipeNamespace namespace, Map.Entry<RecipeTypeSerializerPair<?, ?>, RecipeSchema> schemaEntry
-    ) {
-        String id = schemaEntry.getKey().type().getId().getPath();
-        namespace.register(id, schemaEntry.getValue());
     }
 
     public interface Events {
