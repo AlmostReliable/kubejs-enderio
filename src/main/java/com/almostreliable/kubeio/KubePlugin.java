@@ -1,5 +1,6 @@
 package com.almostreliable.kubeio;
 
+import com.almostreliable.kubeio.builder.CapacitorBuilder;
 import com.almostreliable.kubeio.component.EnchantmentComponent;
 import com.almostreliable.kubeio.component.FireCraftingResultComponent;
 import com.almostreliable.kubeio.component.SagMillOutputItemComponent;
@@ -20,11 +21,13 @@ import com.almostreliable.kubeio.schema.SoulBinderRecipeSchema;
 import com.almostreliable.kubeio.schema.TankRecipeSchema;
 import com.almostreliable.kubeio.schema.VatRecipeSchema;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.MobCategory;
 
 import com.enderio.core.common.recipes.RecipeTypeSerializerPair;
 import com.enderio.enderio.EnderIO;
+import com.enderio.enderio.api.capacitor.CapacitorModifier;
 import com.enderio.enderio.content.fire_crafting.FireCraftingRecipe;
 import com.enderio.enderio.content.machines.sag_mill.SagMillingRecipe;
 import com.enderio.enderio.content.storage.fluid_tank.TankRecipe;
@@ -42,6 +45,7 @@ import dev.latvian.mods.kubejs.recipe.component.RecipeComponentTypeRegistry;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeFactoryRegistry;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchemaRegistry;
+import dev.latvian.mods.kubejs.registry.BuilderTypeRegistry;
 import dev.latvian.mods.kubejs.script.BindingRegistry;
 import dev.latvian.mods.kubejs.script.ScriptType;
 
@@ -59,7 +63,18 @@ public class KubePlugin implements KubeJSPlugin {
     }
 
     @Override
+    public void registerBuilderTypes(BuilderTypeRegistry registry) {
+        registry.of(
+            Registries.ITEM,
+            reg -> reg.add(EnderIO.rl("capacitor"), CapacitorBuilder.class, CapacitorBuilder::new)
+        );
+    }
+
+    @Override
     public void registerBindings(BindingRegistry registry) {
+        if (registry.type().isStartup()) {
+            registry.add("CapacitorModifier", CapacitorModifier.class);
+        }
         if (registry.type().isServer()) {
             registry.add("FireCraftingResult", FireCraftingRecipe.Result.class);
             registry.add("MobCategory", MobCategory.class);

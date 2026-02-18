@@ -6,7 +6,9 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 ## Unreleased
-- /
+
+- added support for registering custom Capacitors ([#23](https://github.com/AlmostReliable/kubejs-enderio/issues/23))
+- changed fire crafting recipes to use proper KubeJS exceptions with source line reporting
 
 ## [0.11.0] - 2026-01-30
 
