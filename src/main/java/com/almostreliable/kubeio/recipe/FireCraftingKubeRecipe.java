@@ -1,11 +1,14 @@
 package com.almostreliable.kubeio.recipe;
 
 import com.almostreliable.kubeio.schema.FireCraftingRecipeSchema;
-import com.enderio.enderio.init.EIORecipes;
-import dev.latvian.mods.kubejs.recipe.KubeRecipe;
-import dev.latvian.mods.kubejs.recipe.schema.KubeRecipeFactory;
+
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
+
+import com.enderio.enderio.init.EIORecipes;
+import dev.latvian.mods.kubejs.error.KubeRuntimeException;
+import dev.latvian.mods.kubejs.recipe.KubeRecipe;
+import dev.latvian.mods.kubejs.recipe.schema.KubeRecipeFactory;
 
 import java.util.ArrayList;
 
@@ -48,7 +51,7 @@ public class FireCraftingKubeRecipe extends KubeRecipe {
         if (baseTags != null) count += baseTags.size();
 
         if (count == 0) {
-            throw new IllegalArgumentException("fire crafting recipe must have at least one base block or tag");
+            throw new KubeRuntimeException("fire crafting recipe must have at least one base block or tag").source(sourceLine);
         }
 
         super.serialize();
