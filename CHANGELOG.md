@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 ## Unreleased
+- /
+
+## [0.12.0] - 2026-02-18
 
 - added support for registering custom Capacitors ([#23](https://github.com/AlmostReliable/kubejs-enderio/issues/23))
 - changed fire crafting recipes to use proper KubeJS exceptions with source line reporting
@@ -111,6 +114,7 @@ Initial 1.20.1 release!
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
 <!-- Versions -->
+[0.12.0]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.21.1-neoforge-0.12.0
 [0.11.0]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.21.1-neoforge-0.11.0
 [0.10.0]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.21.1-neoforge-0.10.0
 [0.9.0]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.21.1-neoforge-0.9.0
