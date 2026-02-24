@@ -2,6 +2,7 @@
   "required": true,
   "minVersion": "0.8.5",
   "package": "com.almostreliable.kubeio.mixin",
+  "refmap": "kubejs_enderio.mixins.refmap.json",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "AlloySmeltingRecipeAccessor",
