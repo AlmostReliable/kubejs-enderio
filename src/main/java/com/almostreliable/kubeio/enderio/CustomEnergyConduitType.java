@@ -1,20 +1,30 @@
 package com.almostreliable.kubeio.enderio;
 
+import com.almostreliable.kubeio.mixin.EnergyConduitDataInvoker;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+
 import com.enderio.api.conduit.ConduitMenuData;
+import com.enderio.api.conduit.ConduitNode;
 import com.enderio.api.conduit.ConduitType;
 import com.enderio.api.conduit.TieredConduit;
 import com.enderio.api.conduit.ticker.ConduitTicker;
 import com.enderio.api.misc.RedstoneControl;
 import com.enderio.conduits.common.conduit.type.energy.EnergyConduitData;
 import com.enderio.conduits.common.conduit.type.energy.EnergyConduitType;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import com.enderio.conduits.common.tag.ConduitTags;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
+
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 public class CustomEnergyConduitType extends TieredConduit<EnergyConduitData> {
 
@@ -82,5 +92,18 @@ public class CustomEnergyConduitType extends TieredConduit<EnergyConduitData> {
     public boolean canBeInSameBlock(ConduitType<?> other) {
         // don't allow simple energy conduit to be in the same block as custom energy conduits
         return !(other instanceof EnergyConduitType) && super.canBeInSameBlock(other);
+    }
+
+    @Override
+    public <K> Optional<LazyOptional<K>> proxyCapability(
+        Capability<K> cap, EnergyConduitData extendedConduitData, Level level, BlockPos pos, @Nullable Direction direction,
+        @Nullable ConduitNode.IOState state
+    ) {
+        if (ForgeCapabilities.ENERGY == cap
+            && (state == null || state.isExtract())
+            && (direction == null || !level.getBlockState(pos.relative(direction)).is(ConduitTags.Blocks.ENERGY_CABLE))) {
+            return Optional.of(((EnergyConduitDataInvoker) extendedConduitData).callGetSelfCap().cast());
+        }
+        return Optional.empty();
     }
 }

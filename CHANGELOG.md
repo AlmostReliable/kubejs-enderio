@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
+## Unreleased
+
+- migrated the project from Architectury Loom to ModDevGradle Legacy
+- changed minimum EnderIO version to 6.2.16-beta
+- fixed custom Energy Conduits not exposing their own energy buffer ([#10](https://github.com/AlmostReliable/kubejs-enderio/issues/10))
+- removed Just Enough Items from optional dependencies
+
 ## [0.6.0] - 2024-09-29
 
 This update adjusts recipe schemas and introduces changes to the Alloy Smelter filtering.
