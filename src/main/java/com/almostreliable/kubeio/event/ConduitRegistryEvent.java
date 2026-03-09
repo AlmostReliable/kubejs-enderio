@@ -9,6 +9,7 @@ import com.enderio.enderio.EnderIO;
 import com.enderio.enderio.api.conduits.Conduit;
 import com.enderio.enderio.content.conduits.type.energy.EnergyConduit;
 import com.enderio.enderio.content.conduits.type.fluid.FluidConduit;
+import com.enderio.enderio.content.conduits.type.item.ItemConduit;
 import com.enderio.modded_conduits.common.modules.appeng.MEConduit;
 import com.enderio.modded_conduits.common.modules.mekanism.chemical.ChemicalConduit;
 import com.google.common.base.Preconditions;
@@ -28,6 +29,10 @@ public class ConduitRegistryEvent implements KubeEvent {
 
     @HideFromJS
     public static final Map<ResourceLocation, JsonElement> CUSTOM_CONDUITS = new HashMap<>();
+
+    public void registerItemConduit(String id, Component name, int transferRate, int networkRate) {
+        CustomConduit.of(id, name).bindInstance((n, tex) -> new ItemConduit(tex, n, transferRate, networkRate));
+    }
 
     public void registerEnergyConduit(String id, Component name, int transferRate) {
         CustomConduit.of(id, name).bindInstance((n, tex) -> new EnergyConduit(tex, n, transferRate));
