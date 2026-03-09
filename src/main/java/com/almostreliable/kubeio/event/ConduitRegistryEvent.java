@@ -1,5 +1,9 @@
 package com.almostreliable.kubeio.event;
 
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.fml.ModList;
+
 import appeng.api.util.AEColor;
 import com.enderio.enderio.EnderIO;
 import com.enderio.enderio.api.conduits.Conduit;
@@ -12,11 +16,12 @@ import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
 import dev.latvian.mods.kubejs.event.KubeEvent;
 import dev.latvian.mods.rhino.util.HideFromJS;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.neoforged.fml.ModList;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.BiFunction;
 
 public class ConduitRegistryEvent implements KubeEvent {
@@ -28,19 +33,17 @@ public class ConduitRegistryEvent implements KubeEvent {
         CustomConduit.of(id, name).bindInstance((n, tex) -> new EnergyConduit(tex, n, transferRate));
     }
 
-    public void registerFluidConduit(
-        String id, Component name, int transferRate, boolean multiFluid, boolean supportPriority
-    ) {
+    public void registerFluidConduit(String id, Component name, int transferRate) {
         CustomConduit.of(id, name)
-            .bindInstance((n, tex) -> new FluidConduit(tex, n, transferRate, multiFluid, supportPriority));
+            .bindInstance((n, tex) -> new FluidConduit(tex, n, transferRate));
     }
 
-    public void registerChemicalConduit(String id, Component name, int transferRate, boolean multiChemical) {
+    public void registerChemicalConduit(String id, Component name, int transferRate) {
         Preconditions.checkArgument(
             ModList.get().isLoaded("mekanism"),
             "mekanism must be loaded to use chemical conduits"
         );
-        CustomConduit.of(id, name).bindInstance((n, tex) -> new ChemicalConduit(tex, n, transferRate, multiChemical));
+        CustomConduit.of(id, name).bindInstance((n, tex) -> new ChemicalConduit(tex, n, transferRate));
     }
 
     public void registerMeConduit(String id, Component name, String color, boolean dense) {

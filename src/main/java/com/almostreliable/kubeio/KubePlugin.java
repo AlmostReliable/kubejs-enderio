@@ -28,14 +28,12 @@ import net.minecraft.world.entity.MobCategory;
 import com.enderio.core.common.recipes.RecipeTypeSerializerPair;
 import com.enderio.enderio.EnderIO;
 import com.enderio.enderio.api.capacitor.CapacitorModifier;
+import com.enderio.enderio.api.components.GrindingBallData;
 import com.enderio.enderio.content.fire_crafting.FireCraftingRecipe;
 import com.enderio.enderio.content.machines.sag_mill.SagMillingRecipe;
 import com.enderio.enderio.content.storage.fluid_tank.TankRecipe;
 import com.enderio.enderio.foundation.datamap.VatReagent;
-import com.enderio.enderio.foundation.tag.EIOTags;
 import com.enderio.enderio.init.EIORecipes;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import dev.latvian.mods.kubejs.event.EventGroup;
 import dev.latvian.mods.kubejs.event.EventGroupRegistry;
 import dev.latvian.mods.kubejs.event.EventHandler;
@@ -132,17 +130,10 @@ public class KubePlugin implements KubeJSPlugin {
         }
 
         if (Events.GRINDING_BALLS.hasListeners()) {
-            JsonArray array = new JsonArray();
-            for (var item : GrindingBallModificationEvent.GRINDING_BALLS.keySet()) {
-                ResourceLocation itemId = item.kjs$getIdLocation();
-                array.add(itemId.toString());
-            }
-            JsonObject json = new JsonObject();
-            json.add("values", array);
-
-            ResourceLocation grindingBallTag = EIOTags.Items.GRINDING_BALLS.location();
-            generator.json(EnderIO.rl("tags/item/" + grindingBallTag.getPath()), json);
-            GrindingBallModificationEvent.clear();
+            generator.dataMap(
+                GrindingBallData.DATA_MAP_TYPE,
+                map -> Events.GRINDING_BALLS.post(ScriptType.SERVER, new GrindingBallModificationEvent(map))
+            );
         }
 
         if (Events.VAT_REAGENTS.hasListeners()) {
@@ -157,11 +148,8 @@ public class KubePlugin implements KubeJSPlugin {
 
         EventGroup GROUP = EventGroup.of("EnderIOEvents");
 
-        // startup
-        EventHandler GRINDING_BALLS = GROUP.startup("grindingBalls", () -> GrindingBallModificationEvent.class);
-
-        // server
         EventHandler CONDUIT_REGISTRY = GROUP.server("conduits", () -> ConduitRegistryEvent.class);
+        EventHandler GRINDING_BALLS = GROUP.server("grindingBalls", () -> GrindingBallModificationEvent.class);
         EventHandler VAT_REAGENTS = GROUP.server("vatReagents", () -> VatReagentModificationEvent.class);
     }
 }

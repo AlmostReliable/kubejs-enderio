@@ -3,25 +3,19 @@ package com.almostreliable.kubeio.event;
 import net.minecraft.world.item.Item;
 
 import com.enderio.enderio.api.components.GrindingBallData;
-import dev.latvian.mods.kubejs.event.KubeEvent;
+import dev.latvian.mods.kubejs.item.ItemPredicate;
+import dev.latvian.mods.kubejs.script.data.VirtualDataMapFile;
 import dev.latvian.mods.rhino.util.HideFromJS;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class GrindingBallModificationEvent implements KubeEvent {
+public class GrindingBallModificationEvent extends SimpleDataMapEvent<GrindingBallData> {
 
     @HideFromJS
-    public static final Map<Item, GrindingBallData> GRINDING_BALLS = new HashMap<>();
-
-    public void add(Item item, float outputMultiplier, float bonusMultiplier, float powerUse, int durability) {
-        var data = new GrindingBallData(outputMultiplier, bonusMultiplier, powerUse, durability);
-        GRINDING_BALLS.put(item, data);
+    public GrindingBallModificationEvent(VirtualDataMapFile<Item, GrindingBallData> dataMap) {
+        super(dataMap);
     }
 
-    @SuppressWarnings("StaticMethodOnlyUsedInOneClass")
-    @HideFromJS
-    public static void clear() {
-        GRINDING_BALLS.clear();
+    public void add(ItemPredicate item, float outputMultiplier, float bonusMultiplier, float powerUse, int durability) {
+        var data = new GrindingBallData(outputMultiplier, bonusMultiplier, powerUse, durability);
+        add(item, data);
     }
 }
