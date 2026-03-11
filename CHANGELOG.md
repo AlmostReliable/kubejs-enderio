@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 ## Unreleased
+- /
+
+## [0.13.0] - 2026-03-11
 
 - updated to EnderIO 8.2.0 ([#24](https://github.com/AlmostReliable/kubejs-enderio/issues/24))
 - added function in Conduit registry event to register custom item conduits
@@ -118,6 +121,7 @@ Initial 1.20.1 release!
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
 <!-- Versions -->
+[0.13.0]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.21.1-neoforge-0.13.0
 [0.12.0]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.21.1-neoforge-0.12.0
 [0.11.0]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.21.1-neoforge-0.11.0
 [0.10.0]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.21.1-neoforge-0.10.0
