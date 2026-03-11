@@ -5,7 +5,7 @@ import com.almostreliable.kubeio.component.EnchantmentComponent;
 import com.almostreliable.kubeio.component.FireCraftingResultComponent;
 import com.almostreliable.kubeio.component.SagMillOutputItemComponent;
 import com.almostreliable.kubeio.component.SimpleComponents;
-import com.almostreliable.kubeio.event.ConduitRegistryEvent;
+import com.almostreliable.kubeio.event.ConduitRegistrationEvent;
 import com.almostreliable.kubeio.event.GrindingBallModificationEvent;
 import com.almostreliable.kubeio.event.VatReagentModificationEvent;
 import com.almostreliable.kubeio.recipe.AlloySmelterKubeRecipe;
@@ -124,9 +124,9 @@ public class KubePlugin implements KubeJSPlugin {
     @Override
     public void generateData(KubeDataGenerator generator) {
         if (Events.CONDUIT_REGISTRY.hasListeners()) {
-            Events.CONDUIT_REGISTRY.post(ScriptType.SERVER, new ConduitRegistryEvent());
-            ConduitRegistryEvent.CUSTOM_CONDUITS.forEach(generator::json);
-            ConduitRegistryEvent.clear();
+            Events.CONDUIT_REGISTRY.post(ScriptType.SERVER, new ConduitRegistrationEvent());
+            ConduitRegistrationEvent.CUSTOM_CONDUITS.forEach(generator::json);
+            ConduitRegistrationEvent.clear();
         }
 
         if (Events.GRINDING_BALLS.hasListeners()) {
@@ -148,7 +148,7 @@ public class KubePlugin implements KubeJSPlugin {
 
         EventGroup GROUP = EventGroup.of("EnderIOEvents");
 
-        EventHandler CONDUIT_REGISTRY = GROUP.server("conduits", () -> ConduitRegistryEvent.class);
+        EventHandler CONDUIT_REGISTRY = GROUP.server("conduits", () -> ConduitRegistrationEvent.class);
         EventHandler GRINDING_BALLS = GROUP.server("grindingBalls", () -> GrindingBallModificationEvent.class);
         EventHandler VAT_REAGENTS = GROUP.server("vatReagents", () -> VatReagentModificationEvent.class);
     }

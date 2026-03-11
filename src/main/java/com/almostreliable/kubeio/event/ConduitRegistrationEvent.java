@@ -29,7 +29,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
 
-public class ConduitRegistryEvent implements KubeEvent {
+public class ConduitRegistrationEvent implements KubeEvent {
 
     @HideFromJS
     public static final Map<ResourceLocation, JsonElement> CUSTOM_CONDUITS = new HashMap<>();
