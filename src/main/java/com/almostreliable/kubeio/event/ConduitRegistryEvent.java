@@ -15,7 +15,10 @@ import com.enderio.modded_conduits.common.modules.mekanism.chemical.ChemicalCond
 import com.google.common.base.Preconditions;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
+import dev.latvian.mods.kubejs.error.KubeRuntimeException;
 import dev.latvian.mods.kubejs.event.KubeEvent;
+import dev.latvian.mods.kubejs.script.SourceLine;
+import dev.latvian.mods.rhino.Context;
 import dev.latvian.mods.rhino.util.HideFromJS;
 
 import java.util.HashMap;
@@ -30,35 +33,55 @@ public class ConduitRegistryEvent implements KubeEvent {
     @HideFromJS
     public static final Map<ResourceLocation, JsonElement> CUSTOM_CONDUITS = new HashMap<>();
 
-    public void registerItemConduit(String id, Component name, int transferRate, int networkRate) {
-        CustomConduit.of(id, name).bindInstance((n, tex) -> new ItemConduit(tex, n, transferRate, networkRate));
+    public void registerItemConduit(Context ctx, String id, Component name, int transferRate, int networkRate) {
+        try {
+            CustomConduit.of(id, name).bindInstance((n, tex) -> new ItemConduit(tex, n, transferRate, networkRate));
+        } catch (Exception e) {
+            throw new KubeRuntimeException(e).source(SourceLine.of(ctx));
+        }
     }
 
-    public void registerEnergyConduit(String id, Component name, int transferRate) {
-        CustomConduit.of(id, name).bindInstance((n, tex) -> new EnergyConduit(tex, n, transferRate));
+    public void registerEnergyConduit(Context ctx, String id, Component name, int transferRate) {
+        try {
+            CustomConduit.of(id, name).bindInstance((n, tex) -> new EnergyConduit(tex, n, transferRate));
+        } catch (Exception e) {
+            throw new KubeRuntimeException(e).source(SourceLine.of(ctx));
+        }
     }
 
-    public void registerFluidConduit(String id, Component name, int transferRate) {
-        CustomConduit.of(id, name)
-            .bindInstance((n, tex) -> new FluidConduit(tex, n, transferRate));
+    public void registerFluidConduit(Context ctx, String id, Component name, int transferRate) {
+        try {
+            CustomConduit.of(id, name)
+                .bindInstance((n, tex) -> new FluidConduit(tex, n, transferRate));
+        } catch (Exception e) {
+            throw new KubeRuntimeException(e).source(SourceLine.of(ctx));
+        }
     }
 
-    public void registerChemicalConduit(String id, Component name, int transferRate) {
-        Preconditions.checkArgument(
-            ModList.get().isLoaded("mekanism"),
-            "mekanism must be loaded to use chemical conduits"
-        );
-        CustomConduit.of(id, name).bindInstance((n, tex) -> new ChemicalConduit(tex, n, transferRate));
+    public void registerChemicalConduit(Context ctx, String id, Component name, int transferRate) {
+        try {
+            Preconditions.checkArgument(
+                ModList.get().isLoaded("mekanism"),
+                "mekanism must be loaded to use chemical conduits"
+            );
+            CustomConduit.of(id, name).bindInstance((n, tex) -> new ChemicalConduit(tex, n, transferRate));
+        } catch (Exception e) {
+            throw new KubeRuntimeException(e).source(SourceLine.of(ctx));
+        }
     }
 
-    public void registerMeConduit(String id, Component name, String color, boolean dense) {
-        Preconditions.checkArgument(
-            Ae2Integration.isLoaded(),
-            "applied energistics 2 must be loaded to use me conduits"
-        );
+    public void registerMeConduit(Context ctx, String id, Component name, String color, boolean dense) {
+        try {
+            Preconditions.checkArgument(
+                Ae2Integration.isLoaded(),
+                "applied energistics 2 must be loaded to use me conduits"
+            );
 
-        var conduitFactory = Ae2Integration.createFactory(color, dense);
-        CustomConduit.of(id, name).bindInstance(conduitFactory);
+            var conduitFactory = Ae2Integration.createFactory(color, dense);
+            CustomConduit.of(id, name).bindInstance(conduitFactory);
+        } catch (Exception e) {
+            throw new KubeRuntimeException(e).source(SourceLine.of(ctx));
+        }
     }
 
     @SuppressWarnings("StaticMethodOnlyUsedInOneClass")

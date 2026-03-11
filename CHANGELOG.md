@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning].
 
 - updated to EnderIO 8.2.0 ([#24](https://github.com/AlmostReliable/kubejs-enderio/issues/24))
 - added function in Conduit registry event to register custom item conduits
+- added proper error handling with source line reporting to Conduit registry event
 - changed Grinding Ball event from startup to server type
 
 ## [0.12.0] - 2026-02-18
