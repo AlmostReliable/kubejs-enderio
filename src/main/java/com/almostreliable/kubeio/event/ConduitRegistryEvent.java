@@ -4,6 +4,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.fml.ModList;
 
+import appeng.api.ids.AEConstants;
 import appeng.api.util.AEColor;
 import com.enderio.enderio.EnderIO;
 import com.enderio.enderio.api.conduits.Conduit;
@@ -126,7 +127,7 @@ public class ConduitRegistryEvent implements KubeEvent {
         }
 
         private static boolean isLoaded() {
-            return ModList.get().isLoaded("ae2");
+            return ModList.get().isLoaded(AEConstants.MOD_ID);
         }
     }
 }
