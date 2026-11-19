@@ -42,7 +42,7 @@ ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies."${modId}"]]
-modId = "enderio_conduits_modded"
+modId = "enderio_modded_conduits"
 type = "OPTIONAL"
 versionRange = "[${eioVersion},)"
 ordering = "AFTER"
