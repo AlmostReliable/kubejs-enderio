@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+- /
+
+## [0.15.0] - 2026-11-19
 
 - updated to Minecraft 26.1.2 and EnderIO 9.0.7
 
@@ -128,6 +131,7 @@ Please read the [wiki](https://github.com/AlmostReliable/kubejs-enderio/wiki) fo
 Initial 1.20.1 release!
 
 <!-- Versions -->
+[0.15.0]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v26.1.2-neoforge-0.15.0
 [0.14.0]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.21.1-neoforge-0.14.0
 [0.13.0]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.21.1-neoforge-0.13.0
 [0.12.0]: https://github.com/AlmostReliable/kubejs-enderio/releases/tag/v1.21.1-neoforge-0.12.0
