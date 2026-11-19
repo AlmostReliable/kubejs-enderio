@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning].
 ## Unreleased
 
 - updated to EnderIO 8.2.14
+- added `copyInputComponents` function to Soul Binding recipes
+- fixed Soul Binding recipe experience being a float instead of an integer
+- fixed Soul Binding recipe entity type accepting tags instead of entity type ids
+- fixed Soul Binding recipes accepting unknown soul data types which crashes the Soul Binder
 
 ## [0.13.0] - 2026-03-11
 

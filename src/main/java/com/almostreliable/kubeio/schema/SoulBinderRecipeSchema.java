@@ -1,12 +1,14 @@
 package com.almostreliable.kubeio.schema;
 
+import com.almostreliable.kubeio.component.EntityTypeIdComponent;
 import com.almostreliable.kubeio.component.SimpleComponents;
+import com.almostreliable.kubeio.component.SoulDataComponent;
+import com.almostreliable.kubeio.recipe.SoulBinderKubeRecipe;
 import com.enderio.enderio.content.machines.soul_binder.SoulBindingRecipe;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.*;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -28,11 +30,11 @@ public interface SoulBinderRecipeSchema {
         .key("energy", ComponentRole.OTHER)
         .optional(2_000)
         .alwaysWrite();
-    RecipeKey<Float> EXPERIENCE = NumberComponent.FLOAT
+    RecipeKey<Integer> EXPERIENCE = NumberComponent.INT
         .key("experience", ComponentRole.OTHER)
-        .optional(5f)
+        .optional(5)
         .alwaysWrite();
-    RecipeKey<TagKey<EntityType<?>>> ENTITY_TYPE = TagKeyComponent.ENTITY_TYPE
+    RecipeKey<ResourceLocation> ENTITY_TYPE = EntityTypeIdComponent.TYPE
         .key("entity_type", ComponentRole.OTHER)
         .functionNames(List.of("entityType"))
         .defaultOptional()
@@ -42,11 +44,25 @@ public interface SoulBinderRecipeSchema {
         .functionNames(List.of("mobCategory"))
         .defaultOptional()
         .exclude();
-    RecipeKey<String> SOUL_DATA = StringComponent.STRING
+    RecipeKey<String> SOUL_DATA = SoulDataComponent.TYPE
         .key("soul_data", ComponentRole.OTHER)
         .functionNames(List.of("soulData"))
         .defaultOptional()
         .exclude();
+    RecipeKey<Boolean> COPY_INPUT_COMPONENTS = BooleanComponent.BOOLEAN
+        .key("copyInputComponents", ComponentRole.OTHER)
+        .optional(false)
+        .noFunctions()
+        .exclude();
 
-    RecipeSchema SCHEMA = new RecipeSchema(OUTPUT, INPUT, ENERGY, EXPERIENCE, ENTITY_TYPE, MOB_CATEGORY, SOUL_DATA);
+    RecipeSchema SCHEMA = new RecipeSchema(
+        OUTPUT,
+        INPUT,
+        ENERGY,
+        EXPERIENCE,
+        ENTITY_TYPE,
+        MOB_CATEGORY,
+        SOUL_DATA,
+        COPY_INPUT_COMPONENTS
+    ).factory(SoulBinderKubeRecipe.FACTORY);
 }

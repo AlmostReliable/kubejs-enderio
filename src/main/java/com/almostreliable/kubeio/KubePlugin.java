@@ -2,14 +2,17 @@ package com.almostreliable.kubeio;
 
 import com.almostreliable.kubeio.builder.CapacitorBuilder;
 import com.almostreliable.kubeio.component.EnchantmentComponent;
+import com.almostreliable.kubeio.component.EntityTypeIdComponent;
 import com.almostreliable.kubeio.component.FireCraftingResultComponent;
 import com.almostreliable.kubeio.component.SagMillOutputItemComponent;
 import com.almostreliable.kubeio.component.SimpleComponents;
+import com.almostreliable.kubeio.component.SoulDataComponent;
 import com.almostreliable.kubeio.event.ConduitRegistrationEvent;
 import com.almostreliable.kubeio.event.GrindingBallModificationEvent;
 import com.almostreliable.kubeio.event.VatReagentModificationEvent;
 import com.almostreliable.kubeio.recipe.AlloySmelterKubeRecipe;
 import com.almostreliable.kubeio.recipe.FireCraftingKubeRecipe;
+import com.almostreliable.kubeio.recipe.SoulBinderKubeRecipe;
 import com.almostreliable.kubeio.recipe.TankKubeRecipe;
 import com.almostreliable.kubeio.schema.AlloySmelterRecipeSchema;
 import com.almostreliable.kubeio.schema.EnchanterRecipeSchema;
@@ -88,14 +91,17 @@ public class KubePlugin implements KubeJSPlugin {
         registry.register(SimpleComponents.MOB_CATEGORY);
         registry.register(SimpleComponents.TANK_MODE);
         registry.register(EnchantmentComponent.TYPE);
+        registry.register(EntityTypeIdComponent.TYPE);
         registry.register(FireCraftingResultComponent.TYPE);
         registry.register(SagMillOutputItemComponent.TYPE);
+        registry.register(SoulDataComponent.TYPE);
     }
 
     @Override
     public void registerRecipeFactories(RecipeFactoryRegistry registry) {
         registry.register(AlloySmelterKubeRecipe.FACTORY);
         registry.register(FireCraftingKubeRecipe.FACTORY);
+        registry.register(SoulBinderKubeRecipe.FACTORY);
         registry.register(TankKubeRecipe.FACTORY);
     }
 
