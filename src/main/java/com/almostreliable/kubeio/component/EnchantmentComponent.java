@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponent;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponentType;
 import dev.latvian.mods.rhino.type.TypeInfo;
+
 import net.minecraft.core.Holder;
 import net.minecraft.world.item.enchantment.Enchantment;
 

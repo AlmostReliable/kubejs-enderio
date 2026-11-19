@@ -1,6 +1,7 @@
 package com.almostreliable.kubeio.component;
 
 import com.almostreliable.kubeio.binding.FireCraftingResult;
+
 import com.enderio.enderio.EnderIO;
 import com.enderio.enderio.content.fire_crafting.FireCraftingRecipe.Result;
 import com.mojang.serialization.Codec;
@@ -9,6 +10,7 @@ import dev.latvian.mods.kubejs.recipe.RecipeScriptContext;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponent;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponentType;
 import dev.latvian.mods.rhino.type.TypeInfo;
+
 import net.minecraft.world.item.ItemStack;
 
 public record FireCraftingResultComponent(RecipeComponentType<?> type) implements RecipeComponent<Result> {

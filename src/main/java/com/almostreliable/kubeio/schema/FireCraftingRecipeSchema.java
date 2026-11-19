@@ -2,6 +2,7 @@ package com.almostreliable.kubeio.schema;
 
 import com.almostreliable.kubeio.component.FireCraftingResultComponent;
 import com.almostreliable.kubeio.recipe.FireCraftingKubeRecipe;
+
 import com.enderio.enderio.content.fire_crafting.FireCraftingRecipe;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.BlockComponent;
@@ -10,6 +11,7 @@ import dev.latvian.mods.kubejs.recipe.component.ResourceKeyComponent;
 import dev.latvian.mods.kubejs.recipe.component.TagKeyComponent;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
 import dev.latvian.mods.kubejs.util.IntBounds;
+
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.Level;

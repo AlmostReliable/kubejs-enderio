@@ -1,12 +1,14 @@
 package com.almostreliable.kubeio.schema;
 
 import com.almostreliable.kubeio.component.EnchantmentComponent;
+
 import com.enderio.enderio.content.enchanter.EnchanterRecipe;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.ComponentRole;
 import dev.latvian.mods.kubejs.recipe.component.NumberComponent;
 import dev.latvian.mods.kubejs.recipe.component.SizedIngredientComponent;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
+
 import net.minecraft.core.Holder;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;

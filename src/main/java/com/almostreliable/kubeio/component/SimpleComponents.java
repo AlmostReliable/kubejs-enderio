@@ -6,6 +6,7 @@ import com.enderio.enderio.content.machines.sag_mill.SagMillingRecipe;
 import com.enderio.enderio.content.storage.fluid_tank.TankRecipe;
 import dev.latvian.mods.kubejs.recipe.component.EnumComponent;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponentType;
+
 import net.minecraft.world.entity.MobCategory;
 
 public interface SimpleComponents {

@@ -4,10 +4,12 @@ import com.almostreliable.kubeio.component.EntityTypeIdComponent;
 import com.almostreliable.kubeio.component.SimpleComponents;
 import com.almostreliable.kubeio.component.SoulDataComponent;
 import com.almostreliable.kubeio.recipe.SoulBinderKubeRecipe;
+
 import com.enderio.enderio.content.machines.soul_binder.SoulBindingRecipe;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.*;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.ItemStack;

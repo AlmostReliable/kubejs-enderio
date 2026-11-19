@@ -2,6 +2,7 @@ package com.almostreliable.kubeio.recipe;
 
 import com.almostreliable.kubeio.KubePlugin;
 import com.almostreliable.kubeio.schema.AlloySmelterRecipeSchema;
+
 import com.enderio.enderio.init.EIORecipes;
 import dev.latvian.mods.kubejs.recipe.KubeRecipe;
 import dev.latvian.mods.kubejs.recipe.schema.KubeRecipeFactory;
