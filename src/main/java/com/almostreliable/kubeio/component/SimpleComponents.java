@@ -1,6 +1,7 @@
 package com.almostreliable.kubeio.component;
 
 import com.enderio.enderio.EnderIO;
+import com.enderio.enderio.content.machines.obelisks.weather.WeatherChangeRecipe;
 import com.enderio.enderio.content.machines.sag_mill.SagMillingRecipe;
 import com.enderio.enderio.content.storage.fluid_tank.TankRecipe;
 import dev.latvian.mods.kubejs.recipe.component.EnumComponent;
@@ -23,5 +24,10 @@ public interface SimpleComponents {
         EnderIO.rl("tank_mode"),
         TankRecipe.Mode.class,
         TankRecipe.Mode.CODEC
+    );
+    RecipeComponentType<WeatherChangeRecipe.WeatherMode> WEATHER_MODE = EnumComponent.of(
+        EnderIO.rl("weather_mode"),
+        WeatherChangeRecipe.WeatherMode.class,
+        WeatherChangeRecipe.WeatherMode.CODEC
     );
 }

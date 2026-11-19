@@ -23,6 +23,7 @@ import com.almostreliable.kubeio.schema.SlicerRecipeSchema;
 import com.almostreliable.kubeio.schema.SoulBinderRecipeSchema;
 import com.almostreliable.kubeio.schema.TankRecipeSchema;
 import com.almostreliable.kubeio.schema.VatRecipeSchema;
+import com.almostreliable.kubeio.schema.WeatherChangeRecipeSchema;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -33,6 +34,7 @@ import com.enderio.enderio.EnderIO;
 import com.enderio.enderio.api.capacitor.CapacitorModifier;
 import com.enderio.enderio.api.components.GrindingBallData;
 import com.enderio.enderio.content.fire_crafting.FireCraftingRecipe;
+import com.enderio.enderio.content.machines.obelisks.weather.WeatherChangeRecipe;
 import com.enderio.enderio.content.machines.sag_mill.SagMillingRecipe;
 import com.enderio.enderio.content.storage.fluid_tank.TankRecipe;
 import com.enderio.enderio.foundation.datamap.VatReagent;
@@ -82,6 +84,7 @@ public class KubePlugin implements KubeJSPlugin {
             registry.add("SagMillBonus", SagMillingRecipe.BonusType.class);
             registry.add("SagMillOutput", SagMillingRecipe.OutputItem.class);
             registry.add("TankMode", TankRecipe.Mode.class);
+            registry.add("WeatherMode", WeatherChangeRecipe.WeatherMode.class);
         }
     }
 
@@ -90,6 +93,7 @@ public class KubePlugin implements KubeJSPlugin {
         registry.register(SimpleComponents.BOUS_TYPE);
         registry.register(SimpleComponents.MOB_CATEGORY);
         registry.register(SimpleComponents.TANK_MODE);
+        registry.register(SimpleComponents.WEATHER_MODE);
         registry.register(EnchantmentComponent.TYPE);
         registry.register(EntityTypeIdComponent.TYPE);
         registry.register(FireCraftingResultComponent.TYPE);
@@ -116,7 +120,8 @@ public class KubePlugin implements KubeJSPlugin {
             EIORecipes.SLICING, SlicerRecipeSchema.SCHEMA,
             EIORecipes.SOUL_BINDING, SoulBinderRecipeSchema.SCHEMA,
             EIORecipes.TANK, TankRecipeSchema.SCHEMA,
-            EIORecipes.VAT_FERMENTING, VatRecipeSchema.SCHEMA
+            EIORecipes.VAT_FERMENTING, VatRecipeSchema.SCHEMA,
+            EIORecipes.WEATHER_CHANGE, WeatherChangeRecipeSchema.SCHEMA
         );
 
         for (var entry : recipeSchemas.entrySet()) {
