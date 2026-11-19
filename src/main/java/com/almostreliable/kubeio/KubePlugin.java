@@ -9,6 +9,7 @@ import com.almostreliable.kubeio.component.SimpleComponents;
 import com.almostreliable.kubeio.component.SoulDataComponent;
 import com.almostreliable.kubeio.event.ConduitRegistrationEvent;
 import com.almostreliable.kubeio.event.GrindingBallModificationEvent;
+import com.almostreliable.kubeio.event.RangeExtenderModificationEvent;
 import com.almostreliable.kubeio.event.VatReagentModificationEvent;
 import com.almostreliable.kubeio.recipe.AlloySmelterKubeRecipe;
 import com.almostreliable.kubeio.recipe.FireCraftingKubeRecipe;
@@ -37,6 +38,7 @@ import com.enderio.enderio.content.fire_crafting.FireCraftingRecipe;
 import com.enderio.enderio.content.machines.obelisks.weather.WeatherChangeRecipe;
 import com.enderio.enderio.content.machines.sag_mill.SagMillingRecipe;
 import com.enderio.enderio.content.storage.fluid_tank.TankRecipe;
+import com.enderio.enderio.foundation.datamap.RangeExtender;
 import com.enderio.enderio.foundation.datamap.VatReagent;
 import com.enderio.enderio.init.EIORecipes;
 import dev.latvian.mods.kubejs.event.EventGroup;
@@ -153,6 +155,13 @@ public class KubePlugin implements KubeJSPlugin {
                 map -> Events.VAT_REAGENTS.post(ScriptType.SERVER, new VatReagentModificationEvent(map))
             );
         }
+
+        if (Events.RANGE_EXTENDERS.hasListeners()) {
+            generator.dataMap(
+                RangeExtender.DATA_MAP,
+                map -> Events.RANGE_EXTENDERS.post(ScriptType.SERVER, new RangeExtenderModificationEvent(map))
+            );
+        }
     }
 
     public interface Events {
@@ -162,5 +171,6 @@ public class KubePlugin implements KubeJSPlugin {
         EventHandler CONDUIT_REGISTRY = GROUP.server("conduits", () -> ConduitRegistrationEvent.class);
         EventHandler GRINDING_BALLS = GROUP.server("grindingBalls", () -> GrindingBallModificationEvent.class);
         EventHandler VAT_REAGENTS = GROUP.server("vatReagents", () -> VatReagentModificationEvent.class);
+        EventHandler RANGE_EXTENDERS = GROUP.server("rangeExtenders", () -> RangeExtenderModificationEvent.class);
     }
 }
