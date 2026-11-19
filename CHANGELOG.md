@@ -6,7 +6,8 @@ The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
 ## Unreleased
-- /
+
+- updated to EnderIO 8.2.14
 
 ## [0.13.0] - 2026-03-11
 
