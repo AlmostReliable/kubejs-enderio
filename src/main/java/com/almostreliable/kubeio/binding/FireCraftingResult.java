@@ -6,6 +6,7 @@ import com.enderio.enderio.content.fire_crafting.FireCraftingRecipe;
 import dev.latvian.mods.rhino.util.RemapPrefixForJS;
 
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 
 /**
  * Implemented on {@link FireCraftingResultMixin} to add utility methods.
@@ -27,6 +28,7 @@ public interface FireCraftingResult {
     }
 
     static FireCraftingRecipe.Result kubeio$of(ItemStack item, int minCount, int maxCount, float chance) {
-        return new FireCraftingRecipe.Result(item, minCount, maxCount, chance);
+        var template = ItemStackTemplate.fromNonEmptyStack(item);
+        return new FireCraftingRecipe.Result(template, minCount, maxCount, chance);
     }
 }

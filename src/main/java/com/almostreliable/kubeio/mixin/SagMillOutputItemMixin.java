@@ -8,7 +8,7 @@ import dev.latvian.mods.rhino.util.RemapForJS;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -17,8 +17,9 @@ import org.spongepowered.asm.mixin.throwables.MixinError;
 @Mixin(SagMillingRecipe.OutputItem.class)
 public abstract class SagMillOutputItemMixin implements SagMillOutputItem {
 
+    @HideFromJS
     @Shadow
-    public static SagMillingRecipe.OutputItem of(ItemStack item, float chance, boolean optional) {
+    public static SagMillingRecipe.OutputItem of(ItemStackTemplate item, float chance, boolean optional) {
         throw new MixinError();
     }
 

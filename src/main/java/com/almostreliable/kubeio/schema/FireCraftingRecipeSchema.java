@@ -25,8 +25,7 @@ import java.util.List;
  */
 public interface FireCraftingRecipeSchema {
 
-    RecipeKey<List<FireCraftingRecipe.Result>> RESULTS = FireCraftingResultComponent.TYPE
-        .instance()
+    RecipeKey<List<FireCraftingRecipe.Result>> RESULTS = FireCraftingResultComponent.INSTANCE
         .asList()
         .key("results", ComponentRole.OUTPUT)
         .noFunctions();
@@ -36,14 +35,12 @@ public interface FireCraftingRecipeSchema {
         .optional(Blocks.AIR)
         .exclude();
     RecipeKey<List<Block>> BASE_BLOCKS = BlockComponent.OPTIONAL_BLOCK
-        .instance()
         .asList()
         .key("base_blocks", ComponentRole.INPUT)
         .defaultOptional()
         .noFunctions()
         .exclude();
     RecipeKey<List<TagKey<Block>>> BASE_TAGS = TagKeyComponent.BLOCK
-        .instance()
         .asList()
         .withBounds(IntBounds.OPTIONAL)
         .key("base_tags", ComponentRole.INPUT)
@@ -51,7 +48,6 @@ public interface FireCraftingRecipeSchema {
         .noFunctions()
         .exclude();
     RecipeKey<List<ResourceKey<Level>>> DIMENSIONS = ResourceKeyComponent.DIMENSION
-        .instance()
         .asList()
         .key("dimensions", ComponentRole.OTHER)
         .optional(List.of(Level.OVERWORLD))

@@ -2,8 +2,8 @@ package com.almostreliable.kubeio.event;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 
 import com.enderio.enderio.content.machines.powered_spawner.MobSpawnMode;
 import com.enderio.enderio.foundation.souldata.EngineSoul;
@@ -29,44 +29,44 @@ public class SoulDataModificationEvent implements KubeEvent {
 
     private static final Map<SoulDataReloadListener<?>, SoulDataChanges<?>> CHANGES_BY_LISTENER = new HashMap<>();
 
-    public void spawner(Context cx, ResourceLocation entity, int power, MobSpawnMode spawnMode) {
+    public void spawner(Context cx, Identifier entity, int power, MobSpawnMode spawnMode) {
         validateEntity(cx, entity);
         var soulData = new SpawnerSoul.SoulData(entity, power, spawnMode);
-        getChanges(SpawnerSoul.SPAWNER).add(soulData);
+        getChanges(SpawnerSoul.RELOAD_LISTENER).add(soulData);
     }
 
-    public void spawner(Context cx, ResourceLocation entity, int power) {
+    public void spawner(Context cx, Identifier entity, int power) {
         spawner(cx, entity, power, MobSpawnMode.NEW);
     }
 
-    public void engine(Context cx, ResourceLocation entity, String fluid, int powerPerMb, int ticksPerMb) {
+    public void engine(Context cx, Identifier entity, String fluid, int powerPerMb, int ticksPerMb) {
         validateEntity(cx, entity);
         validateFluid(cx, fluid);
         var soulData = new EngineSoul.SoulData(entity, fluid, powerPerMb, ticksPerMb);
-        getChanges(EngineSoul.ENGINE).add(soulData);
+        getChanges(EngineSoul.RELOAD_LISTENER).add(soulData);
     }
 
-    public void farm(Context cx, ResourceLocation entity, float bonemeal, int seeds, float power) {
+    public void farm(Context cx, Identifier entity, float bonemeal, int seeds, float power) {
         validateEntity(cx, entity);
         var soulData = new FarmSoul.SoulData(entity, bonemeal, seeds, power);
-        getChanges(FarmSoul.FARM).add(soulData);
+        getChanges(FarmSoul.RELOAD_LISTENER).add(soulData);
     }
 
-    public void solar(Context cx, ResourceLocation entity, boolean daytime, boolean nighttime, ResourceLocation dimension) {
+    public void solar(Context cx, Identifier entity, boolean daytime, boolean nighttime, Identifier dimension) {
         validateEntity(cx, entity);
         var dimensionKey = ResourceKey.create(Registries.DIMENSION, dimension);
         var level = Optional.of(dimensionKey);
         var soulData = new SolarSoul.SoulData(entity, daytime, nighttime, level);
-        getChanges(SolarSoul.SOLAR).add(soulData);
+        getChanges(SolarSoul.RELOAD_LISTENER).add(soulData);
     }
 
-    public void solar(Context cx, ResourceLocation entity, boolean daytime, boolean nighttime) {
+    public void solar(Context cx, Identifier entity, boolean daytime, boolean nighttime) {
         validateEntity(cx, entity);
         var soulData = new SolarSoul.SoulData(entity, daytime, nighttime, Optional.empty());
-        getChanges(SolarSoul.SOLAR).add(soulData);
+        getChanges(SolarSoul.RELOAD_LISTENER).add(soulData);
     }
 
-    public void remove(Context cx, String type, ResourceLocation entity) {
+    public void remove(Context cx, String type, Identifier entity) {
         var listener = getListener(cx, type);
         getChanges(listener).remove(entity);
     }
@@ -105,7 +105,7 @@ public class SoulDataModificationEvent implements KubeEvent {
         return listener;
     }
 
-    private static void validateEntity(Context cx, ResourceLocation entity) {
+    private static void validateEntity(Context cx, Identifier entity) {
         if (BuiltInRegistries.ENTITY_TYPE.containsKey(entity)) return;
         throw error(cx, "unknown entity type: " + entity);
     }
@@ -113,7 +113,7 @@ public class SoulDataModificationEvent implements KubeEvent {
     private static void validateFluid(Context cx, String fluid) {
         var isTag = fluid.startsWith("#");
         var idString = isTag ? fluid.substring(1) : fluid;
-        var id = ResourceLocation.tryParse(idString);
+        var id = Identifier.tryParse(idString);
         if (id == null) {
             throw error(cx, "invalid fluid: " + fluid);
         }
@@ -128,8 +128,8 @@ public class SoulDataModificationEvent implements KubeEvent {
 
     private static final class SoulDataChanges<T extends SoulData> {
 
-        private final Map<ResourceLocation, T> additionsByEntity = new HashMap<>();
-        private final Set<ResourceLocation> removedEntities = new HashSet<>();
+        private final Map<Identifier, T> additionsByEntity = new HashMap<>();
+        private final Set<Identifier> removedEntities = new HashSet<>();
 
         private boolean isCleared;
 
@@ -139,7 +139,7 @@ public class SoulDataModificationEvent implements KubeEvent {
             additionsByEntity.put(entity, soulData);
         }
 
-        private void remove(ResourceLocation entity) {
+        private void remove(Identifier entity) {
             additionsByEntity.remove(entity);
             removedEntities.add(entity);
         }
@@ -150,7 +150,7 @@ public class SoulDataModificationEvent implements KubeEvent {
             removedEntities.clear();
         }
 
-        private void applyTo(Map<ResourceLocation, T> soulDataByEntity) {
+        private void applyTo(Map<Identifier, T> soulDataByEntity) {
             if (isCleared) {
                 soulDataByEntity.clear();
             }

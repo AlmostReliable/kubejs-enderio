@@ -2,7 +2,7 @@ package com.almostreliable.kubeio.recipe;
 
 import com.almostreliable.kubeio.schema.SoulBinderRecipeSchema;
 
-import com.enderio.enderio.init.EIORecipes;
+import com.enderio.enderio.init.EIORecipeTypes;
 import dev.latvian.mods.kubejs.recipe.KubeRecipe;
 import dev.latvian.mods.kubejs.recipe.schema.KubeRecipeFactory;
 
@@ -12,7 +12,7 @@ import dev.latvian.mods.kubejs.recipe.schema.KubeRecipeFactory;
 public class SoulBinderKubeRecipe extends KubeRecipe {
 
     public static final KubeRecipeFactory FACTORY = new KubeRecipeFactory(
-        EIORecipes.SOUL_BINDING.type().getId(),
+        EIORecipeTypes.SOUL_BINDING.getId(),
         SoulBinderKubeRecipe.class,
         SoulBinderKubeRecipe::new
     );

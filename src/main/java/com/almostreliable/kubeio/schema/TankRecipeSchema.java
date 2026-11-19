@@ -26,7 +26,7 @@ public interface TankRecipeSchema {
     RecipeKey<Ingredient> INPUT = IngredientComponent.INGREDIENT
         .key("input", ComponentRole.INPUT)
         .noFunctions();
-    RecipeKey<SizedFluidIngredient> FLUID = SizedFluidIngredientComponent.FLAT
+    RecipeKey<SizedFluidIngredient> FLUID = SizedFluidIngredientComponent.SIZED_FLUID_INGREDIENT
         .key("fluid", ComponentRole.OTHER)
         .noFunctions();
     RecipeKey<TankRecipe.Mode> MODE = SimpleComponents.TANK_MODE

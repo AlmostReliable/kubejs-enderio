@@ -5,7 +5,7 @@ import com.almostreliable.kubeio.schema.FireCraftingRecipeSchema;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
-import com.enderio.enderio.init.EIORecipes;
+import com.enderio.enderio.init.EIORecipeTypes;
 import dev.latvian.mods.kubejs.error.KubeRuntimeException;
 import dev.latvian.mods.kubejs.recipe.KubeRecipe;
 import dev.latvian.mods.kubejs.recipe.schema.KubeRecipeFactory;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class FireCraftingKubeRecipe extends KubeRecipe {
 
     public static final KubeRecipeFactory FACTORY = new KubeRecipeFactory(
-        EIORecipes.FIRE_CRAFTING.type().getId(),
+        EIORecipeTypes.FIRE_CRAFTING.getId(),
         FireCraftingKubeRecipe.class,
         FireCraftingKubeRecipe::new
     );

@@ -23,7 +23,6 @@ public interface SlicerRecipeSchema {
         .key("output", ComponentRole.OUTPUT)
         .noFunctions();
     RecipeKey<List<Ingredient>> INPUTS = IngredientComponent.INGREDIENT
-        .instance()
         .asList()
         .withBounds(IntBounds.of(6, 6))
         .key("inputs", ComponentRole.INPUT)

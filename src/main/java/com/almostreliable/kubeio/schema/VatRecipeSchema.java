@@ -18,19 +18,19 @@ public interface VatRecipeSchema {
     RecipeKey<FluidStack> OUTPUT = FluidStackComponent.FLUID_STACK
         .key("output", ComponentRole.OUTPUT)
         .noFunctions();
-    RecipeKey<SizedFluidIngredient> INPUT = SizedFluidIngredientComponent.FLAT
+    RecipeKey<SizedFluidIngredient> INPUT = SizedFluidIngredientComponent.SIZED_FLUID_INGREDIENT
         .key("input", ComponentRole.INPUT)
         .noFunctions();
-    RecipeKey<TagKey<Item>> LEFT_REAGENT = TagKeyComponent.ITEM
-        .key("left_reagent", ComponentRole.INPUT)
+    RecipeKey<TagKey<Item>> FIRST_REAGENT = TagKeyComponent.ITEM
+        .key("first_reagent", ComponentRole.INPUT)
         .noFunctions();
-    RecipeKey<TagKey<Item>> RIGHT_REAGENT = TagKeyComponent.ITEM
-        .key("right_reagent", ComponentRole.INPUT)
+    RecipeKey<TagKey<Item>> SECOND_REAGENT = TagKeyComponent.ITEM
+        .key("second_reagent", ComponentRole.INPUT)
         .noFunctions();
     RecipeKey<Integer> TICKS = NumberComponent.INT
         .key("ticks", ComponentRole.OTHER)
         .optional(60)
         .alwaysWrite();
 
-    RecipeSchema SCHEMA = new RecipeSchema(OUTPUT, INPUT, LEFT_REAGENT, RIGHT_REAGENT, TICKS);
+    RecipeSchema SCHEMA = new RecipeSchema(OUTPUT, INPUT, FIRST_REAGENT, SECOND_REAGENT, TICKS);
 }

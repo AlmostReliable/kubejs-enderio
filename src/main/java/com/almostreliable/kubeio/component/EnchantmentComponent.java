@@ -7,14 +7,12 @@ import dev.latvian.mods.kubejs.recipe.component.RecipeComponentType;
 import dev.latvian.mods.rhino.type.TypeInfo;
 
 import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.enchantment.Enchantment;
 
-public record EnchantmentComponent(RecipeComponentType<?> type) implements RecipeComponent<Holder<Enchantment>> {
+public record EnchantmentComponent(ResourceKey<RecipeComponentType<?>> type) implements RecipeComponent<Holder<Enchantment>> {
 
-    public static final RecipeComponentType<Holder<Enchantment>> TYPE = RecipeComponentType.unit(
-        EnderIO.rl("enchantment"),
-        EnchantmentComponent::new
-    );
+    public static final EnchantmentComponent INSTANCE = new EnchantmentComponent(RecipeComponentType.key(EnderIO.id("enchantment")));
 
     @Override
     public Codec<Holder<Enchantment>> codec() {
@@ -26,4 +24,3 @@ public record EnchantmentComponent(RecipeComponentType<?> type) implements Recip
         return TypeInfo.of(Holder.class).withParams(TypeInfo.of(Enchantment.class));
     }
 }
-

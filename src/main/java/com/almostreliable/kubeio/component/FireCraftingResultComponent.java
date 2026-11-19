@@ -5,21 +5,21 @@ import com.almostreliable.kubeio.binding.FireCraftingResult;
 import com.enderio.enderio.EnderIO;
 import com.enderio.enderio.content.fire_crafting.FireCraftingRecipe.Result;
 import com.mojang.serialization.Codec;
+import dev.latvian.mods.kubejs.error.InvalidRecipeComponentValueException;
 import dev.latvian.mods.kubejs.plugin.builtin.wrapper.ItemWrapper;
 import dev.latvian.mods.kubejs.recipe.RecipeScriptContext;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponent;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponentType;
 import dev.latvian.mods.rhino.type.TypeInfo;
+import org.jspecify.annotations.Nullable;
 
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceKey;
 
-public record FireCraftingResultComponent(RecipeComponentType<?> type) implements RecipeComponent<Result> {
+public record FireCraftingResultComponent(ResourceKey<RecipeComponentType<?>> type) implements RecipeComponent<Result> {
 
-    public static final RecipeComponentType<Result> TYPE = RecipeComponentType.unit(
-        EnderIO.rl("fire_crafting_result"),
-        FireCraftingResultComponent::new
+    public static final FireCraftingResultComponent INSTANCE = new FireCraftingResultComponent(
+        RecipeComponentType.key(EnderIO.id("fire_crafting_result"))
     );
-    private static final Result EMPTY = FireCraftingResult.kubeio$of(ItemStack.EMPTY);
 
     @Override
     public Codec<Result> codec() {
@@ -32,17 +32,17 @@ public record FireCraftingResultComponent(RecipeComponentType<?> type) implement
     }
 
     @Override
-    public Result wrap(RecipeScriptContext cx, Object from) {
+    public Result wrap(RecipeScriptContext cx, @Nullable Object from) {
         if (from instanceof Result o) {
             return o;
         }
 
-        ItemStack itemStack = ItemWrapper.wrap(cx.cx(), from);
-        return itemStack.isEmpty() ? EMPTY : FireCraftingResult.kubeio$of(itemStack);
-    }
+        var itemStack = ItemWrapper.wrap(cx.cx(), from);
+        if (itemStack.isEmpty()) {
+            var message = "fire crafting result must not be empty";
+            throw new InvalidRecipeComponentValueException(message, this, from).source(cx.recipe().sourceLine);
+        }
 
-    @Override
-    public boolean isEmpty(Result value) {
-        return value == EMPTY || value.result().isEmpty();
+        return FireCraftingResult.kubeio$of(itemStack);
     }
 }

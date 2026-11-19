@@ -20,8 +20,7 @@ public interface AlloySmelterRecipeSchema {
     RecipeKey<ItemStack> OUTPUT = ItemStackComponent.ITEM_STACK
         .key("output", ComponentRole.OUTPUT)
         .noFunctions();
-    RecipeKey<List<SizedIngredient>> INPUTS = SizedIngredientComponent.FLAT
-        .instance()
+    RecipeKey<List<SizedIngredient>> INPUTS = SizedIngredientComponent.SIZED_INGREDIENT
         .asList()
         .key("inputs", ComponentRole.INPUT)
         .noFunctions();

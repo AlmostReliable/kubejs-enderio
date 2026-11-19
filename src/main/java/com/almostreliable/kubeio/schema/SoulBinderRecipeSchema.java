@@ -10,7 +10,7 @@ import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.*;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -36,7 +36,7 @@ public interface SoulBinderRecipeSchema {
         .key("experience", ComponentRole.OTHER)
         .optional(5)
         .alwaysWrite();
-    RecipeKey<ResourceLocation> ENTITY_TYPE = EntityTypeIdComponent.TYPE
+    RecipeKey<Identifier> ENTITY_TYPE = EntityTypeIdComponent.INSTANCE
         .key("entity_type", ComponentRole.OTHER)
         .functionNames(List.of("entityType"))
         .defaultOptional()
@@ -46,7 +46,7 @@ public interface SoulBinderRecipeSchema {
         .functionNames(List.of("mobCategory"))
         .defaultOptional()
         .exclude();
-    RecipeKey<String> SOUL_DATA = SoulDataComponent.TYPE
+    RecipeKey<String> SOUL_DATA = SoulDataComponent.INSTANCE
         .key("soul_data", ComponentRole.OTHER)
         .functionNames(List.of("soulData"))
         .defaultOptional()

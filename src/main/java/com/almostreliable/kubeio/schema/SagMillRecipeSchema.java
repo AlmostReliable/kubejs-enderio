@@ -19,8 +19,7 @@ import java.util.List;
  */
 public interface SagMillRecipeSchema {
 
-    RecipeKey<List<SagMillingRecipe.OutputItem>> OUTPUTS = SagMillOutputItemComponent.TYPE
-        .instance()
+    RecipeKey<List<SagMillingRecipe.OutputItem>> OUTPUTS = SagMillOutputItemComponent.INSTANCE
         .asList()
         .key("outputs", ComponentRole.OUTPUT)
         .noFunctions();
@@ -31,7 +30,7 @@ public interface SagMillRecipeSchema {
         .key("energy", ComponentRole.INPUT)
         .optional(2_000)
         .alwaysWrite();
-    RecipeKey<SagMillingRecipe.BonusType> BONUS = SimpleComponents.BOUS_TYPE
+    RecipeKey<SagMillingRecipe.BonusType> BONUS = SimpleComponents.BONUS_TYPE
         .key("bonus", ComponentRole.OTHER)
         .optional(SagMillingRecipe.BonusType.MULTIPLY_OUTPUT);
 

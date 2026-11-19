@@ -11,23 +11,23 @@ import net.minecraft.world.entity.MobCategory;
 
 public interface SimpleComponents {
 
-    RecipeComponentType<SagMillingRecipe.BonusType> BOUS_TYPE = EnumComponent.of(
-        EnderIO.rl("bonus_type"),
+    EnumComponent<SagMillingRecipe.BonusType> BONUS_TYPE = EnumComponent.create(
+        RecipeComponentType.key(EnderIO.id("bonus_type")),
         SagMillingRecipe.BonusType.class,
         SagMillingRecipe.BonusType.CODEC
     );
-    RecipeComponentType<MobCategory> MOB_CATEGORY = EnumComponent.of(
-        EnderIO.rl("mob_category"),
+    EnumComponent<MobCategory> MOB_CATEGORY = EnumComponent.create(
+        RecipeComponentType.key(EnderIO.id("mob_category")),
         MobCategory.class,
         MobCategory.CODEC
     );
-    RecipeComponentType<TankRecipe.Mode> TANK_MODE = EnumComponent.of(
-        EnderIO.rl("tank_mode"),
+    EnumComponent<TankRecipe.Mode> TANK_MODE = EnumComponent.create(
+        RecipeComponentType.key(EnderIO.id("tank_mode")),
         TankRecipe.Mode.class,
         TankRecipe.Mode.CODEC
     );
-    RecipeComponentType<WeatherChangeRecipe.WeatherMode> WEATHER_MODE = EnumComponent.of(
-        EnderIO.rl("weather_mode"),
+    EnumComponent<WeatherChangeRecipe.WeatherMode> WEATHER_MODE = EnumComponent.create(
+        RecipeComponentType.key(EnderIO.id("weather_mode")),
         WeatherChangeRecipe.WeatherMode.class,
         WeatherChangeRecipe.WeatherMode.CODEC
     );

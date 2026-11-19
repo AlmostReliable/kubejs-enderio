@@ -1,7 +1,7 @@
 package com.almostreliable.kubeio.builder;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
@@ -19,7 +19,7 @@ public class CapacitorBuilder extends ItemBuilder {
     private float modifierBaseValue = 1;
     private boolean visibleInCreativeTab = true;
 
-    public CapacitorBuilder(ResourceLocation id) {
+    public CapacitorBuilder(Identifier id) {
         super(id);
         maxStackSize(64);
     }

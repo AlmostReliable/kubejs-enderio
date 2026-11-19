@@ -3,7 +3,7 @@ package com.almostreliable.kubeio.recipe;
 import com.almostreliable.kubeio.schema.TankRecipeSchema;
 
 import com.enderio.enderio.content.storage.fluid_tank.TankRecipe;
-import com.enderio.enderio.init.EIORecipes;
+import com.enderio.enderio.init.EIORecipeTypes;
 import dev.latvian.mods.kubejs.recipe.KubeRecipe;
 import dev.latvian.mods.kubejs.recipe.schema.KubeRecipeFactory;
 
@@ -13,7 +13,7 @@ import dev.latvian.mods.kubejs.recipe.schema.KubeRecipeFactory;
 public class TankKubeRecipe extends KubeRecipe {
 
     public static final KubeRecipeFactory FACTORY = new KubeRecipeFactory(
-        EIORecipes.TANK.type().getId(),
+        EIORecipeTypes.TANK.getId(),
         TankKubeRecipe.class,
         TankKubeRecipe::new
     );

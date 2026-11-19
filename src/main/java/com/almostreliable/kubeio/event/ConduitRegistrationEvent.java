@@ -1,7 +1,7 @@
 package com.almostreliable.kubeio.event;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.fml.ModList;
 
 import appeng.api.ids.AEConstants;
@@ -12,7 +12,6 @@ import com.enderio.enderio.content.conduits.type.energy.EnergyConduit;
 import com.enderio.enderio.content.conduits.type.fluid.FluidConduit;
 import com.enderio.enderio.content.conduits.type.item.ItemConduit;
 import com.enderio.modded_conduits.common.modules.appeng.MEConduit;
-import com.enderio.modded_conduits.common.modules.mekanism.chemical.ChemicalConduit;
 import com.google.common.base.Preconditions;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
@@ -29,10 +28,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
 
+@SuppressWarnings("unused")
 public class ConduitRegistrationEvent implements KubeEvent {
 
     @HideFromJS
-    public static final Map<ResourceLocation, JsonElement> CUSTOM_CONDUITS = new HashMap<>();
+    public static final Map<Identifier, JsonElement> CUSTOM_CONDUITS = new HashMap<>();
 
     public void registerItemConduit(Context ctx, String id, Component name, int transferRate, int networkRate) {
         try {
@@ -54,18 +54,6 @@ public class ConduitRegistrationEvent implements KubeEvent {
         try {
             CustomConduit.of(id, name)
                 .bindInstance((n, tex) -> new FluidConduit(tex, n, transferRate));
-        } catch (Exception e) {
-            throw new KubeRuntimeException(e).source(SourceLine.of(ctx));
-        }
-    }
-
-    public void registerChemicalConduit(Context ctx, String id, Component name, int transferRate) {
-        try {
-            Preconditions.checkArgument(
-                ModList.get().isLoaded("mekanism"),
-                "mekanism must be loaded to use chemical conduits"
-            );
-            CustomConduit.of(id, name).bindInstance((n, tex) -> new ChemicalConduit(tex, n, transferRate));
         } catch (Exception e) {
             throw new KubeRuntimeException(e).source(SourceLine.of(ctx));
         }
@@ -104,22 +92,22 @@ public class ConduitRegistrationEvent implements KubeEvent {
             return new CustomConduit(id, name);
         }
 
-        private void bindInstance(BiFunction<Component, ResourceLocation, Conduit<?, ?>> factory) {
+        private void bindInstance(BiFunction<Component, Identifier, Conduit<?, ?>> factory) {
             var conduit = factory.apply(name, getTexturePath());
             JsonElement conduitJson = Conduit.DIRECT_CODEC.encodeStart(JsonOps.INSTANCE, conduit).getOrThrow();
-            CUSTOM_CONDUITS.put(EnderIO.rl("enderio/conduit/" + id), conduitJson);
+            CUSTOM_CONDUITS.put(EnderIO.id("enderio/conduit/" + id), conduitJson);
             CONDUIT_IDS.add(id);
         }
 
-        private ResourceLocation getTexturePath() {
-            return EnderIO.rl("block/conduit/" + id);
+        private Identifier getTexturePath() {
+            return EnderIO.id("block/conduit/" + id);
         }
     }
 
     @SuppressWarnings("UnstableApiUsage")
     private static final class Ae2Integration {
 
-        private static BiFunction<Component, ResourceLocation, Conduit<?, ?>> createFactory(
+        private static BiFunction<Component, Identifier, Conduit<?, ?>> createFactory(
             String color, boolean dense
         ) {
             AEColor aeColor = AEColor.valueOf(color.toUpperCase(Locale.ROOT));

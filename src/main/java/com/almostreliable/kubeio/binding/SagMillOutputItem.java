@@ -8,6 +8,7 @@ import dev.latvian.mods.rhino.util.RemapPrefixForJS;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 
 /**
  * Implemented on {@link SagMillOutputItemMixin} to add utility methods.
@@ -21,7 +22,12 @@ public interface SagMillOutputItem {
     }
 
     static SagMillingRecipe.OutputItem kubeio$of(ItemStack item, float chance) {
-        return SagMillingRecipe.OutputItem.of(item, chance, false);
+        return kubeio$of(item, chance, false);
+    }
+
+    static SagMillingRecipe.OutputItem kubeio$of(ItemStack item, float chance, boolean optional) {
+        var template = ItemStackTemplate.fromNonEmptyStack(item);
+        return SagMillingRecipe.OutputItem.of(template, chance, optional);
     }
 
     static SagMillingRecipe.OutputItem kubeio$ofTag(TagKey<Item> tag, int count) {

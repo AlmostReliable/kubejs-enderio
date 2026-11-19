@@ -1,5 +1,7 @@
 package com.almostreliable.kubeio.component;
 
+import net.minecraft.resources.ResourceKey;
+
 import com.enderio.enderio.EnderIO;
 import com.enderio.enderio.foundation.souldata.SoulDataReloadListener;
 import com.mojang.serialization.Codec;
@@ -8,10 +10,11 @@ import dev.latvian.mods.kubejs.recipe.RecipeScriptContext;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponent;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponentType;
 import dev.latvian.mods.rhino.type.TypeInfo;
+import org.jspecify.annotations.Nullable;
 
-public record SoulDataComponent(RecipeComponentType<?> type) implements RecipeComponent<String> {
+public record SoulDataComponent(ResourceKey<RecipeComponentType<?>> type) implements RecipeComponent<String> {
 
-    public static final RecipeComponentType<String> TYPE = RecipeComponentType.unit(EnderIO.rl("soul_data"), SoulDataComponent::new);
+    public static final SoulDataComponent INSTANCE = new SoulDataComponent(RecipeComponentType.key(EnderIO.id("soul_data")));
 
     @Override
     public Codec<String> codec() {
@@ -24,7 +27,7 @@ public record SoulDataComponent(RecipeComponentType<?> type) implements RecipeCo
     }
 
     @Override
-    public String wrap(RecipeScriptContext cx, Object from) {
+    public String wrap(RecipeScriptContext cx, @Nullable Object from) {
         var soulData = RecipeComponent.super.wrap(cx, from);
         // noinspection ConstantValue
         if (SoulDataReloadListener.fromString(soulData) == null) {

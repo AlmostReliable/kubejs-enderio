@@ -28,10 +28,8 @@ import com.almostreliable.kubeio.schema.VatRecipeSchema;
 import com.almostreliable.kubeio.schema.WeatherChangeRecipeSchema;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.MobCategory;
 
-import com.enderio.core.common.recipes.RecipeTypeSerializerPair;
 import com.enderio.enderio.EnderIO;
 import com.enderio.enderio.api.capacitor.CapacitorModifier;
 import com.enderio.enderio.api.components.GrindingBallData;
@@ -42,7 +40,7 @@ import com.enderio.enderio.content.machines.sag_mill.SagMillingRecipe;
 import com.enderio.enderio.content.storage.fluid_tank.TankRecipe;
 import com.enderio.enderio.foundation.datamap.RangeExtender;
 import com.enderio.enderio.foundation.datamap.VatReagent;
-import com.enderio.enderio.init.EIORecipes;
+import com.enderio.enderio.init.EIORecipeTypes;
 import dev.latvian.mods.kubejs.event.EventGroup;
 import dev.latvian.mods.kubejs.event.EventGroupRegistry;
 import dev.latvian.mods.kubejs.event.EventHandler;
@@ -50,19 +48,12 @@ import dev.latvian.mods.kubejs.generator.KubeDataGenerator;
 import dev.latvian.mods.kubejs.plugin.KubeJSPlugin;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponentTypeRegistry;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeFactoryRegistry;
-import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchemaRegistry;
 import dev.latvian.mods.kubejs.registry.BuilderTypeRegistry;
 import dev.latvian.mods.kubejs.script.BindingRegistry;
 import dev.latvian.mods.kubejs.script.ScriptType;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 public class KubePlugin implements KubeJSPlugin {
-
-    public static final Set<ResourceLocation> SMELTING_RECIPES = new HashSet<>();
 
     @Override
     public void registerEvents(EventGroupRegistry registry) {
@@ -73,7 +64,7 @@ public class KubePlugin implements KubeJSPlugin {
     public void registerBuilderTypes(BuilderTypeRegistry registry) {
         registry.of(
             Registries.ITEM,
-            reg -> reg.add(EnderIO.rl("capacitor"), CapacitorBuilder.class, CapacitorBuilder::new)
+            reg -> reg.add(EnderIO.id("capacitor"), CapacitorBuilder.class, CapacitorBuilder::new)
         );
     }
 
@@ -95,15 +86,15 @@ public class KubePlugin implements KubeJSPlugin {
 
     @Override
     public void registerRecipeComponents(RecipeComponentTypeRegistry registry) {
-        registry.register(SimpleComponents.BOUS_TYPE);
-        registry.register(SimpleComponents.MOB_CATEGORY);
-        registry.register(SimpleComponents.TANK_MODE);
-        registry.register(SimpleComponents.WEATHER_MODE);
-        registry.register(EnchantmentComponent.TYPE);
-        registry.register(EntityTypeIdComponent.TYPE);
-        registry.register(FireCraftingResultComponent.TYPE);
-        registry.register(SagMillOutputItemComponent.TYPE);
-        registry.register(SoulDataComponent.TYPE);
+        registry.unit(SimpleComponents.BONUS_TYPE);
+        registry.unit(SimpleComponents.MOB_CATEGORY);
+        registry.unit(SimpleComponents.TANK_MODE);
+        registry.unit(SimpleComponents.WEATHER_MODE);
+        registry.unit(EnchantmentComponent.INSTANCE);
+        registry.unit(EntityTypeIdComponent.INSTANCE);
+        registry.unit(FireCraftingResultComponent.INSTANCE);
+        registry.unit(SagMillOutputItemComponent.INSTANCE);
+        registry.unit(SoulDataComponent.INSTANCE);
     }
 
     @Override
@@ -116,25 +107,16 @@ public class KubePlugin implements KubeJSPlugin {
 
     @Override
     public void registerRecipeSchemas(RecipeSchemaRegistry registry) {
-        Map<RecipeTypeSerializerPair<?, ?>, RecipeSchema> recipeSchemas = Map.of(
-            EIORecipes.ALLOY_SMELTING, AlloySmelterRecipeSchema.SCHEMA,
-            EIORecipes.ENCHANTING, EnchanterRecipeSchema.SCHEMA,
-            EIORecipes.FIRE_CRAFTING, FireCraftingRecipeSchema.SCHEMA,
-            EIORecipes.PAINTING, PaintingRecipeSchema.SCHEMA,
-            EIORecipes.SAG_MILLING, SagMillRecipeSchema.SCHEMA,
-            EIORecipes.SLICING, SlicerRecipeSchema.SCHEMA,
-            EIORecipes.SOUL_BINDING, SoulBinderRecipeSchema.SCHEMA,
-            EIORecipes.TANK, TankRecipeSchema.SCHEMA,
-            EIORecipes.VAT_FERMENTING, VatRecipeSchema.SCHEMA,
-            EIORecipes.WEATHER_CHANGE, WeatherChangeRecipeSchema.SCHEMA
-        );
-
-        for (var entry : recipeSchemas.entrySet()) {
-            var recipeType = entry.getKey();
-            var schema = entry.getValue();
-            var id = recipeType.type().getId();
-            registry.register(id, schema);
-        }
+        registry.register(EIORecipeTypes.ALLOY_SMELTING.getId(), AlloySmelterRecipeSchema.SCHEMA);
+        registry.register(EIORecipeTypes.ENCHANTING.getId(), EnchanterRecipeSchema.SCHEMA);
+        registry.register(EIORecipeTypes.FIRE_CRAFTING.getId(), FireCraftingRecipeSchema.SCHEMA);
+        registry.register(EIORecipeTypes.PAINTING.getId(), PaintingRecipeSchema.SCHEMA);
+        registry.register(EIORecipeTypes.SAG_MILLING.getId(), SagMillRecipeSchema.SCHEMA);
+        registry.register(EIORecipeTypes.SLICING.getId(), SlicerRecipeSchema.SCHEMA);
+        registry.register(EIORecipeTypes.SOUL_BINDING.getId(), SoulBinderRecipeSchema.SCHEMA);
+        registry.register(EIORecipeTypes.TANK.getId(), TankRecipeSchema.SCHEMA);
+        registry.register(EIORecipeTypes.VAT_FERMENTING.getId(), VatRecipeSchema.SCHEMA);
+        registry.register(EIORecipeTypes.WEATHER_CHANGE.getId(), WeatherChangeRecipeSchema.SCHEMA);
     }
 
     @Override

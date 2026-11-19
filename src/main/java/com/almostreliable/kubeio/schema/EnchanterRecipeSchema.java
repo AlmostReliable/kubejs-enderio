@@ -20,10 +20,10 @@ import java.util.List;
  */
 public interface EnchanterRecipeSchema {
 
-    RecipeKey<Holder<Enchantment>> ENCHANTMENT = EnchantmentComponent.TYPE
+    RecipeKey<Holder<Enchantment>> ENCHANTMENT = EnchantmentComponent.INSTANCE
         .key("enchantment", ComponentRole.OTHER)
         .noFunctions();
-    RecipeKey<SizedIngredient> INPUT = SizedIngredientComponent.FLAT
+    RecipeKey<SizedIngredient> INPUT = SizedIngredientComponent.SIZED_INGREDIENT
         .key("input", ComponentRole.INPUT)
         .noFunctions();
     RecipeKey<Integer> COST_MULTIPLIER = NumberComponent.INT
