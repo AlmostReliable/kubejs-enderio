@@ -3,6 +3,11 @@ package com.almostreliable.kubeio.component;
 import com.almostreliable.kubeio.binding.SagMillOutputItem;
 import com.almostreliable.kubeio.mixin.IngredientAccessor;
 import com.almostreliable.kubeio.mixin.TagValueAccessor;
+
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.neoforged.neoforge.common.crafting.SizedIngredient;
+
 import com.enderio.enderio.EnderIO;
 import com.enderio.enderio.content.machines.sag_mill.SagMillingRecipe;
 import com.enderio.enderio.content.machines.sag_mill.SagMillingRecipe.OutputItem;
@@ -15,9 +20,6 @@ import dev.latvian.mods.kubejs.recipe.RecipeScriptContext;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponent;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponentType;
 import dev.latvian.mods.rhino.type.TypeInfo;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.neoforged.neoforge.common.crafting.SizedIngredient;
 
 public record SagMillOutputItemComponent(RecipeComponentType<?> type) implements RecipeComponent<OutputItem> {
 
@@ -88,6 +90,8 @@ public record SagMillOutputItemComponent(RecipeComponentType<?> type) implements
 
     @Override
     public boolean isEmpty(OutputItem value) {
-        return value == EMPTY || !value.isPresent();
+        if (value == EMPTY) return true;
+        // optional tag outputs have no items without other mods
+        return value.output().left().map(ItemStack::isEmpty).orElse(false);
     }
 }

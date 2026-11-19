@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning].
 - added support for adding, modifying, and removing soul data (Powered Spawner, Soul Engine, Farming Station, Solar
   Panel) via a custom event
 - added `copyInputComponents` function to Soul Binding recipes
+- fixed Sag Mill recipes with tag outputs that have no items failing to parse
 - fixed Soul Binding recipe experience being a float instead of an integer
 - fixed Soul Binding recipe entity type accepting tags instead of entity type ids
 - fixed Soul Binding recipes accepting unknown soul data types which crashes the Soul Binder
