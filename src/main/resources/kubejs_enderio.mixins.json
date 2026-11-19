@@ -8,6 +8,7 @@
     "IngredientAccessor",
     "RecipeManagerMixin",
     "SagMillOutputItemMixin",
+    "SoulDataReloadListenerMixin",
     "TagValueAccessor"
   ],
   "client": [],

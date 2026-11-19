@@ -10,6 +10,7 @@ import com.almostreliable.kubeio.component.SoulDataComponent;
 import com.almostreliable.kubeio.event.ConduitRegistrationEvent;
 import com.almostreliable.kubeio.event.GrindingBallModificationEvent;
 import com.almostreliable.kubeio.event.RangeExtenderModificationEvent;
+import com.almostreliable.kubeio.event.SoulDataModificationEvent;
 import com.almostreliable.kubeio.event.VatReagentModificationEvent;
 import com.almostreliable.kubeio.recipe.AlloySmelterKubeRecipe;
 import com.almostreliable.kubeio.recipe.FireCraftingKubeRecipe;
@@ -36,6 +37,7 @@ import com.enderio.enderio.api.capacitor.CapacitorModifier;
 import com.enderio.enderio.api.components.GrindingBallData;
 import com.enderio.enderio.content.fire_crafting.FireCraftingRecipe;
 import com.enderio.enderio.content.machines.obelisks.weather.WeatherChangeRecipe;
+import com.enderio.enderio.content.machines.powered_spawner.MobSpawnMode;
 import com.enderio.enderio.content.machines.sag_mill.SagMillingRecipe;
 import com.enderio.enderio.content.storage.fluid_tank.TankRecipe;
 import com.enderio.enderio.foundation.datamap.RangeExtender;
@@ -83,6 +85,7 @@ public class KubePlugin implements KubeJSPlugin {
         if (registry.type().isServer()) {
             registry.add("FireCraftingResult", FireCraftingRecipe.Result.class);
             registry.add("MobCategory", MobCategory.class);
+            registry.add("MobSpawnMode", MobSpawnMode.class);
             registry.add("SagMillBonus", SagMillingRecipe.BonusType.class);
             registry.add("SagMillOutput", SagMillingRecipe.OutputItem.class);
             registry.add("TankMode", TankRecipe.Mode.class);
@@ -162,6 +165,11 @@ public class KubePlugin implements KubeJSPlugin {
                 map -> Events.RANGE_EXTENDERS.post(ScriptType.SERVER, new RangeExtenderModificationEvent(map))
             );
         }
+
+        SoulDataModificationEvent.reset();
+        if (Events.SOUL_DATA.hasListeners()) {
+            Events.SOUL_DATA.post(ScriptType.SERVER, new SoulDataModificationEvent());
+        }
     }
 
     public interface Events {
@@ -172,5 +180,6 @@ public class KubePlugin implements KubeJSPlugin {
         EventHandler GRINDING_BALLS = GROUP.server("grindingBalls", () -> GrindingBallModificationEvent.class);
         EventHandler VAT_REAGENTS = GROUP.server("vatReagents", () -> VatReagentModificationEvent.class);
         EventHandler RANGE_EXTENDERS = GROUP.server("rangeExtenders", () -> RangeExtenderModificationEvent.class);
+        EventHandler SOUL_DATA = GROUP.server("soulData", () -> SoulDataModificationEvent.class);
     }
 }

@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning].
 - updated to EnderIO 8.2.14
 - added Weather Obelisk recipe support
 - added support for adding, modifying, and removing Wireless Charger range extenders via a custom event
+- added support for adding, modifying, and removing soul data (Powered Spawner, Soul Engine, Farming Station, Solar
+  Panel) via a custom event
 - added `copyInputComponents` function to Soul Binding recipes
 - fixed Soul Binding recipe experience being a float instead of an integer
 - fixed Soul Binding recipe entity type accepting tags instead of entity type ids
